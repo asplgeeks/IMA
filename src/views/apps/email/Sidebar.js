@@ -80,8 +80,7 @@ const Sidebar = props => {
   }
 
   return (
-    <div
-      className={classnames('sidebar-left', {
+    <div className={classnames('sidebar-left', {
         show: sidebarOpen
       })}
     >

@@ -68,7 +68,7 @@ $email_details_header_height: 5rem;
 
     // Right content area common css starts
     .content-right {
-      width: calc(100% - #{$menu-expanded-width});
+      width: calc(100% - #{$menu-expanded-width} - 164px);
       border-left: 1px solid $border-color;
       .email-app-list {
         height: inherit;
@@ -558,3 +558,10 @@ color: #5e5873 !important;
 .side-navbar>li{
   padding: 0px !important;
 }
+.light-gray-bg
+{
+  background-color: #f8f8f8 !important;
+}
+// body{
+//   font-family: 'Helvetica Neue', 'Arial'!important;
+// }

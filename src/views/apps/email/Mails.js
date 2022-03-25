@@ -5,9 +5,18 @@ import { Fragment, useState } from 'react'
 import MailCard from './MailCard'
 import MailDetails from './MailDetails'
 import ComposePopUp from './ComposePopup'
+import * as Icon from 'react-feather'
 
 // ** Utils
 import { formatDateToMonthShort } from '@utils'
+
+import InputAdornment from "@material-ui/core/InputAdornment"
+import TextField from "@material-ui/core/TextField"
+import SearchIcon from "@material-ui/icons/Search"
+// import PlusIcon from "@material-ui/icons/Plus"
+
+import { IconButton } from "@material-ui/core"
+import CancelRoundedIcon from "@material-ui/icons/CancelRounded"
 
 // ** Third Party Components
 import PerfectScrollbar from 'react-perfect-scrollbar'
@@ -20,9 +29,11 @@ import {
   DropdownMenu,
   DropdownItem,
   DropdownToggle,
-  UncontrolledDropdown
+  UncontrolledDropdown,
+  Row,
+  Col
 } from 'reactstrap'
-import { Menu, Search, Folder, Tag, Mail, Trash, Edit2, Info } from 'react-feather'
+import { Menu, Search, ArrowLeftCircle, Folder, Tag, Mail, Trash, Edit2, Info } from 'react-feather'
 
 const Mails = props => {
   // ** Props
@@ -47,6 +58,8 @@ const Mails = props => {
 
   // ** States
   const [openMail, setOpenMail] = useState(false)
+  const [search, setSearchVisible] = useState(false)
+  const [value, setValue] = useState("")
 
   // ** Variables
   const labelColors = {
@@ -60,11 +73,6 @@ const Mails = props => {
   const handleMailClick = id => {
     dispatch(selectCurrentMail(id))
     setOpenMail(true)
-  }
-
-  // ** Handles SelectAll
-  const handleSelectAll = e => {
-    dispatch(selectAllMail(e.target.checked))
   }
 
   /*eslint-disable */
@@ -120,13 +128,15 @@ const Mails = props => {
 
   return (
     <Fragment>
+      {/* <Row> */}
+        {/* <Col md={6}> */}
       <div className='email-app-list'>
         <div className='app-fixed-search d-flex align-items-center'>
           <div className='sidebar-toggle d-block d-lg-none ml-1' onClick={() => setSidebarOpen(true)}>
-            <Menu />
+            <ArrowLeftCircle /> 
           </div>
-          <div className='d-flex align-content-center justify-content-between w-100'>
-            <InputGroup className='input-group-merge'>
+          <div className='align-content-center justify-content-between w-100'>
+            {/* <InputGroup className='input-group-merge'>
               <InputGroupAddon addonType='prepend'>
                 <InputGroupText>
                   <Search className='text-muted' size={14} />
@@ -137,129 +147,70 @@ const Mails = props => {
                 placeholder='Search email'
                 value={query}
                 onChange={e => setQuery(e.target.value)}
-              />
-            </InputGroup>
+              /> */}
+            {/* </InputGroup> */}
+             { search === false ?  <span className='broadcom_align float-right'>
+          {/* <ListItem  component="div" tag={Link}  onClick={handleClick}>
+            <ListItemText  inset primary="All Categories" />
+            {open ? <span className='dropdown_icon'><ExpandLess /> </span> : <span className='dropdown_icon'> <ExpandMore /> </span>}
+          </ListItem> */}
+         
+          <div className='sidebar_search'>
+          <span className='align-middle dropdown_icon'   onClick={() => [setSearchVisible(!search)] }>  <SearchIcon /> </span>
+          <span className='align-middle dropdown_icon'   onClick={() => [setSearchVisible(!search)] }>     <Icon.User/> </span>
+
           </div>
-        </div>
-        <div className='app-action'>
-          <div className='action-left'>
-            <CustomInput
-              type='checkbox'
-              id='select-all'
-              label='Select All'
-              onChange={handleSelectAll}
-              checked={selectedMails.length && selectedMails.length === mails.length}
-            />
+          </span> : <TextField
+          placeholder="Search"
+          type="text"
+          variant="outlined"
+          fullWidth
+          size="small"
+          onChange={(e) => setValue(e.target.value)}
+          value={value}
+          InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon />
+                    </InputAdornment>
+                  ),
+                  endAdornment:(
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={() => [setSearchVisible(!search), setValue("")] }
+                  >
+                    <CancelRoundedIcon />
+                  </IconButton>
+                )
+              }}
+            /> }
+
           </div>
-          {selectedMails.length ? (
-            <div className='action-right'>
-              <ul className='list-inline m-0'>
-                <li className='list-inline-item mr-1'>
-                  <UncontrolledDropdown>
-                    <DropdownToggle tag='span'>
-                      <Folder size={18} />
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                      <DropdownItem
-                        tag='a'
-                        href='/'
-                        onClick={e => handleFolderUpdate(e, 'draft')}
-                        className='d-flex align-items-center'
-                      >
-                        <Edit2 className='mr-50' size={18} />
-                        <span>Draft</span>
-                      </DropdownItem>
-                      <DropdownItem
-                        tag='a'
-                        href='/'
-                        onClick={e => handleFolderUpdate(e, 'spam')}
-                        className='d-flex align-items-center'
-                      >
-                        <Info className='mr-50' size={18} />
-                        <span>Spam</span>
-                      </DropdownItem>
-                      <DropdownItem
-                        tag='a'
-                        href='/'
-                        onClick={e => handleFolderUpdate(e, 'trash')}
-                        className='d-flex align-items-center'
-                      >
-                        <Trash className='mr-50' size={18} />
-                        <span>Trash</span>
-                      </DropdownItem>
-                    </DropdownMenu>
-                  </UncontrolledDropdown>
-                </li>
-                <li className='list-inline-item mr-1'>
-                  <UncontrolledDropdown>
-                    <DropdownToggle tag='span'>
-                      <Tag size={18} />
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                      <DropdownItem
-                        tag='a'
-                        href='/'
-                        onClick={e => handleLabelsUpdate(e, 'personal')}
-                        className='d-flex align-items-center'
-                      >
-                        <span className='bullet bullet-success bullet-sm mr-50' />
-                        <span>Personal</span>
-                      </DropdownItem>
-                      <DropdownItem
-                        tag='a'
-                        href='/'
-                        onClick={e => handleLabelsUpdate(e, 'company')}
-                        className='d-flex align-items-center'
-                      >
-                        <span className='bullet bullet-primary bullet-sm mr-50' />
-                        <span>Company</span>
-                      </DropdownItem>
-                      <DropdownItem
-                        tag='a'
-                        href='/'
-                        onClick={e => handleLabelsUpdate(e, 'important')}
-                        className='d-flex align-items-center'
-                      >
-                        <span className='bullet bullet-warning bullet-sm mr-50' />
-                        <span>Important</span>
-                      </DropdownItem>
-                      <DropdownItem
-                        tag='a'
-                        href='/'
-                        onClick={e => handleLabelsUpdate(e, 'private')}
-                        className='d-flex align-items-center'
-                      >
-                        <span className='bullet bullet-danger bullet-sm mr-50' />
-                        <span>Private</span>
-                      </DropdownItem>
-                    </DropdownMenu>
-                  </UncontrolledDropdown>
-                </li>
-                <li className='list-inline-item mr-1'>
-                  <span className='action-icon' onClick={() => handleMailReadUpdate(selectedMails, false)}>
-                    <Mail size={18} />
-                  </span>
-                </li>
-                <li className='list-inline-item mr-1'>
-                  <span className='action-icon' onClick={() => handleMailToTrash(selectedMails)}>
-                    <Trash size={18} />
-                  </span>
-                </li>
-              </ul>
-            </div>
-          ) : null}
         </div>
 
+
         <PerfectScrollbar className='email-user-list' options={{ wheelPropagation: false }}>
+        <div className='app-action light-gray-bg'>
+          <div className='action-left' style={{width:"100%"}}>
+          <p className='text-truncate mb-0'>Tread name display for longer text eclips Tread name display for longer text eclipse Tread name display for longer text eclipse Tread name display for longer text eclipseTread name display for longer text eclipseTread name display for longer text eclipseTread name display for longer text eclipseTread name display for longer text eclipseTread name display for longer text eclipseTread name display for longer text eclipseTread name display for longer text eclipseTread name display for longer text eclipse</p>
+          </div>
+            <div className='action-right'>
+            <Info size={18} />
+            </div>
+        </div>
+
           {mails.length ? (
             <ul className='email-media-list'>{renderMails()}</ul>
           ) : (
             <div className='no-results d-block'>
               <h5>No Items Found</h5>
             </div>
-          )}
+        )} 
         </PerfectScrollbar>
       </div>
+      {/* </Col>
+      <Col  md={6}>
+        sadadadj */}
       <MailDetails
         openMail={openMail}
         dispatch={dispatch}
@@ -276,6 +227,8 @@ const Mails = props => {
         formatDateToMonthShort={formatDateToMonthShort}
       />
       <ComposePopUp composeOpen={composeOpen} toggleCompose={toggleCompose} />
+      {/* </Col>
+      </Row> */}
     </Fragment>
   )
 }
