@@ -133,7 +133,9 @@ const Mails = props => {
       <div className='email-app-list'>
         <div className='app-fixed-search d-flex align-items-center'>
           <div className='sidebar-toggle d-block d-lg-none ml-1' onClick={() => setSidebarOpen(true)}>
-            <ArrowLeftCircle /> 
+           {/* <span></> < />  */}
+           <span className='dropdown_icon' style={{padding: "4px 1px"}}  ><Icon.ArrowLeft /> </span>
+
           </div>
           <div className='align-content-center justify-content-between w-100'>
             {/* <InputGroup className='input-group-merge'>
@@ -156,9 +158,10 @@ const Mails = props => {
           </ListItem> */}
          
           <div className='sidebar_search'>
-          <span className='align-middle dropdown_icon'   onClick={() => [setSearchVisible(!search)] }>  <SearchIcon /> </span>
-          <span className='align-middle dropdown_icon'   onClick={() => [setSearchVisible(!search)] }>     <Icon.User/> </span>
-
+          <span className='align-middle dropdown_icon mr20'   ><Icon.RotateCw  style={{padding:"4px"}} /> </span>
+          <span className='align-middle dropdown_icon mr20'  ><Icon.Plus /> </span>
+          <span className='align-middle dropdown_icon '   onClick={() => [setSearchVisible(!search)] }>  <SearchIcon /> </span>
+          {/* <RefreshCcw /> */}
           </div>
           </span> : <TextField
           placeholder="Search"
@@ -179,7 +182,8 @@ const Mails = props => {
                     aria-label="toggle password visibility"
                     onClick={() => [setSearchVisible(!search), setValue("")] }
                   >
-                    <CancelRoundedIcon />
+                    <Icon.XCircle />
+                    {/* <CancelRoundedIcon /> */}
                   </IconButton>
                 )
               }}
