@@ -128,40 +128,20 @@ const Mails = props => {
 
   return (
     <Fragment>
-      {/* <Row> */}
-        {/* <Col md={6}> */}
+     
       <div className='email-app-list'>
         <div className='app-fixed-search d-flex align-items-center'>
           <div className='sidebar-toggle d-block d-lg-none ml-1' onClick={() => setSidebarOpen(true)}>
-           {/* <span></> < />  */}
            <span className='dropdown_icon' style={{padding: "4px 1px"}}  ><Icon.ArrowLeft /> </span>
 
           </div>
           <div className='align-content-center justify-content-between w-100'>
-            {/* <InputGroup className='input-group-merge'>
-              <InputGroupAddon addonType='prepend'>
-                <InputGroupText>
-                  <Search className='text-muted' size={14} />
-                </InputGroupText>
-              </InputGroupAddon>
-              <Input
-                id='email-search'
-                placeholder='Search email'
-                value={query}
-                onChange={e => setQuery(e.target.value)}
-              /> */}
-            {/* </InputGroup> */}
+        
              { search === false ?  <span className='broadcom_align float-right'>
-          {/* <ListItem  component="div" tag={Link}  onClick={handleClick}>
-            <ListItemText  inset primary="All Categories" />
-            {open ? <span className='dropdown_icon'><ExpandLess /> </span> : <span className='dropdown_icon'> <ExpandMore /> </span>}
-          </ListItem> */}
-         
           <div className='sidebar_search'>
           <span className='align-middle dropdown_icon mr20'   ><Icon.RotateCw  style={{padding:"4px"}} /> </span>
           <span className='align-middle dropdown_icon mr20'  ><Icon.Plus /> </span>
           <span className='align-middle dropdown_icon '   onClick={() => [setSearchVisible(!search)] }>  <SearchIcon /> </span>
-          {/* <RefreshCcw /> */}
           </div>
           </span> : <TextField
           placeholder="Search"
@@ -183,7 +163,6 @@ const Mails = props => {
                     onClick={() => [setSearchVisible(!search), setValue("")] }
                   >
                     <Icon.XCircle />
-                    {/* <CancelRoundedIcon /> */}
                   </IconButton>
                 )
               }}
@@ -212,9 +191,7 @@ const Mails = props => {
         )} 
         </PerfectScrollbar>
       </div>
-      {/* </Col>
-      <Col  md={6}>
-        sadadadj */}
+      
       <MailDetails
         openMail={openMail}
         dispatch={dispatch}
@@ -231,8 +208,7 @@ const Mails = props => {
         formatDateToMonthShort={formatDateToMonthShort}
       />
       <ComposePopUp composeOpen={composeOpen} toggleCompose={toggleCompose} />
-      {/* </Col>
-      </Row> */}
+  
     </Fragment>
   )
 }

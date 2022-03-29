@@ -38,7 +38,7 @@ $email_details_header_height: 5rem;
           }
           .sidebar-menu-list {
             position: relative;
-            height: calc(100% - 80px); // search section height 80px
+            height: calc(100% - 115px); // search section height 80px
           }
         }
       }
@@ -106,7 +106,7 @@ $email_details_header_height: 5rem;
     .email-user-list {
       position: relative;
       height: calc(
-        100% - calc(3.49rem + 3.32rem)
+        100% - calc(3.49rem + 1.32rem)
       ); // ? search box height (3.49rem) + select all section height (3.32rem)
       .email-media-list {
         padding: 0;
@@ -128,7 +128,7 @@ $email_details_header_height: 5rem;
             padding: ($spacer + 0.5);
             &:hover {
               transform: translateY(-2px);
-              box-shadow: 0 3px 10px 0 $border-color;
+              // box-shadow: 0 3px 10px 0 $border-color;
               transition: all 0.2s;
               z-index: 1;
             }
@@ -240,7 +240,7 @@ $email_details_header_height: 5rem;
     z-index: 2;
     visibility: hidden;
     top: 0;
-    width: calc(100% - #{$menu-expanded-width});
+    width: calc(100% - #{$menu-expanded-width} - 164px);
     background-color: $body-bg;
     transform: translateX(100%);
     transition: all 0.25s ease, color 0s;
@@ -259,7 +259,7 @@ $email_details_header_height: 5rem;
       border-bottom: 1px solid $kbd-bg;
       position: relative;
       padding: 0.5rem 2rem;
-      background-color: $white;
+      background-color: #f8f8f8;
       height: $email_details_header_height;
     }
     .email-header-left {
@@ -572,4 +572,95 @@ color: #5e5873 !important;
 }
 .mr20{
   margin-right: 20px;
+}
+.mt5{
+  margin-top: 5px;
+}
+
+.new_thread{
+    margin-bottom: 0;
+    font-weight: 600;
+}
+.create-thread{
+height: 100% !important;
+}
+
+.create-thread{ 
+   .media{
+  padding: 12px 15px;
+  .media_text{
+    margin-left: 10px;
+  }
+}
+
+}
+
+
+
+.MuiInputBase-root{
+  color:#707070 !important;
+}
+
+.thread-model{
+  .MuiFormControl-root{
+    width: 100%;
+    margin-bottom: 22px;
+  }
+
+  h5{
+    color: #100707;
+    text-align: center;
+  }
+  p{
+    color: #707070;
+    text-align: justify;
+  }
+  button{
+    background-color: #6AC517 !important;
+    border-color: #6AC517 !important;
+  }
+  .button_send_request
+  {
+    display: table !important;
+    width: 100%;
+    text-align: center;
+    button{
+      svg{
+        margin-left: 5px !important;
+      }
+    }
+  }
+}
+.MuiInputAdornment-root svg
+{
+  color: #707070 !important;
+}
+.thread-model-footer
+{
+  display: table;
+    /* width: 100%; */
+    text-align: center;
+  button{
+    color: #FF0000;
+    text-align: center; 
+  }
+}
+
+.details_svg{
+  border: 2px solid #444444 !important;
+    border-radius: 50%;
+}
+
+.email-app-details
+{
+  .app-fixed-search
+{
+  background: #f8f8f8 !important;
+  border-bottom: 0px !important;
+}
+
+}
+.content
+{
+     margin-left: 0px !important;
 }
