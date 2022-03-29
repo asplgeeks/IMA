@@ -258,7 +258,30 @@ const MailDetails = props => {
           </div>
         </div>
           <PerfectScrollbar className='email-scroll-area' options={{ wheelPropagation: false }}>
-          {mail.replies && mail.replies.length ? (
+            <Row className="topic_details">
+              <Col sm='12'>
+                <div className='email-label'>
+                  <p> The pharmaceutical industry mainly influences drug regulation.
+                     World governments are also turning a blind eye to bribery and 
+                     corruption in the pharma sector. The pharmaceutical industry mainly influences drug regulation. World governments are also turning a blind eye to bribery and corruption in the pharma sector.The pharmaceutical industry mainly influences drug regulation. World governments are also turning a blind eye to bribery and corruption in the pharma sector.</p>
+                </div>
+          <div> Images slider</div>
+              <div className='pdf_view'>
+                <span>
+              <img className="rounded" src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/avatar-s-7.ba3f6823.jpg" alt="" />                
+             <span className='pdf_text'>Full name of the PDF file uploaded with.pdf</span>
+             </span>
+              </div>
+              sadasd
+              ]asdad
+              asdads
+              sada
+              dsaada
+
+              </Col>
+            </Row>
+
+            {mail.replies && mail.replies.length ? (
               <Fragment>
                 {showReplies === false ? (
                   <Row className='mb-1'>

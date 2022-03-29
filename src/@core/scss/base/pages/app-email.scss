@@ -241,7 +241,7 @@ $email_details_header_height: 5rem;
     visibility: hidden;
     top: 0;
     width: calc(100% - #{$menu-expanded-width} - 164px);
-    background-color: $body-bg;
+    background-color: $white;
     transform: translateX(100%);
     transition: all 0.25s ease, color 0s;
     height: 100%;
@@ -658,9 +658,27 @@ height: 100% !important;
   background: #f8f8f8 !important;
   border-bottom: 0px !important;
 }
-
-}
-.content
+.scrollbar-container
 {
-     margin-left: 0px !important;
+  // email-scroll-area
+  padding: 0 !important;
+}
+.topic_details{
+  padding: 0  2rem !important;
+background-color: #F5F5F5 !important;
+}
+.pdf_view{
+  img{
+    height: 30px;
+    width: 30px;
+    border-radius: 8px 0px 0px 8px;
+  }
+
+.pdf_text{
+  padding: 10px 5px 8px 0px;
+    background: #fff;
+    border-radius: 0px 8px 8px 0px;
+}
+}
+
 }
