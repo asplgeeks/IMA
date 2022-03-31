@@ -38,6 +38,7 @@ import {
   addNewtreads
 } from './store/actions'
 
+import Adnew from './../../../Images/addnew.svg'
 const Sidebar = props => {
   // ** Props
   const { store, sidebarOpen, toggleCompose, dispatch, getMails, resetSelectedMail, setSidebarOpen, gettreads } = props
@@ -272,6 +273,7 @@ const renderModal = (
                   <h5>Thread Name HR 2022 Trends</h5>
                   <span className='broadcom_align'>
                     <Breadcrumbs separator="|" aria-label="breadcrumb">
+<<<<<<< HEAD
                       <Link underline="hover" key="1" color="inherit" href="/" >{detail.new_topic_count} New Topics</Link>
                       <Link   key="2"  href="/getting-started/installation/">{detail.total_topic_count} Topics</Link>
                       <Link  key="2" color="inherit" href="/getting-started/installation/">{detail.members} Members</Link>
@@ -280,6 +282,15 @@ const renderModal = (
                       <Badge className='float-right bg-danger' color='white' pill >
                         {/* {store.emailsMeta.draft} */}
                         {detail.unread_comments}</Badge>) : null}</span>
+=======
+                      <Link underline="hover" key="1" color="inherit" href="/" > 21 New Topic</Link>
+                      <Link   key="2"  href="/getting-started/installation/"> 23 topics </Link>
+                      <Link  key="2" color="inherit" href="/getting-started/installation/"> 5 Members </Link>
+                  </Breadcrumbs>
+                    <span className=''>{store.emailsMeta.draft ? (
+                      <Badge  color='white' pill >
+                        23 </Badge>) : null}</span>
+>>>>>>> bd6b9e8e055b5ecfb8d3b1ecfd8d92d0dacc4aea
                     </span>
                 </ListGroupItem>
               </ListGroup>
@@ -288,7 +299,10 @@ const renderModal = (
             </PerfectScrollbar>
             <div className='light-gray-bg create-thread'>
             <Media onClick={() => toggleModal(3)}>
-           <Avatar className='mt5' img="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/avatar-s-7.ba3f6823.jpg" imgHeight='40' imgWidth='40' />
+           {/* <Avatar className='mt5' img={Adnew} imgHeight='40' imgWidth='40' /> */}
+           <div className="mt5 img">
+           <img  src={Adnew} alt="avatarImg" height="30" width="30" />
+           </div>
            <div className='media_text'>
            <h6 className='new_thread mt5'>Request New Thread!</h6>
            <small className='text-muted'>If you feel a thread/forum is missing.</small>    
