@@ -1,7 +1,7 @@
 // ** React Imports
 import { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
-import starLogo from './../../../../../Images/Star-icon.svg'
+// import starLogo from './../../../../../Images/Star-icon.svg'
 
 // ** Third Party Components
 import { Disc, X, Circle } from 'react-feather'

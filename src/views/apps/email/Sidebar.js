@@ -34,6 +34,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 
+import Adnew from './../../../Images/addnew.svg'
 const Sidebar = props => {
   // ** Props
   const { store, sidebarOpen, toggleCompose, dispatch, getMails, resetSelectedMail, setSidebarOpen } = props
@@ -235,202 +236,8 @@ const renderModal = (
                       <Link   key="2"  href="/getting-started/installation/"> 23 topics </Link>
                       <Link  key="2" color="inherit" href="/getting-started/installation/"> 5 Members </Link>
                   </Breadcrumbs>
-                    <span className='align-middle'>{store.emailsMeta.draft ? (
-                      <Badge className='float-right bg-danger' color='white' pill >
-                        {/* {store.emailsMeta.draft} */}
-                        23 </Badge>) : null}</span>
-                    </span>
-                </ListGroupItem>
-
-                <ListGroupItem
-                 tag={Link}
-                  to='/apps/email/inbox'
-                  onClick={() => handleFolder('inbox')}
-                  action
-                >
-                  <h5>Thread Name HR 2022 Trends</h5>
-                  <span className='broadcom_align'>
-                    <Breadcrumbs separator="|" aria-label="breadcrumb">
-                      <Link underline="hover" key="1" color="inherit" href="/" > 21 New Topic</Link>
-                      <Link   key="2"  href="/getting-started/installation/"> 23 topics </Link>
-                      <Link  key="2" color="inherit" href="/getting-started/installation/"> 5 Members </Link>
-                  </Breadcrumbs>
-                    <span className='align-middle'>{store.emailsMeta.draft ? (
-                      <Badge className='float-right bg-danger' color='white' pill >
-                        {/* {store.emailsMeta.draft} */}
-                        23 </Badge>) : null}</span>
-                    </span>
-                </ListGroupItem>
-                <ListGroupItem
-                 tag={Link}
-                  to='/apps/email/inbox'
-                  onClick={() => handleFolder('inbox')}
-                  action
-                >
-                  <h5>Thread Name HR 2022 Trends</h5>
-                  <span className='broadcom_align'>
-                    <Breadcrumbs separator="|" aria-label="breadcrumb">
-                      <Link underline="hover" key="1" color="inherit" href="/" > 21 New Topic</Link>
-                      <Link   key="2"  href="/getting-started/installation/"> 23 topics </Link>
-                      <Link  key="2" color="inherit" href="/getting-started/installation/"> 5 Members </Link>
-                  </Breadcrumbs>
-                    <span className='align-middle'>{store.emailsMeta.draft ? (
-                      <Badge className='float-right bg-danger' color='white' pill >
-                        {/* {store.emailsMeta.draft} */}
-                        23 </Badge>) : null}</span>
-                    </span>
-                </ListGroupItem>
-
-                <ListGroupItem
-                 tag={Link}
-                  to='/apps/email/inbox'
-                  onClick={() => handleFolder('inbox')}
-                  action
-                >
-                  <h5>Thread Name HR 2022 Trends</h5>
-                  <span className='broadcom_align'>
-                    <Breadcrumbs separator="|" aria-label="breadcrumb">
-                      <Link underline="hover" key="1" color="inherit" href="/" > 21 New Topic</Link>
-                      <Link   key="2"  href="/getting-started/installation/"> 23 topics </Link>
-                      <Link  key="2" color="inherit" href="/getting-started/installation/"> 5 Members </Link>
-                  </Breadcrumbs>
-                    <span className='align-middle'>{store.emailsMeta.draft ? (
-                      <Badge className='float-right bg-danger' color='white' pill >
-                        {/* {store.emailsMeta.draft} */}
-                        23 </Badge>) : null}</span>
-                    </span>
-                </ListGroupItem>
-                <ListGroupItem
-                 tag={Link}
-                  to='/apps/email/inbox'
-                  onClick={() => handleFolder('inbox')}
-                  action
-                >
-                  <h5>Thread Name HR 2022 Trends</h5>
-                  <span className='broadcom_align'>
-                    <Breadcrumbs separator="|" aria-label="breadcrumb">
-                      <Link underline="hover" key="1" color="inherit" href="/" > 21 New Topic</Link>
-                      <Link   key="2"  href="/getting-started/installation/"> 23 topics </Link>
-                      <Link  key="2" color="inherit" href="/getting-started/installation/"> 5 Members </Link>
-                  </Breadcrumbs>
-                    <span className='align-middle'>{store.emailsMeta.draft ? (
-                      <Badge className='float-right bg-danger' color='white' pill >
-                        {/* {store.emailsMeta.draft} */}
-                        23 </Badge>) : null}</span>
-                    </span>
-                </ListGroupItem>
-                <ListGroupItem
-                 tag={Link}
-                  to='/apps/email/inbox'
-                  onClick={() => handleFolder('inbox')}
-                  action
-                >
-                  <h5>Thread Name HR 2022 Trends</h5>
-                  <span className='broadcom_align'>
-                    <Breadcrumbs separator="|" aria-label="breadcrumb">
-                      <Link underline="hover" key="1" color="inherit" href="/" > 21 New Topic</Link>
-                      <Link   key="2"  href="/getting-started/installation/"> 23 topics </Link>
-                      <Link  key="2" color="inherit" href="/getting-started/installation/"> 5 Members </Link>
-                  </Breadcrumbs>
-                    <span className='align-middle'>{store.emailsMeta.draft ? (
-                      <Badge className='float-right bg-danger' color='white' pill >
-                        {/* {store.emailsMeta.draft} */}
-                        23 </Badge>) : null}</span>
-                    </span>
-                </ListGroupItem>
-                <ListGroupItem
-                 tag={Link}
-                  to='/apps/email/inbox'
-                  onClick={() => handleFolder('inbox')}
-                  action
-                >
-                  <h5>Thread Name HR 2022 Trends</h5>
-                  <span className='broadcom_align'>
-                    <Breadcrumbs separator="|" aria-label="breadcrumb">
-                      <Link underline="hover" key="1" color="inherit" href="/" > 21 New Topic</Link>
-                      <Link   key="2"  href="/getting-started/installation/"> 23 topics </Link>
-                      <Link  key="2" color="inherit" href="/getting-started/installation/"> 5 Members </Link>
-                  </Breadcrumbs>
-                    <span className='align-middle'>{store.emailsMeta.draft ? (
-                      <Badge className='float-right bg-danger' color='white' pill >
-                        {/* {store.emailsMeta.draft} */}
-                        23 </Badge>) : null}</span>
-                    </span>
-                </ListGroupItem>
-                <ListGroupItem
-                 tag={Link}
-                  to='/apps/email/inbox'
-                  onClick={() => handleFolder('inbox')}
-                  action
-                >
-                  <h5>Thread Name HR 2022 Trends</h5>
-                  <span className='broadcom_align'>
-                    <Breadcrumbs separator="|" aria-label="breadcrumb">
-                      <Link underline="hover" key="1" color="inherit" href="/" > 21 New Topic</Link>
-                      <Link   key="2"  href="/getting-started/installation/"> 23 topics </Link>
-                      <Link  key="2" color="inherit" href="/getting-started/installation/"> 5 Members </Link>
-                  </Breadcrumbs>
-                    <span className='align-middle'>{store.emailsMeta.draft ? (
-                      <Badge className='float-right bg-danger' color='white' pill >
-                        {/* {store.emailsMeta.draft} */}
-                        23 </Badge>) : null}</span>
-                    </span>
-                </ListGroupItem>
-                <ListGroupItem
-                 tag={Link}
-                  to='/apps/email/inbox'
-                  onClick={() => handleFolder('inbox')}
-                  action
-                >
-                  <h5>Thread Name HR 2022 Trends</h5>
-                  <span className='broadcom_align'>
-                    <Breadcrumbs separator="|" aria-label="breadcrumb">
-                      <Link underline="hover" key="1" color="inherit" href="/" > 21 New Topic</Link>
-                      <Link   key="2"  href="/getting-started/installation/"> 23 topics </Link>
-                      <Link  key="2" color="inherit" href="/getting-started/installation/"> 5 Members </Link>
-                  </Breadcrumbs>
-                    <span className='align-middle'>{store.emailsMeta.draft ? (
-                      <Badge className='float-right bg-danger' color='white' pill >
-                        {/* {store.emailsMeta.draft} */}
-                        23 </Badge>) : null}</span>
-                    </span>
-                </ListGroupItem>
-                <ListGroupItem
-                 tag={Link}
-                  to='/apps/email/inbox'
-                  onClick={() => handleFolder('inbox')}
-                  action
-                >
-                  <h5>Thread Name HR 2022 Trends</h5>
-                  <span className='broadcom_align'>
-                    <Breadcrumbs separator="|" aria-label="breadcrumb">
-                      <Link underline="hover" key="1" color="inherit" href="/" > 21 New Topic</Link>
-                      <Link   key="2"  href="/getting-started/installation/"> 23 topics </Link>
-                      <Link  key="2" color="inherit" href="/getting-started/installation/"> 5 Members </Link>
-                  </Breadcrumbs>
-                    <span className='align-middle'>{store.emailsMeta.draft ? (
-                      <Badge className='float-right bg-danger' color='white' pill >
-                        {/* {store.emailsMeta.draft} */}
-                        23 </Badge>) : null}</span>
-                    </span>
-                </ListGroupItem>
-
-                <ListGroupItem
-                 tag={Link}
-                  to='/apps/email/inbox'
-                  onClick={() => handleFolder('inbox')}
-                  action
-                >
-                  <h5>Thread Name HR 2022 Trends</h5>
-                  <span className='broadcom_align'>
-                    <Breadcrumbs separator="|" aria-label="breadcrumb">
-                      <Link underline="hover" key="1" color="inherit" href="/" > 21 New Topic</Link>
-                      <Link   key="2"  href="/getting-started/installation/"> 23 topics </Link>
-                      <Link  key="2" color="inherit" href="/getting-started/installation/"> 5 Members </Link>
-                  </Breadcrumbs>
-                    <span className='align-middle'>{store.emailsMeta.draft ? (
-                      <Badge className='float-right bg-danger' color='white' pill >
-                        {/* {store.emailsMeta.draft} */}
+                    <span className=''>{store.emailsMeta.draft ? (
+                      <Badge  color='white' pill >
                         23 </Badge>) : null}</span>
                     </span>
                 </ListGroupItem>
@@ -438,7 +245,10 @@ const renderModal = (
             </PerfectScrollbar>
             <div className='light-gray-bg create-thread'>
             <Media onClick={() => toggleModal(3)}>
-           <Avatar className='mt5' img="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/avatar-s-7.ba3f6823.jpg" imgHeight='40' imgWidth='40' />
+           {/* <Avatar className='mt5' img={Adnew} imgHeight='40' imgWidth='40' /> */}
+           <div className="mt5 img">
+           <img  src={Adnew} alt="avatarImg" height="30" width="30" />
+           </div>
            <div className='media_text'>
            <h6 className='new_thread mt5'>Request New Thread!</h6>
            <small className='text-muted'>If you feel a thread/forum is missing.</small>    

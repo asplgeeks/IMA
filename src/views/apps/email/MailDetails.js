@@ -7,10 +7,17 @@ import { formatDate } from '@utils'
 
 import * as Icon from 'react-feather'
 import SearchIcon from "@material-ui/icons/Search"
-
+//-------------------
 import InputAdornment from "@material-ui/core/InputAdornment"
 import TextField from "@material-ui/core/TextField"
 import { IconButton } from "@material-ui/core"
+import CancelRoundedIcon from "@material-ui/icons/CancelRounded"
+import Reply from "../../../Images/reply.svg"
+import PDF from "../../../Images/pdf.svg"
+
+import Input from '@material-ui/core/Input'
+import InputLabel from '@material-ui/core/InputLabel'
+import FormControl from '@material-ui/core/FormControl'
 
 // ** Custom Components
 import Avatar from '@components/avatar'
@@ -23,30 +30,24 @@ import {
   Badge,
   Card,
   Table,
+  Button,
   CardBody,
   CardFooter,
   CardHeader,
   DropdownMenu,
   DropdownItem,
   DropdownToggle,
-  UncontrolledDropdown
+  UncontrolledDropdown,
+  Media,
+  input,
+  Label 
 } from 'reactstrap'
 import {
-  ChevronLeft,
-  ChevronRight,
-  Star,
-  Folder,
-  Tag,
-  Mail,
-  Trash,
-  Edit2,
-  Info,
   Paperclip,
   MoreVertical,
   CornerUpLeft,
   CornerUpRight,
-  Trash2
-} from 'react-feather'
+  Trash2 } from 'react-feather'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 
 const MailDetails = props => {
@@ -179,17 +180,6 @@ const MailDetails = props => {
     )
   }
 
-  // ** Renders Replies
-  const renderReplies = arr => {
-    if (arr.length && showReplies === true) {
-      return arr.map((obj, index) => (
-        <Row key={index}>
-          <Col sm='12'>{renderMessage(obj)}</Col>
-        </Row>
-      ))
-    }
-  }
-
   // ** Handle show replies, go back, folder & read click functions
   const handleShowReplies = e => {
     e.preventDefault()
@@ -198,16 +188,6 @@ const MailDetails = props => {
 
   const handleGoBack = () => {
     setOpenMail(false)
-  }
-
-  const handleFolderClick = (e, folder, id) => {
-    handleFolderUpdate(e, folder, [id])
-    handleGoBack()
-  }
-
-  const handleReadClick = () => {
-    handleMailReadUpdate([mail.id], false)
-    handleGoBack()
   }
 
   return (
@@ -257,7 +237,7 @@ const MailDetails = props => {
 
           </div>
         </div>
-          <PerfectScrollbar className='email-scroll-area' options={{ wheelPropagation: false }}>
+          <PerfectScrollbar className='email-scroll-area' >
             <Row className="topic_details">
               <Col sm='12'>
                 <div className='email-label'>
@@ -267,39 +247,103 @@ const MailDetails = props => {
                 </div>
           <div> Images slider</div>
               <div className='pdf_view'>
-                <span>
-              <img className="rounded" src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/avatar-s-7.ba3f6823.jpg" alt="" />                
-             <span className='pdf_text'>Full name of the PDF file uploaded with.pdf</span>
+             <span className='pdf_text'>
+               <span className='view'>
+               <span className='pdf-img'><img src={PDF} /><span className='size'>5mb</span></span>
+            <span className='pdf-title'> Full name of the PDF file uploaded with.pdf</span>
+             </span>
              </span>
               </div>
-              sadasd
-              ]asdad
-              asdads
-              sada
-              dsaada
 
+              <Media> 
+            <div className='avatar'>
+            <img  src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/avatar-s-7.ba3f6823.jpg" height='25' width='25' />
+
+            </div>
+              <div>
+              <span className='user_name'>Vidhyabhuan Upadhye, </span>
+              <span className='text-muted '> CTO, Indian Market Assessment </span>
+              </div>
+            </Media>
+            <Media body  className='text-muted' style={{fontSize: "16px"}} >
+              <div>
+            <small className='text-muted'> 23 Dec 2021 
+                </small>
+                <span className='text-muted ml-50 mr-25'>|</span>
+                <small className='text-muted'>23 Comments </small>
+                </div>
+                <div>
+                <small className='text-muted'><img src={Reply} />Comment </small>
+                </div>
+              </Media>
               </Col>
+                    
+            </Row>
+            <Row className="comment_details">
+            <Col sm='12'>
+
+            <Media> 
+            <div className='avatar'>
+            <img  src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/avatar-s-7.ba3f6823.jpg" height='50' width='50' />
+
+            </div>
+              <div>
+              <span className='user_name'>Vidhyabhuan Upadhye, </span>
+              <span className='text-muted '> CTO, Indian Market Assessment </span>
+              </div>
+            </Media>
+            <p>
+            The pharmaceutical industry mainly influences drug regulation.
+             World governments are also turning a blind eye to bribery and corruption in the pharma sector.
+              Share your thoughts.The pharmaceutical industry mainly influences drug regulation. 
+              World governments are also turning a blind eye to bribery and corruption in the pharma sector.
+               Share your thoughts.The pharmaceutical industry mainly influences drug regulation. World governments
+                are also turning a blind eye to bribery and corruption in the pharma sector. Share your thoughts.
+            </p>
+             </Col>
             </Row>
 
-            {mail.replies && mail.replies.length ? (
-              <Fragment>
-                {showReplies === false ? (
-                  <Row className='mb-1'>
-                    <Col sm='12'>
-                      <a className='font-weight-bold' href='/' onClick={handleShowReplies}>
-                        View {mail.replies.length} Earlier Messages
-                      </a>
-                    </Col>
-                  </Row>
-                ) : null}
-
-                {renderReplies(mail.replies)}
-              </Fragment>
-            ) : null}
-            <Row>
-              <Col sm='12'>{renderMessage(mail)}</Col>
+        
+            <Row className="comment">
+            <Col sm='12'>
+            <Media body  className='text-muted' style={{fontSize: "16px"}} >
+            <small className='text-muted'> 23 Dec 2021   </small>
+            <small className='text-muted'><Icon.XCircle  size={20} />Cancel </small>
+              </Media>
+              </Col>
+            <Col sm='12'>
+            <div className='comment_box'>
+            <FormControl variant="standard">
+            <Input
+              id="TEST"
+              placeholder="Add Reply"
+              floatingLabelText="MultiLine and FloatingLabel"
+              multiline
+              rows={3}
+              // startAdornment={
+              //   <InputAdornment position="start">
+              //     <Icon.Edit2  />
+              //   </InputAdornment>
+              // }
+            />
+          </FormControl>
+          <div className='comment_buttons'>
+              <div className='comment_attachment'>
+                    <Label className='mb-0 btn ' for='attach-email-item'>
+                      <Icon.PlusCircle  className='cursor-pointer'  size={20} /> FILE
+                      <input type='file' name='attach-email-item' id='attach-email-item' hidden />
+                    </Label>
+                  </div>
+                  <div className='btn_send_request'>
+                <Button.Ripple >
+                  <span className='align-middle ms-25'>POST REPLY</span>
+                  <Icon.ArrowRightCircle  size={20} />
+                </Button.Ripple>
+              </div>
+          </div>
+          </div>
+             </Col>
             </Row>
-           
           </PerfectScrollbar>
         </Fragment>
       ) : null}

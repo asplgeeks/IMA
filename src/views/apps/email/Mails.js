@@ -129,15 +129,15 @@ const Mails = props => {
   return (
     <Fragment>
      
-      <div className='email-app-list'>
+      <div className='email-app-list topic_navbar'>
         <div className='app-fixed-search d-flex align-items-center'>
           <div className='sidebar-toggle d-block d-lg-none ml-1' onClick={() => setSidebarOpen(true)}>
            <span className='dropdown_icon' style={{padding: "4px 1px"}}  ><Icon.ArrowLeft /> </span>
 
           </div>
-          <div className='align-content-center justify-content-between w-100'>
-        
-             { search === false ?  <span className='broadcom_align float-right'>
+          <div className='align-content-center menu justify-content-between w-100'>
+          <span className='title'> TOPIC </span> 
+          { search === false ? <span className='broadcom_align float-right'>
           <div className='sidebar_search'>
           <span className='align-middle dropdown_icon mr20'   ><Icon.RotateCw  style={{padding:"4px"}} /> </span>
           <span className='align-middle dropdown_icon mr20'  ><Icon.Plus /> </span>
@@ -175,7 +175,7 @@ const Mails = props => {
         <PerfectScrollbar className='email-user-list' options={{ wheelPropagation: false }}>
         <div className='app-action light-gray-bg'>
           <div className='action-left' style={{width:"100%"}}>
-          <p className='text-truncate mb-0'>Tread name display for longer text eclips Tread name display for longer text eclipse Tread name display for longer text eclipse Tread name display for longer text eclipseTread name display for longer text eclipseTread name display for longer text eclipseTread name display for longer text eclipseTread name display for longer text eclipseTread name display for longer text eclipseTread name display for longer text eclipseTread name display for longer text eclipseTread name display for longer text eclipse</p>
+          <p className='text-truncate mb-0 topic_title'>Tread name display for longer text eclips....</p>
           </div>
             <div className='action-right'>
             <Info size={18} />
