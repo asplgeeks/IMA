@@ -209,10 +209,12 @@ const MailDetails = props => {
     handleMailReadUpdate([mail.id], false)
     handleGoBack()
   }
+  console.log('openMail', openMail, window.innerWidth)
 
   return (
     <div
-      className={classnames('email-app-details', {
+    // className='wrap-border side-navbar square-border d-none d-lg-block border_bottom_none border_top_none'
+      className={classnames(window.innerWidth > "480" ? 'wrap-border side-navbar square-border d-none d-lg-block border_bottom_none border_top_none' : 'email-app-details', {
         show: openMail
       })}
     >

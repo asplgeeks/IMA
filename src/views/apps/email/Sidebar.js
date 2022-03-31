@@ -1,5 +1,5 @@
 // ** Third Party Components
-import {React, useState, Fragment} from 'react'
+import {React, useState, Fragment, useEffect} from 'react'
 
 import classnames from 'classnames'
 import { Link, useParams } from 'react-router-dom'
@@ -33,23 +33,30 @@ import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
 import AccountCircle from '@material-ui/icons/AccountCircle'
+import Models from './../../components/Model'
+import {
+  addNewtreads
+} from './store/actions'
 
 const Sidebar = props => {
   // ** Props
-  const { store, sidebarOpen, toggleCompose, dispatch, getMails, resetSelectedMail, setSidebarOpen } = props
+  const { store, sidebarOpen, toggleCompose, dispatch, getMails, resetSelectedMail, setSidebarOpen, gettreads } = props
   const [open, setOpen] = useState(false)
   const [search, setSearchVisible] = useState(false)
-
+  const [formValue, setFormValue] = useState({})
   const [value, setValue] = useState("")
 
   const [modal, setModal] = useState(null)
-
-
+  const [sentPop, setSentPop] = useState(false)
+  const { mails, selectedMails, treadDetail } = store
+console.log(props)
   const handleClick = () => {
     // setOpen(!open)
     setOpen(!open)
   }
-
+useEffect(() => {
+  dispatch(gettreads())
+}, [])
   // ** Vars
   const params = useParams()
 
@@ -85,6 +92,25 @@ const Sidebar = props => {
       setModal(null)
     }
   }
+
+  const toggleSentModal = id => {
+    setSentPop(false)
+  }
+
+
+// form input
+  const handleChange = (event) => {
+    const name = event.target.name
+    const value = event.target.value
+    setFormValue(values => ({...values, [name]: value}))
+  }
+// onsubmit
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    // setSentPop(true)
+    dispatch(addNewtreads(formValue, {setSentPop, toggleModal}))
+    // alert(formValue.title)
+  }
 //---------------------------
 const renderModal = (
     <div className={'theme-{item.modalColor}'} key={3}>
@@ -102,7 +128,7 @@ const renderModal = (
             You can always request to admin to create a new one. 
             However, the creation is at the discretion of the admin.
           </p>
-
+          <form onSubmit={handleSubmit}>
           <Row>
       <Col md={12} sm={12}>
      <FormControl variant="standard" >
@@ -112,6 +138,9 @@ const renderModal = (
         <Input
           id="input-with-icon-adornment"
           placeholder="Add Title"
+          name="title"
+          value={formValue.title || ''}
+          onChange={handleChange}
           startAdornment={
             <InputAdornment position="start">
               <Icon.Edit2 />
@@ -129,6 +158,9 @@ const renderModal = (
         <Input
           id="TEST"
           placeholder="Add Description"
+          name='thread'
+          value={formValue.thread || ''}
+          onChange={handleChange}
           startAdornment={
             <InputAdornment position="start">
               <Icon.FileText />
@@ -139,7 +171,7 @@ const renderModal = (
       </Col>
       <Col md={12} sm={12}>
         <div className='button_send_request'>
-             <Button.Ripple color='success'>
+             <Button.Ripple color='success' type='submit' >
         <span className='align-middle ms-25'>SEND REQUEST</span>
         <Icon.ArrowRightCircle  size={20} />
       </Button.Ripple>
@@ -147,6 +179,7 @@ const renderModal = (
       </Col>
 
       </Row>
+      </form>
         </ModalBody>
         <ModalFooter className="thread-model-footer">
           <Button color="modal-success" onClick={() => toggleModal(3)}>
@@ -164,7 +197,13 @@ const renderModal = (
     >
       {/* render model  */}
       <div>{renderModal}</div>
-
+      <div>
+        <Models
+      modal = {sentPop} 
+      toggleModal={() => toggleSentModal()}
+      style={{borderRadius:'30px'}}
+      />
+      </div>
       <div className='sidebar'>
         <div className='sidebar-content email-app-sidebar'>
           <div className='email-app-menu'>
@@ -220,6 +259,8 @@ const renderModal = (
           </Row>
             </div>
             <PerfectScrollbar className='sidebar-menu-list' options={{ wheelPropagation: false }}>
+              {treadDetail && treadDetail.data && treadDetail.data.map((detail, index) => {
+                return (
               <ListGroup tag='div' className='list-group-messages'>
                 <ListGroupItem
                  tag={Link}
@@ -231,17 +272,19 @@ const renderModal = (
                   <h5>Thread Name HR 2022 Trends</h5>
                   <span className='broadcom_align'>
                     <Breadcrumbs separator="|" aria-label="breadcrumb">
-                      <Link underline="hover" key="1" color="inherit" href="/" > 21 New Topic</Link>
-                      <Link   key="2"  href="/getting-started/installation/"> 23 topics </Link>
-                      <Link  key="2" color="inherit" href="/getting-started/installation/"> 5 Members </Link>
+                      <Link underline="hover" key="1" color="inherit" href="/" >{detail.new_topic_count} New Topics</Link>
+                      <Link   key="2"  href="/getting-started/installation/">{detail.total_topic_count} Topics</Link>
+                      <Link  key="2" color="inherit" href="/getting-started/installation/">{detail.members} Members</Link>
                   </Breadcrumbs>
                     <span className='align-middle'>{store.emailsMeta.draft ? (
                       <Badge className='float-right bg-danger' color='white' pill >
                         {/* {store.emailsMeta.draft} */}
-                        23 </Badge>) : null}</span>
+                        {detail.unread_comments}</Badge>) : null}</span>
                     </span>
                 </ListGroupItem>
               </ListGroup>
+                )
+              })}
             </PerfectScrollbar>
             <div className='light-gray-bg create-thread'>
             <Media onClick={() => toggleModal(3)}>

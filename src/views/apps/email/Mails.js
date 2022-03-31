@@ -128,7 +128,8 @@ const Mails = props => {
 
   return (
     <Fragment>
-     
+     <Row>
+       <Col xs='12' sm='12' lg='12' xl={openMail === true ? '6' : '12'}>
       <div className='email-app-list'>
         <div className='app-fixed-search d-flex align-items-center'>
           <div className='sidebar-toggle d-block d-lg-none ml-1' onClick={() => setSidebarOpen(true)}>
@@ -191,7 +192,8 @@ const Mails = props => {
         )} 
         </PerfectScrollbar>
       </div>
-      
+      </Col>
+      <Col xs='6' style={{borderLeft:"1px solid"}}>
       <MailDetails
         openMail={openMail}
         dispatch={dispatch}
@@ -208,7 +210,23 @@ const Mails = props => {
         formatDateToMonthShort={formatDateToMonthShort}
       />
       <ComposePopUp composeOpen={composeOpen} toggleCompose={toggleCompose} />
-  
+      </Col>
+      </Row>
+      <MailDetails
+        openMail={openMail}
+        dispatch={dispatch}
+        mail={store.currentMail}
+        labelColors={labelColors}
+        setOpenMail={setOpenMail}
+        updateMails={updateMails}
+        paginateMail={paginateMail}
+        updateMailLabel={updateMailLabel}
+        handleMailToTrash={handleMailToTrash}
+        handleFolderUpdate={handleFolderUpdate}
+        handleLabelsUpdate={handleLabelsUpdate}
+        handleMailReadUpdate={handleMailReadUpdate}
+        formatDateToMonthShort={formatDateToMonthShort}
+      />
     </Fragment>
   )
 }

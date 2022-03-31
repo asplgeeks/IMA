@@ -1,4 +1,58 @@
 import axios from 'axios'
+import axiosConfig from './../../../../../axiosConfig'
+
+const Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0MCwiaWF0IjoxNjQ4NzAxMjA0LCJleHAiOjE2NDg3MTkyMDR9.PQvjtmjB_Zmfc3Z5hjyTFjgosMAOz1z06idSFS9FZBU"
+// ** Get tread list 
+export const gettreads = () => {
+  return dispatch => {
+    return axiosConfig.post('/admin/getThreadUnreadCount', {
+      userid:"40",
+      status:"",
+      page_no:0,
+      page_limit:10,
+      sort_by:"status",
+      search_by:"",
+      thread_categoryid:"1"
+  }, 
+  {
+  headers: {
+    Authorization: Token
+  }}).then(res => {
+      dispatch({ type: 'GET_TREAD', data: res.data })
+    })
+  }
+}
+
+// add new tread
+export const addNewtreads = (formValue, props) => {
+  return dispatch => {
+    return axiosConfig.post('/admin/addThread', {
+      userid:"40",
+      threadcategory_id:"1",
+      admin_note:"note",
+      display_name:formValue.title,
+      display_desc:formValue.thread,
+      moderator_ids:"40"
+  }, 
+  {
+  headers: {
+    Authorization: Token
+  }}).then(res => {
+      console.log(res)
+      axiosConfig.post('/admin/addThread', {
+    threadid:res.data.data[0].thread_id,
+    selection_type:"0",
+    selected_ids:"40"
+    }, 
+    {
+    headers: {
+      Authorization: Token
+    }}).then(r => console.log(r))
+      props.setSentPop(true)
+      props.toggleModal()
+    })
+  }
+}
 
 // ** GET Mails
 export const getMails = params => {

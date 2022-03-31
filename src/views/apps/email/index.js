@@ -19,7 +19,8 @@ import {
   selectAllMail,
   resetSelectedMail,
   selectCurrentMail,
-  updateMailLabel
+  updateMailLabel,
+  gettreads
 } from './store/actions'
 
 // ** Styles
@@ -53,6 +54,7 @@ const EmailApp = () => {
         store={store}
         dispatch={dispatch}
         getMails={getMails}
+        gettreads={gettreads}
         sidebarOpen={sidebarOpen}
         toggleCompose={toggleCompose}
         setSidebarOpen={setSidebarOpen}

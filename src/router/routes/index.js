@@ -13,7 +13,7 @@ import DashboardRoutes from './Dashboards'
 const TemplateTitle = '%s -Star Admin Panel'
 
 // ** Default Route
-const DefaultRoute = '/dashboard'
+const DefaultRoute = '/apps/email'
 
 // ** Merge Routes
 const Routes = [
