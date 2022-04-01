@@ -59,7 +59,6 @@ const EmailApp = () => {
         toggleCompose={toggleCompose}
         setSidebarOpen={setSidebarOpen}
         resetSelectedMail={resetSelectedMail}
-    
   />
   
       <div className='content-right'>

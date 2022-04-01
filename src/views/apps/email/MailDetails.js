@@ -54,7 +54,7 @@ import {
   CornerUpRight,
   Trash2 } from 'react-feather'
 import PerfectScrollbar from 'react-perfect-scrollbar'
-
+const moment = require('moment')
 const MailDetails = props => {
   // ** Props
   const {
@@ -71,7 +71,7 @@ const MailDetails = props => {
     handleMailReadUpdate,
     formatDateToMonthShort
   } = props
-
+  console.log(mail)
   // ** States
   const [showReplies, setShowReplies] = useState(false)
   const [search, setSearchVisible] = useState(false)
@@ -257,13 +257,11 @@ const MailDetails = props => {
 
           </div>
         </div>
-          <PerfectScrollbar className='email-scroll-area' >
+        <PerfectScrollbar className='email-user-list' options={{ wheelPropagation: false }}>
             <Row className="topic_details">
               <Col sm='12'>
                 <div className='email-label'>
-                  <p> The pharmaceutical industry mainly influences drug regulation.
-                     World governments are also turning a blind eye to bribery and 
-                     corruption in the pharma sector. The pharmaceutical industry mainly influences drug regulation. World governments are also turning a blind eye to bribery and corruption in the pharma sector.The pharmaceutical industry mainly influences drug regulation. World governments are also turning a blind eye to bribery and corruption in the pharma sector.</p>
+                  <p>"The pharmaceutical industry mainly influences drug regulation"</p>
                 </div>
           <div> Images slider</div>
               <div className='pdf_view'>
@@ -281,16 +279,16 @@ const MailDetails = props => {
 
             </div>
               <div>
-              <span className='user_name'>Vidhyabhuan Upadhye, </span>
-              <span className='text-muted '> CTO, Indian Market Assessment </span>
+              <span className='user_name'>{mail && mail.data && mail.data.comment_by}</span>
+              <span className='text-muted '> {mail && mail.data && mail.data.commentor_designation} </span>
               </div>
             </Media>
             <Media body  className='text-muted' style={{fontSize: "16px"}} >
               <div>
-            <small className='text-muted'> 23 Dec 2021 
+            <small className='text-muted'> {moment(mail && mail.data && mail.data.created_datetime).format("DD MMMM  YYYY")}
                 </small>
                 <span className='text-muted ml-50 mr-25'>|</span>
-                <small className='text-muted'>23 Comments </small>
+                <small className='text-muted'>{mail && mail.data && mail.data.comment_count} Comments </small>
                 </div>
                 <div>
                 <small className='text-muted'><img src={Reply} />Comment </small>
@@ -308,17 +306,12 @@ const MailDetails = props => {
 
             </div>
               <div>
-              <span className='user_name'>Vidhyabhuan Upadhye, </span>
-              <span className='text-muted '> CTO, Indian Market Assessment </span>
+              <span className='user_name'>{mail && mail.data && mail.data.comment_by}</span>
+              <span className='text-muted '> {mail && mail.data && mail.data.commentor_designation} </span>
               </div>
             </Media>
             <p>
-            The pharmaceutical industry mainly influences drug regulation.
-             World governments are also turning a blind eye to bribery and corruption in the pharma sector.
-              Share your thoughts.The pharmaceutical industry mainly influences drug regulation. 
-              World governments are also turning a blind eye to bribery and corruption in the pharma sector.
-               Share your thoughts.The pharmaceutical industry mainly influences drug regulation. World governments
-                are also turning a blind eye to bribery and corruption in the pharma sector. Share your thoughts.
+            {mail && mail.data && mail.data.comment}
             </p>
              </Col>
             </Row>
@@ -327,7 +320,7 @@ const MailDetails = props => {
             <Row className="comment">
             <Col sm='12'>
             <Media body  className='text-muted' style={{fontSize: "16px"}} >
-            <small className='text-muted'> 23 Dec 2021   </small>
+            <small className='text-muted'> {moment(mail && mail.data && mail.data.created_datetime).format("DD MMMM  YYYY")}</small>
             <small className='text-muted'><Icon.XCircle  size={20} />Cancel </small>
               </Media>
               </Col>

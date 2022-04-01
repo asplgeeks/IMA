@@ -61,7 +61,7 @@ const Mails = props => {
     selectCurrentMail
   } = props
 
-  const { mails, selectedMails, params } = store
+  const { mails, selectedMails, params, currentMail } = store
 console.log(params)
   // ** States
   const [openMail, setOpenMail] = useState(false)
@@ -78,6 +78,7 @@ console.log(params)
 
   // ** Handles Update Functions
   const handleMailClick = id => {
+    console.log(id)
     dispatch(selectCurrentMail(id))
     setOpenMail(true)
   }
@@ -100,7 +101,7 @@ console.log(params)
 
   // ** Handles Mail Read Update
   const handleMailReadUpdate = (arr, bool) => {
-    dispatch(updateMails(arr, { isRead: bool })).then(() => dispatch(resetSelectedMail()))
+    // dispatch(updateMails(arr, { isRead: bool })).then(() => dispatch(resetSelectedMail()))
     dispatch(selectAllMail(false))
   }
 
@@ -210,7 +211,7 @@ console.log(params)
       <MailDetails
         openMail={openMail}
         dispatch={dispatch}
-        mail={store.currentMail}
+        mail={currentMail}
         labelColors={labelColors}
         setOpenMail={setOpenMail}
         updateMails={updateMails}
@@ -225,7 +226,7 @@ console.log(params)
       <ComposePopUp composeOpen={composeOpen} toggleCompose={toggleCompose} />
       </Col>
       </Row>
-      <MailDetails
+      {/* <MailDetails
         openMail={openMail}
         dispatch={dispatch}
         mail={store.currentMail}
@@ -239,7 +240,7 @@ console.log(params)
         handleLabelsUpdate={handleLabelsUpdate}
         handleMailReadUpdate={handleMailReadUpdate}
         formatDateToMonthShort={formatDateToMonthShort}
-      />
+      /> */}
     </Fragment>
   )
 }

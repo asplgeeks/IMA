@@ -1,7 +1,7 @@
 import axios from 'axios'
 import axiosConfig from './../../../../../axiosConfig'
 
-const Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0MCwiaWF0IjoxNjQ4NzkwMzE5LCJleHAiOjE2NDg4MDgzMTl9.Y9gQB6jYTL2KoCAIBBmyGord1TV6PkSXfFIZv2AJuXc"
+const Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0MCwiaWF0IjoxNjQ4ODA4NTc1LCJleHAiOjE2NDg4MjY1NzV9.kwuVj33aFQKZd63cL-Wn29M830GDMhSzl85iK16QNqw"
 // ** Get tread list 
 export const gettreads = () => {
   return dispatch => {
@@ -72,6 +72,17 @@ export const getTopics = (params) => {
   }
 }
 
+
+// ** SELECT Current Mail
+export const selectCurrentMail = id => dispatch => {
+  return axiosConfig.post('/admin/getCommentDetails', { id }, {
+    headers: {
+      Authorization: Token
+    }}).then(res => {
+    console.log(res)
+    dispatch({ type: 'SELECT_CURRENT_MAIL', mail: res.data })
+  })
+}
 // ** UPDATE Mails
 export const updateMails = (emailIds, dataToUpdate) => {
   return (dispatch, getState) => {
@@ -99,13 +110,6 @@ export const paginateMail = (dir, emailId) => {
       dispatch({ type: 'PAGINATE_MAIL', data: res.data })
     })
   }
-}
-
-// ** SELECT Current Mail
-export const selectCurrentMail = id => dispatch => {
-  return axios.get('/apps/email/get-email', { id }).then(res => {
-    dispatch({ type: 'SELECT_CURRENT_MAIL', mail: res.data })
-  })
 }
 
 // ** SELECT Mail
