@@ -1,7 +1,7 @@
 import axios from 'axios'
 import axiosConfig from './../../../../../axiosConfig'
 
-const Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0MCwiaWF0IjoxNjQ4NzAxMjA0LCJleHAiOjE2NDg3MTkyMDR9.PQvjtmjB_Zmfc3Z5hjyTFjgosMAOz1z06idSFS9FZBU"
+const Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0MCwiaWF0IjoxNjQ4NzE5NTgxLCJleHAiOjE2NDg3Mzc1ODF9.JsABmkrrZ9ybsdz6Qz0MXpVT5UCkReEmxbVplkNKzWs"
 // ** Get tread list 
 export const gettreads = () => {
   return dispatch => {
@@ -55,9 +55,18 @@ export const addNewtreads = (formValue, props) => {
 }
 
 // ** GET Mails
-export const getMails = params => {
+export const getTopics = (params) => {
+  console.log(params)
   return dispatch => {
-    return axios.get('/apps/email/emails', { params }).then(res => {
+    return axiosConfig.post('/admin/getCommentIdList', {
+      thread_id:params.folder.thread_id,
+      comment_id:""
+  }, 
+  {
+  headers: {
+    Authorization: Token
+  }}).then(res => {
+      console.log(res)
       dispatch({ type: 'GET_MAILS', data: res.data, params })
     })
   }
@@ -68,7 +77,7 @@ export const updateMails = (emailIds, dataToUpdate) => {
   return (dispatch, getState) => {
     return axios.post('/apps/email/update-emails', { emailIds, dataToUpdate }).then(res => {
       dispatch({ type: 'UPDATE_MAILS', emailIds, dataToUpdate, data: res.data })
-      dispatch(getMails(getState().email.params))
+      dispatch(getTopics(getState().email.params))
     })
   }
 }
@@ -78,7 +87,7 @@ export const updateMailLabel = (emailIds, label) => {
   return (dispatch, getState) => {
     return axios.post('/apps/email/update-emails-label', { emailIds, label }).then(res => {
       dispatch({ type: 'UPDATE_MAIL_LABEL', data: res.data })
-      dispatch(getMails(getState().email.params))
+      dispatch(getTopics(getState().email.params))
     })
   }
 }

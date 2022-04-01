@@ -24,7 +24,7 @@ const EmailReducer = (state = initialState, action) => {
       }
       return {
         ...state,
-        mails: action.data.emails,
+        mails: action.data,
         emailsMeta: action.data.emailsMeta,
         params: action.params,
         currentMail: currMail

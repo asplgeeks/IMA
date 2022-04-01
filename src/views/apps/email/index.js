@@ -12,7 +12,7 @@ import classnames from 'classnames'
 // ** Store & Actions
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  getMails,
+  getTopics,
   selectMail,
   updateMails,
   paginateMail,
@@ -44,7 +44,7 @@ const EmailApp = () => {
 
   // ** UseEffect: GET initial data on Mount
   useEffect(() => {
-    dispatch(getMails({ q: query || '', folder: params.folder || 'inbox', label: params.label || '' }))
+    dispatch(getTopics({ q: query || '', folder: params.folder || 'inbox', label: params.label || '' }))
   }, [query, params.folder, params.label])
 
   return (
@@ -53,7 +53,7 @@ const EmailApp = () => {
       <Sidebar
         store={store}
         dispatch={dispatch}
-        getMails={getMails}
+        getTopics={getTopics}
         gettreads={gettreads}
         sidebarOpen={sidebarOpen}
         toggleCompose={toggleCompose}
@@ -73,7 +73,7 @@ const EmailApp = () => {
             query={query}
             setQuery={setQuery}
             dispatch={dispatch}
-            getMails={getMails}
+            getTopics={getTopics}
             selectMail={selectMail}
             updateMails={updateMails}
             composeOpen={composeOpen}

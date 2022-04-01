@@ -190,7 +190,6 @@ const MailDetails = props => {
     setOpenMail(false)
   }
 
-<<<<<<< HEAD
   const handleFolderClick = (e, folder, id) => {
     handleFolderUpdate(e, folder, [id])
     handleGoBack()
@@ -202,8 +201,6 @@ const MailDetails = props => {
   }
   console.log('openMail', openMail, window.innerWidth)
 
-=======
->>>>>>> bd6b9e8e055b5ecfb8d3b1ecfd8d92d0dacc4aea
   return (
     <div
     // className='wrap-border side-navbar square-border d-none d-lg-block border_bottom_none border_top_none'

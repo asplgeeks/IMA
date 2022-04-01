@@ -4,9 +4,6 @@ import { Redirect } from 'react-router-dom'
 const AppRoutes = [
   {
     path: '/apps/email',
-    exact: true,
-    appLayout: true,
-    className: 'email-application',
     component: lazy(() => import('../../views/apps/email'))
   },
   {
@@ -14,7 +11,7 @@ const AppRoutes = [
     exact: true,
     appLayout: true,
     className: 'email-application',
-    component: lazy(() => import('../../views/apps/email')),
+    component: lazy(() => import('../../views/apps/email/MailCard')),
     meta: {
       navLink: '/apps/email'
     }

@@ -41,7 +41,7 @@ import {
 import Adnew from './../../../Images/addnew.svg'
 const Sidebar = props => {
   // ** Props
-  const { store, sidebarOpen, toggleCompose, dispatch, getMails, resetSelectedMail, setSidebarOpen, gettreads } = props
+  const { store, sidebarOpen, toggleCompose, dispatch, getTopics, resetSelectedMail, setSidebarOpen, gettreads } = props
   const [open, setOpen] = useState(false)
   const [search, setSearchVisible] = useState(false)
   const [formValue, setFormValue] = useState({})
@@ -63,12 +63,12 @@ useEffect(() => {
 
   // ** Functions To Handle Folder, Label & Compose
   const handleFolder = folder => {
-    dispatch(getMails({ ...store.params, folder }))
+    dispatch(getTopics({ ...store.params, folder }))
     dispatch(resetSelectedMail())
   }
 
   const handleLabel = label => {
-    dispatch(getMails({ ...store.params, label }))
+    dispatch(getTopics({ ...store.params, label }))
     dispatch(resetSelectedMail())
   }
 
@@ -266,31 +266,21 @@ const renderModal = (
                 <ListGroupItem
                  tag={Link}
                   to='/apps/email/inbox'
-                  onClick={() => handleFolder('inbox')}
+                  onClick={() => handleFolder(detail)}
                   action
                   active={!Object.keys(params).length || handleActiveItem('inbox')}
                 >
-                  <h5>Thread Name HR 2022 Trends</h5>
+                  <h5>{detail.display_name}</h5>
                   <span className='broadcom_align'>
                     <Breadcrumbs separator="|" aria-label="breadcrumb">
-<<<<<<< HEAD
                       <Link underline="hover" key="1" color="inherit" href="/" >{detail.new_topic_count} New Topics</Link>
                       <Link   key="2"  href="/getting-started/installation/">{detail.total_topic_count} Topics</Link>
                       <Link  key="2" color="inherit" href="/getting-started/installation/">{detail.members} Members</Link>
                   </Breadcrumbs>
-                    <span className='align-middle'>{store.emailsMeta.draft ? (
+                    <span className='align-middle'>
                       <Badge className='float-right bg-danger' color='white' pill >
                         {/* {store.emailsMeta.draft} */}
-                        {detail.unread_comments}</Badge>) : null}</span>
-=======
-                      <Link underline="hover" key="1" color="inherit" href="/" > 21 New Topic</Link>
-                      <Link   key="2"  href="/getting-started/installation/"> 23 topics </Link>
-                      <Link  key="2" color="inherit" href="/getting-started/installation/"> 5 Members </Link>
-                  </Breadcrumbs>
-                    <span className=''>{store.emailsMeta.draft ? (
-                      <Badge  color='white' pill >
-                        23 </Badge>) : null}</span>
->>>>>>> bd6b9e8e055b5ecfb8d3b1ecfd8d92d0dacc4aea
+                        {detail.unread_comments}</Badge></span>
                     </span>
                 </ListGroupItem>
               </ListGroup>
