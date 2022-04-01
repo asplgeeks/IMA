@@ -75,11 +75,14 @@ const Router = () => {
       action = route.meta.action ? route.meta.action : null
       resource = route.meta.resource ? route.meta.resource : null
     }
-
+ console.log("login", isUserLoggedIn())
+ console.log("route", route)
+ console.log()
     if (
       (!isUserLoggedIn() && route.meta === undefined) ||
       (!isUserLoggedIn() && route.meta && !route.meta.authRoute && !route.meta.publicRoute)
     ) {
+      console.log("first")
       /**
        ** If user is not Logged in & route meta is undefined
        ** OR
@@ -89,9 +92,13 @@ const Router = () => {
 
       return <Redirect to='/apps/email/index' />
     } else if (route.meta && route.meta.authRoute && isUserLoggedIn()) {
+      console.log("second")
+
       // ** If route has meta and authRole and user is Logged in then redirect user to home page (DefaultRoute)
       return <Redirect to='/' />
     } else {
+      console.log("third")
+
       // ** If none of the above render component
       return <route.component {...props} />
     }

@@ -514,7 +514,11 @@ html[data-textdirection='rtl'] {
 
 .broadcom_align{
   display: flex !important;
-    justify-content: space-between !important;
+  justify-content: space-between !important;
+  .MuiListItem-root {
+    padding-top: 7px !important;
+    padding-bottom: 6px !important;
+  }
 }
 .badge-pill{
 padding: 0.6em !important;
@@ -624,22 +628,57 @@ color: #5e5873 !important;
 }
 
 .thread-model{
+  display: grid;
+  align-items: center;
+  margin-top: 10px;
+  .img{
+    margin: auto;
+    height: 35px;
+    width: 35px;
+  }
   .MuiFormControl-root{
     width: 100%;
     margin-bottom: 22px;
+    label{
+      font-size: 12pt !important;
+      font-family: "Helvetica Neue", "Regular" !important;
+      color: #999999;
+  
+    }
+    .MuiInput-underline:hover:not(.Mui-disabled):before
+    {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.42) !important;
+    }
+    .MuiInput-underline:before
+    {
+      left: 20px !important;
+    }
+    .MuiInput-underline:after
+    {
+      left: 20px !important;
+    }
+    .MuiInputAdornment-root img
+    {
+      height: 25px;
+    }
   }
 
   h5{
-    color: #100707;
+    color: #000000;
     text-align: center;
+    margin-top: 15px;
+    font-family: "Helvetica Neue", "Bold" !important;
+    font-size: 15pt;
   }
   p{
+    font-family: "Helvetica Neue", "Regular" !important;
+    font-size: 12pt;
     color: #707070;
-    text-align: justify;
   }
   button{
     background-color: #6AC517 !important;
     border-color: #6AC517 !important;
+    border-radius: 6pt;
   }
   .button_send_request
   {
@@ -754,14 +793,14 @@ color: #5e5873 !important;
       border-radius: 8px;
       display: grid;
       padding: 3px;
-      width: 50px;
+      width: 40px;
       img{
         margin: auto;
       }
       .size{
         font-family: "Helvetica Neue", "Medium";
         color: #ffff;
-        font-size: 10pt;
+        font-size: 7pt;
         text-align: center;
       }
     }
@@ -975,6 +1014,44 @@ p{
   }
 }
 
-.content {
-  margin-left: 0px !important;
+//--------------------------//
+.top-header
+{
+  display:table;
+  width: 100%;
+  text-align: center;
+  h4{
+    color:#191617;
+     font-family:"SF Pro Text", "Medium";
+       display: table-cell;
+        vertical-align:middle;
+        img{
+          margin-right: 15px;
+    height: 25px;
+        }
+  }
+}
+
+.details_navbar
+{
+.img{
+    height: 25px ;
+  }
+}
+.back_arrow{
+  height: 25px;
+}
+
+.delete_btn:hover{
+  background-color:#fff !important;
+
+}
+
+.delete_btn:focus
+{
+      outline: 0 !important; 
+   outline: 0 !important;
+}
+.content{
+margin-left: 0px !important;
 }

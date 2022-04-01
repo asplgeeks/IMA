@@ -6,7 +6,7 @@ const NavSquareBorder = () => {
   return (
     <Nav vertical className='wrap-border web-navbar side-navbar square-border d-none d-lg-block border_bottom_none border_top_none'>
       <NavItem className="bottom_border " active>
-        <NavLink  tag={Link} to='/apps/email/weiu'  className="text-center">
+        <NavLink  tag={Link} to='/apps/'  className="text-center">
         <Icon.Users size={30} className='ficon' />
         <h5> Discussion Forum </h5>
         </NavLink>

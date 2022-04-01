@@ -34,7 +34,7 @@ html {
     margin-left: $menu-expanded-width;
     &.app-content {
       // padding: calc(#{$content-padding} + #{$navbar-height} + #{$floating-nav-margin}) #{$content-padding} 0;
-      padding: calc(0.4rem + 3.3rem + 0rem) 0.2rem 0;
+      padding: calc(0.4rem + 3.2rem + 0rem) 0.2rem 0;
       &.show-overlay {
         .content-overlay {
           z-index: 10;

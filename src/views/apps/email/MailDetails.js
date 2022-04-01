@@ -15,6 +15,11 @@ import CancelRoundedIcon from "@material-ui/icons/CancelRounded"
 import Reply from "../../../Images/reply.svg"
 import PDF from "../../../Images/pdf.svg"
 
+import Search from "../../../Images/Search.svg"
+import Refresh from "../../../Images/refresh.svg"
+import Back_arrow from "../../../Images/backarrow.svg"
+import Delete from "../../../Images/delete.svg"
+
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
@@ -210,17 +215,20 @@ const MailDetails = props => {
     >
       {mail !== null && mail !== undefined ? (
         <Fragment>
-       <div className='app-fixed-search d-flex align-items-center'>
+       <div className='app-fixed-search d-flex align-items-center details_navbar'>
           <div className='sidebar-toggle d-block ml-1' onClick={handleGoBack} >
-           <span className='dropdown_icon' style={{padding: "5px 1px"}}  ><Icon.ArrowLeft /> </span>
+           <span className='' style={{padding: "5px 1px"}}  ><img className='img' src={Back_arrow}  /> </span>
           </div>
           <div className='align-content-center justify-content-between w-100'>
         
           { search === false ?  <span className='broadcom_align float-right'>
           <div className='sidebar_search'>
-          <span className='align-middle dropdown_icon mr20'   ><Icon.RotateCw  style={{padding:"4px"}} /> </span>
+          <span className='align-middle mr20'   ><img className='img' src={Refresh}  /> </span>
           {/* <span className='align-middle dropdown_icon mr20'  ><Icon.Plus /> </span> */}
-          <span className='align-middle dropdown_icon '   onClick={() => [setSearchVisible(!search)] }>  <SearchIcon /> </span>
+          <span className='align-middle  '   onClick={() => [setSearchVisible(!search)] }>  <img className='img' src={Search} /> </span>
+          {/* <span className='align-middle dropdown_icon '   onClick={() => [setSearchVisible(!search)] }>  <SearchIcon /> </span> */}
+
+          
           </div>
           </span> : <TextField
           placeholder="Search"
@@ -237,11 +245,11 @@ const MailDetails = props => {
                     </InputAdornment>
                   ),
                   endAdornment:(
-                  <IconButton
+                  <IconButton className='delete_btn'
                     aria-label="toggle password visibility"
                     onClick={() => [setSearchVisible(!search), setValue("")] }
                   >
-                    <Icon.XCircle />
+              <img img className='img' src={Delete} />
                   </IconButton>
                 )
               }}
@@ -261,7 +269,7 @@ const MailDetails = props => {
               <div className='pdf_view'>
              <span className='pdf_text'>
                <span className='view'>
-               <span className='pdf-img'><img src={PDF} /><span className='size'>5mb</span></span>
+               <span className='pdf-img'><img src={PDF} /><span className='size'>5 MB</span></span>
             <span className='pdf-title'> Full name of the PDF file uploaded with.pdf</span>
              </span>
              </span>

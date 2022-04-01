@@ -33,7 +33,14 @@ import {
   Row,
   Col
 } from 'reactstrap'
-import { Menu, Search, ArrowLeftCircle, Folder, Tag, Mail, Trash, Edit2, Info } from 'react-feather'
+import { Menu, ArrowLeftCircle, Folder, Tag, Mail, Trash, Edit2, Info } from 'react-feather'
+
+
+import Search from "../../../Images/Search.svg"
+import Refresh from "../../../Images/refresh.svg"
+import Back_arrow from "../../../Images/backarrow.svg"
+import Plus from "../../../Images/add.svg"
+import Delete from "../../../Images/delete.svg"
 
 const Mails = props => {
   // ** Props
@@ -135,16 +142,19 @@ console.log(params)
       <div className='email-app-list'>
         <div className='app-fixed-search d-flex align-items-center'>
           <div className='sidebar-toggle d-block d-lg-none ml-1' onClick={() => setSidebarOpen(true)}>
-           <span className='dropdown_icon' style={{padding: "4px 1px"}}  ><Icon.ArrowLeft /> </span>
+           <span className='dropdown_icon' style={{padding: "4px 1px"}}  ><img className='back_arrow' src={Back_arrow}  /> </span>
 
           </div>
-          <div className='align-content-center menu justify-content-between w-100'>
+          <div className='align-content-center menu justify-content-between w-100 details_navbar'>
           <span className='title'> TOPIC </span> 
           { search === false ? <span className='broadcom_align float-right'>
           <div className='sidebar_search'>
-          <span className='align-middle dropdown_icon mr20'   ><Icon.RotateCw  style={{padding:"4px"}} /> </span>
+          {/* <span className='align-middle dropdown_icon mr20'   ><Icon.RotateCw  style={{padding:"4px"}} /> </span>
           <span className='align-middle dropdown_icon mr20'  ><Icon.Plus /> </span>
-          <span className='align-middle dropdown_icon '   onClick={() => [setSearchVisible(!search)] }>  <SearchIcon /> </span>
+          <span className='align-middle dropdown_icon '   onClick={() => [setSearchVisible(!search)] }>  <SearchIcon /> </span> */}
+          <span className='align-middle  mr20'   ><img className='img' src={Refresh}  /></span>
+          <span className='align-middle  mr20'  ><img className='img' src={Plus}  /> </span>
+          <span className='align-middle ' onClick={() => [setSearchVisible(!search)] }> <img className='img' src={Search}  /> </span>
           </div>
           </span> : <TextField
           placeholder="Search"
@@ -162,10 +172,11 @@ console.log(params)
                   ),
                   endAdornment:(
                   <IconButton
+                    className='delete_btn'
                     aria-label="toggle password visibility"
                     onClick={() => [setSearchVisible(!search), setValue("")] }
                   >
-                    <Icon.XCircle />
+                   <img img className='img' src={Delete} />
                   </IconButton>
                 )
               }}

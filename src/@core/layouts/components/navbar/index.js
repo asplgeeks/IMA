@@ -4,6 +4,7 @@ import '@styles/base/pages/page-auth.scss'
 // ** Custom Components
 import NavbarUser from './NavbarUser'
 import NavbarBookmarks from './NavbarBookmarks'
+import logo from "../../../../Images/logo.svg"
 
 const ThemeNavbar = props => {
   // ** Props
@@ -14,14 +15,13 @@ const ThemeNavbar = props => {
 
     setTitled(Title)
   }, [Title])
-
   return (
     <Fragment>
-      <div className='bookmark-wrapper align-items-center' style={{display:"table", width: "100%", textAlign: "center"}}>
+      <div className='bookmark-wrapper align-items-center top-header' >
       <NavbarBookmarks setMenuVisibility={setMenuVisibility} />
        {/* <h4  style={{color:"rgb(221 33 44)", fontFamily:"gotham", fontWeight:400, display: "table-cell", verticalAlign:"middle"}}>{Titled === "undefined" ? 'Dashboard' : Titled}</h4>  */}
-       <h4  style={{color:"#191617", fontFamily:"gotham", fontWeight:400, display: "table-cell", verticalAlign:"middle"}}>DISCUSSION FORUM</h4> 
-
+     
+       <h4><img src={logo} /> DISCUSSION FORUM</h4> 
       </div>
       {/* <NavbarUser skin={skin} setSkin={setSkin} /> */}  
     </Fragment>
