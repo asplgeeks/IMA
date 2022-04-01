@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const instance = axios.create({
 // .. where we make our configurations
-    baseURL: 'http://172.105.49.15:3030'
+    baseURL: 'http://65.1.145.79'
 })
 
 // Where you would set stuff like your 'Authorization' header, etc ...

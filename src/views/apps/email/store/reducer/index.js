@@ -1,5 +1,6 @@
 // ** Initial State
 const initialState = {
+  treadDetail:[],
   mails: [],
   params: {},
   currentMail: null,
@@ -9,6 +10,12 @@ const initialState = {
 
 const EmailReducer = (state = initialState, action) => {
   switch (action.type) {
+    case 'GET_TREAD': 
+    return {
+      ...state,
+      treadDetail:action.data,
+      params: action.params
+    }
     case 'GET_MAILS':
       // ** If currentMail is not null / undefined then find and set currentMail
       let currMail = null
@@ -17,7 +24,7 @@ const EmailReducer = (state = initialState, action) => {
       }
       return {
         ...state,
-        mails: action.data.emails,
+        mails: action.data,
         emailsMeta: action.data.emailsMeta,
         params: action.params,
         currentMail: currMail

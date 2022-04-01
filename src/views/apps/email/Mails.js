@@ -61,8 +61,8 @@ const Mails = props => {
     selectCurrentMail
   } = props
 
-  const { mails, selectedMails } = store
-
+  const { mails, selectedMails, params } = store
+console.log(params)
   // ** States
   const [openMail, setOpenMail] = useState(false)
   const [search, setSearchVisible] = useState(false)
@@ -113,8 +113,10 @@ const Mails = props => {
 
   // ** Renders Mail
   const renderMails = () => {
-    if (mails.length) {
-      return mails.map((mail, index) => {
+    // if (mails && mails.length) {
+      console.log(mails)
+      return mails && mails.data && mails.data.map((mail, index) => {
+        console.log(mail)
         return (
           <MailCard
             mail={mail}
@@ -130,13 +132,14 @@ const Mails = props => {
           />
         )
       })
-    }
+    // }
   }
 
   return (
     <Fragment>
-     
-      <div className='email-app-list topic_navbar'>
+     <Row>
+       <Col xs='12' sm='12' lg='12' xl={openMail === true ? '6' : '12'}>
+      <div className='email-app-list'>
         <div className='app-fixed-search d-flex align-items-center'>
           <div className='sidebar-toggle d-block d-lg-none ml-1' onClick={() => setSidebarOpen(true)}>
            <span className='dropdown_icon' style={{padding: "4px 1px"}}  ><img className='back_arrow' src={Back_arrow}  /> </span>
@@ -186,14 +189,14 @@ const Mails = props => {
         <PerfectScrollbar className='email-user-list' options={{ wheelPropagation: false }}>
         <div className='app-action light-gray-bg'>
           <div className='action-left' style={{width:"100%"}}>
-          <p className='text-truncate mb-0 topic_title'>Tread name display for longer text eclips....</p>
+          <p className='text-truncate mb-0 topic_title'>{params && params.folder && params.folder.display_name}</p>
           </div>
             <div className='action-right'>
             <Info size={18} />
             </div>
         </div>
 
-          {mails.length ? (
+          {mails && mails.data && mails.data.length ? (
             <ul className='email-media-list'>{renderMails()}</ul>
           ) : (
             <div className='no-results d-block'>
@@ -202,7 +205,8 @@ const Mails = props => {
         )} 
         </PerfectScrollbar>
       </div>
-      
+      </Col>
+      <Col xs='6' style={{borderLeft:"1px solid"}}>
       <MailDetails
         openMail={openMail}
         dispatch={dispatch}
@@ -219,7 +223,23 @@ const Mails = props => {
         formatDateToMonthShort={formatDateToMonthShort}
       />
       <ComposePopUp composeOpen={composeOpen} toggleCompose={toggleCompose} />
-  
+      </Col>
+      </Row>
+      <MailDetails
+        openMail={openMail}
+        dispatch={dispatch}
+        mail={store.currentMail}
+        labelColors={labelColors}
+        setOpenMail={setOpenMail}
+        updateMails={updateMails}
+        paginateMail={paginateMail}
+        updateMailLabel={updateMailLabel}
+        handleMailToTrash={handleMailToTrash}
+        handleFolderUpdate={handleFolderUpdate}
+        handleLabelsUpdate={handleLabelsUpdate}
+        handleMailReadUpdate={handleMailReadUpdate}
+        formatDateToMonthShort={formatDateToMonthShort}
+      />
     </Fragment>
   )
 }

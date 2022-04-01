@@ -13,7 +13,7 @@ import DashboardRoutes from './Dashboards'
 const TemplateTitle = '%s -IMA'
 
 // ** Default Route
-const DefaultRoute = '/dashboard'
+const DefaultRoute = '/'
 
 // ** Merge Routes
 const Routes = [

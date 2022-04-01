@@ -90,7 +90,7 @@ $email_details_header_height: 5rem;
       width: calc(100% - #{$menu-expanded-width} - 164px);
       border-left: 1px solid $border-color;
       .email-app-list {
-        height: inherit;
+        height: 100%;
       }
       .app-fixed-search {
         padding: 0.35rem 0.5rem;
