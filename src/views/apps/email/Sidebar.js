@@ -150,13 +150,9 @@ const renderModal = (
         <Input
           id="input-with-icon-adornment"
           placeholder="Add Title"
-<<<<<<< HEAD
           name="title"
           value={formValue.title || ''}
           onChange={handleChange}
-=======
-        
->>>>>>> 313041e976d0ae20eabf89fa4b37d324d1170bb0
           startAdornment={
             <InputAdornment position="start">
               {/* <Icon.Edit2 /> */}
@@ -175,15 +171,9 @@ const renderModal = (
         <Input
           id="TEST"
           placeholder="Add Description"
-<<<<<<< HEAD
           name='thread'
           value={formValue.thread || ''}
           onChange={handleChange}
-=======
-          // floatingLabelText="MultiLine and FloatingLabel"
-          // multiline
-          // rows={2}
->>>>>>> 313041e976d0ae20eabf89fa4b37d324d1170bb0
           startAdornment={
             <InputAdornment position="start">
                <img src={Path}></img>
@@ -289,13 +279,8 @@ const renderModal = (
               <ListGroup tag='div' className='list-group-messages'>
                 <ListGroupItem
                  tag={Link}
-<<<<<<< HEAD
-                  to='/apps/email/inbox'
+                  to='/apps/email'
                   onClick={() => handleFolder(detail)}
-=======
-                  to='/apps/inbox'
-                  onClick={() => handleFolder('inbox')}
->>>>>>> 313041e976d0ae20eabf89fa4b37d324d1170bb0
                   action
                   active={!Object.keys(params).length || handleActiveItem('inbox')}
                 >

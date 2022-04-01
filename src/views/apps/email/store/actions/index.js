@@ -1,7 +1,7 @@
 import axios from 'axios'
 import axiosConfig from './../../../../../axiosConfig'
 
-const Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0MCwiaWF0IjoxNjQ4NzE5NTgxLCJleHAiOjE2NDg3Mzc1ODF9.JsABmkrrZ9ybsdz6Qz0MXpVT5UCkReEmxbVplkNKzWs"
+const Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0MCwiaWF0IjoxNjQ4NzkwMzE5LCJleHAiOjE2NDg4MDgzMTl9.Y9gQB6jYTL2KoCAIBBmyGord1TV6PkSXfFIZv2AJuXc"
 // ** Get tread list 
 export const gettreads = () => {
   return dispatch => {
