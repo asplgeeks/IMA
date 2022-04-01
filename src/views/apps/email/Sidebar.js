@@ -35,6 +35,16 @@ import FormControl from '@material-ui/core/FormControl'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 
 import Adnew from './../../../Images/addnew.svg'
+import Adnewgreen from './../../../Images/addnewgreen.svg'
+import Thread from './../../../Images/thread.svg'
+import Path from './../../../Images/path.svg'
+import Search_img from "../../../Images/Search.svg"
+
+import Up_arrow from "../../../Images/uparrow.svg"
+import Down_arrow from "../../../Images/downarrow.svg"
+
+import Delete from "../../../Images/delete.svg"
+
 const Sidebar = props => {
   // ** Props
   const { store, sidebarOpen, toggleCompose, dispatch, getMails, resetSelectedMail, setSidebarOpen } = props
@@ -98,6 +108,7 @@ const renderModal = (
       >
         {/* <ModalHeader toggle={() => toggleModal(3)}></ModalHeader> */}
         <ModalBody className="thread-model">
+          <img className='img' src={Adnewgreen} />
           <h5>Request New Thread!</h5>
           <p>In case you feel there is a thread/forum missing. 
             You can always request to admin to create a new one. 
@@ -113,9 +124,11 @@ const renderModal = (
         <Input
           id="input-with-icon-adornment"
           placeholder="Add Title"
+        
           startAdornment={
             <InputAdornment position="start">
-              <Icon.Edit2 />
+              {/* <Icon.Edit2 /> */}
+              <img src={Thread}></img>
             </InputAdornment>
           }
         />
@@ -130,9 +143,12 @@ const renderModal = (
         <Input
           id="TEST"
           placeholder="Add Description"
+          // floatingLabelText="MultiLine and FloatingLabel"
+          // multiline
+          // rows={2}
           startAdornment={
             <InputAdornment position="start">
-              <Icon.FileText />
+               <img src={Path}></img>
             </InputAdornment>
           }
         />
@@ -170,17 +186,19 @@ const renderModal = (
         <div className='sidebar-content email-app-sidebar'>
           <div className='email-app-menu'>
 
-      <div className='form-group-compose text-center bottom_border '>
+      <div className='form-group-compose text-center bottom_border details_navbar'>
          <Row>
            <Col lg={12}>
           { search === false ?  <span className='broadcom_align'>
           <ListItem  component="div" tag={Link}  onClick={handleClick}>
             <ListItemText  inset primary="All Categories" />
-            {open ? <span className='dropdown_icon'><ExpandLess /> </span> : <span className='dropdown_icon'> <ExpandMore /> </span>}
+            {open ? <span className=''><img img className='img' src={Up_arrow} /> </span> : <span className=''> <img className='img'  src={Down_arrow} /> </span>}
           </ListItem>
          
           <div className='sidebar_search'>
-          <span className='align-middle dropdown_icon'   onClick={() => [setSearchVisible(!search),  setOpen(false)] }>  <SearchIcon /> </span>
+          {/* <span className='align-middle dropdown_icon'   onClick={() => [setSearchVisible(!search),  setOpen(false)] }>  <SearchIcon /> </span> */}
+                 <span className='align-middle '   onClick={() => [setSearchVisible(!search),  setOpen(false)] }> <img img className='img' src={Search_img} /> </span> 
+
           </div>
           </span> : <TextField
           placeholder="Search"
@@ -196,12 +214,12 @@ const renderModal = (
                       <SearchIcon />
                     </InputAdornment>
                   ),
-                  endAdornment: value && (
-                  <IconButton
+                  endAdornment:(
+                  <IconButton className='delete_btn'
                     aria-label="toggle password visibility"
                     onClick={() => [setSearchVisible(!search), setValue("")] }
                   >
-                    <CancelRoundedIcon />
+                    <img img className='img' src={Delete} />
                   </IconButton>
                 )
               }}
@@ -224,7 +242,7 @@ const renderModal = (
               <ListGroup tag='div' className='list-group-messages'>
                 <ListGroupItem
                  tag={Link}
-                  to='/apps/email/inbox'
+                  to='/apps/inbox'
                   onClick={() => handleFolder('inbox')}
                   action
                   active={!Object.keys(params).length || handleActiveItem('inbox')}

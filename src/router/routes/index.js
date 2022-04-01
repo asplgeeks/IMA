@@ -10,7 +10,7 @@ import DashboardRoutes from './Dashboards'
 
 
 // ** Document title
-const TemplateTitle = '%s -Star Admin Panel'
+const TemplateTitle = '%s -IMA'
 
 // ** Default Route
 const DefaultRoute = '/dashboard'

@@ -57,15 +57,18 @@ const EmailApp = () => {
         toggleCompose={toggleCompose}
         setSidebarOpen={setSidebarOpen}
         resetSelectedMail={resetSelectedMail}
-      />
+    
+  />
+  
       <div className='content-right'>
         <div className='content-body'>
           <div
             className={classnames('body-content-overlay', {
               show: sidebarOpen
             })}
-            onClick={() => setSidebarOpen(false)}
-          ></div>
+            onClick={() => setSidebarOpen(false)}>
+
+          </div>
           <Mails
             store={store}
             query={query}
