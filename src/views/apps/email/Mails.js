@@ -66,8 +66,22 @@ console.log(params)
   // ** States
   const [openMail, setOpenMail] = useState(false)
   const [search, setSearchVisible] = useState(false)
-  const [value, setValue] = useState("")
+  const [threadDetails, setThreadDetails] = useState(mails)
+  const [searchField, setSearchField] = useState("")
 
+  const filteredPersons = mails && mails.data && mails.data.filter(
+    person => {
+      return (
+        person
+        .commentor_designation
+        .toLowerCase()
+        .includes(searchField.toLowerCase())
+      )
+    }
+  )
+
+
+  // console.log("searchable items", filteredPersons)
   // ** Variables
   const labelColors = {
     personal: 'success',
@@ -116,7 +130,7 @@ console.log(params)
   const renderMails = () => {
     // if (mails && mails.length) {
       console.log(mails)
-      return mails && mails.data && mails.data.map((mail, index) => {
+      return filteredPersons.map((mail, index) => {
         console.log(mail)
         return (
           <MailCard
@@ -163,8 +177,8 @@ console.log(params)
           variant="outlined"
           fullWidth
           size="small"
-          onChange={(e) => setValue(e.target.value)}
-          value={value}
+          onChange={(e) => setSearchField(e.target.value)}
+          value={searchField}
           InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -175,7 +189,7 @@ console.log(params)
                   <IconButton
                     className='delete_btn'
                     aria-label="toggle password visibility"
-                    onClick={() => [setSearchVisible(!search), setValue("")] }
+                    onClick={() => [setSearchVisible(!search), setSearchField("")] }
                   >
                    <img img className='img' src={Delete} />
                   </IconButton>

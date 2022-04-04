@@ -23,7 +23,6 @@ import Delete from "../../../Images/delete.svg"
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
-
 // ** Custom Components
 import Avatar from '@components/avatar'
 
@@ -45,7 +44,12 @@ import {
   UncontrolledDropdown,
   Media,
   input,
-  Label 
+  Label,
+  Carousel,
+  CarouselIndicators,
+  CarouselCaption,
+  CarouselItem,
+  CarouselControl 
 } from 'reactstrap'
 import {
   Paperclip,
@@ -76,7 +80,43 @@ const MailDetails = props => {
   const [showReplies, setShowReplies] = useState(false)
   const [search, setSearchVisible] = useState(false)
   const [value, setValue] = useState("")
+  const [formValue, setFormValue] = useState({})
 
+ const items = [
+    {
+      altText: 'Slide 1',
+      caption: 'Slide 1',
+      key: 1,
+      src: 'https://picsum.photos/id/123/1200/600'
+    }, {
+      altText: 'Slide 2',
+      caption: 'Slide 2',
+      key: 2,
+      src: 'https://picsum.photos/id/456/1200/600'
+    },
+    {
+      altText: 'Slide 3',
+      caption: 'Slide 3',
+      key: 3,
+      src: 'https://picsum.photos/id/678/1200/600'
+    }
+  ]
+
+  const slides = items && items.map((item) => {
+    return (
+      <CarouselItem
+        onExiting={() => setAnimating(true)}
+        onExited={() => setAnimating(false)}
+        key={item.src}
+      >
+        <img src={item.src} alt={item.altText} height="320px" />
+        <CarouselCaption
+          captionText={item.caption}
+          captionHeader={item.caption}
+        />
+      </CarouselItem>
+    )
+  })
   // ** Renders Labels
   const renderLabels = arr => {
     if (arr && arr.length) {
@@ -204,7 +244,21 @@ const MailDetails = props => {
     handleMailReadUpdate([mail.id], false)
     handleGoBack()
   }
-  console.log('openMail', openMail, window.innerWidth)
+
+
+  // form input
+  const handleChange = (event) => {
+    const name = event.target.name
+    const value = event.target.value
+    setFormValue(values => ({...values, [name]: value}))
+  }
+  // onsubmit
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    // setSentPop(true)
+    // dispatch(addNewtreads(formValue, {setSentPop, toggleModal}))
+    alert(formValue.comment)
+  }
 
   return (
     <div
@@ -213,8 +267,10 @@ const MailDetails = props => {
         show: openMail
       })}
     >
+
       {mail !== null && mail !== undefined ? (
         <Fragment>
+     <div className='email-user-list' options={{ wheelPropagation: false }}>
        <div className='app-fixed-search d-flex align-items-center details_navbar'>
           <div className='sidebar-toggle d-block ml-1' onClick={handleGoBack} >
            <span className='' style={{padding: "5px 1px"}}  ><img className='img' src={Back_arrow}  /> </span>
@@ -257,13 +313,26 @@ const MailDetails = props => {
 
           </div>
         </div>
-        <PerfectScrollbar className='email-user-list' options={{ wheelPropagation: false }}>
+
             <Row className="topic_details">
               <Col sm='12'>
                 <div className='email-label'>
                   <p>"The pharmaceutical industry mainly influences drug regulation"</p>
                 </div>
-          <div> Images slider</div>
+          <div style={{
+            display: 'block', width: 320, padding: 30
+        }}> Images slider
+          <Carousel
+          activeIndex={2}
+          next={function noRefCheck () {}}
+          previous={function noRefCheck () {}}
+    >
+      <CarouselIndicators items={items} activeIndex={0} onClickHandler={function noRefCheck () {}} />
+      {slides}
+      <CarouselControl direction="prev" directionText="Previous" onClickHandler={function noRefCheck () {}} />
+      <CarouselControl direction="next" directionText="Next" onClickHandler={function noRefCheck () {}} />
+    </Carousel>
+          </div>
               <div className='pdf_view'>
              <span className='pdf_text'>
                <span className='view'>
@@ -324,15 +393,19 @@ const MailDetails = props => {
             <small className='text-muted'><Icon.XCircle  size={20} />Cancel </small>
               </Media>
               </Col>
+           <form onSubmit={handleSubmit}>
             <Col sm='12'>
             <div className='comment_box'>
             <FormControl variant="standard">
             <Input
               id="TEST"
+              name="comment"
               placeholder="Add Reply"
               floatingLabelText="MultiLine and FloatingLabel"
               multiline
               rows={3}
+              value={formValue.comment || ''}
+              onChange={handleChange}
               // startAdornment={
               //   <InputAdornment position="start">
               //     <Icon.Edit2  />
@@ -342,13 +415,18 @@ const MailDetails = props => {
           </FormControl>
           <div className='comment_buttons'>
               <div className='comment_attachment'>
-                    <Label className='mb-0 btn ' for='attach-email-item'>
+                    <Label className='mb-0 btn' for='attach-email-item'>
                       <Icon.PlusCircle  className='cursor-pointer'  size={20} /> FILE
-                      <input type='file' name='attach-email-item' id='attach-email-item' hidden />
+                      <input type='file'
+                       name='attach_email_item' 
+                       value={[formValue.attach_email_item] || []}
+                       onChange={handleChange}
+                       id='attach-email-item'
+                      hidden />
                     </Label>
                   </div>
                   <div className='btn_send_request'>
-                <Button.Ripple >
+                <Button.Ripple type='submit' >
                   <span className='align-middle ms-25'>POST REPLY</span>
                   <Icon.ArrowRightCircle  size={20} />
                 </Button.Ripple>
@@ -356,10 +434,12 @@ const MailDetails = props => {
           </div>
           </div>
              </Col>
+             </form>
             </Row>
-          </PerfectScrollbar>
+            </div>
         </Fragment>
       ) : null}
+
     </div>
   )
 }

@@ -1,9 +1,9 @@
 import axios from 'axios'
 import axiosConfig from './../../../../../axiosConfig'
 
-const Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0MCwiaWF0IjoxNjQ4ODA4NTc1LCJleHAiOjE2NDg4MjY1NzV9.kwuVj33aFQKZd63cL-Wn29M830GDMhSzl85iK16QNqw"
+const Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0MCwiaWF0IjoxNjQ5MDY2NDc0LCJleHAiOjE2NDkwODQ0NzR9.9jfwzMJuD2YGGUm2hUZ0ozo4bdyWdkTiAJLzphN2zV0"
 // ** Get tread list 
-export const gettreads = () => {
+export const gettreads = (searchDetail) => {
   return dispatch => {
     return axiosConfig.post('/admin/getThreadUnreadCount', {
       userid:"40",
@@ -11,7 +11,7 @@ export const gettreads = () => {
       page_no:0,
       page_limit:10,
       sort_by:"status",
-      search_by:"",
+      search_by:searchDetail,
       thread_categoryid:"1"
   }, 
   {
