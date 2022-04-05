@@ -259,11 +259,16 @@ const MailDetails = props => {
     const value = event.target.value
     console.log(event.target.value)
     axiosConfig.post('/admin/uploadFile', {
-            file:value
+           data:{ 
+             file:value
+           }
           }, 
           {
           headers: {
-            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0MCwiaWF0IjoxNjQ5MTMzMjk0LCJleHAiOjE2NDkxNTEyOTR9.8Igs6qDV3jKwgXjEBCTFxar5PrGdtQ5xX-CcmTtKhic"
+            Auth: {
+              Username:'asuWorks',
+              Password:'ergbhjwfvbhjkegvfvkgbhjbhjksfdgvsdjfvhnklhnjklhjkSJKHhjkBHJKbhjkhjkkjBHJvHJKBHJK'
+            }
           }}).then(r => console.log(r))
           setFormValue(values => ({...values, [name]: value}))
   }
