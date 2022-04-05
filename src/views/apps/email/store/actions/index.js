@@ -14,11 +14,7 @@ export const gettreads = (searchDetail) => {
       sort_by:"status",
       search_by:searchDetail,
       thread_categoryid:"1"
-  }, 
-  {
-  headers: {
-    Authorization: Token
-  }}).then(res => {
+  }).then(res => {
       dispatch({ type: 'GET_TREAD', data: res.data })
     })
   }

@@ -302,9 +302,9 @@ const renderModal = (
                   <h5>{detail.display_name}</h5>
                   <span className='broadcom_align'>
                     <Breadcrumbs separator="|" aria-label="breadcrumb">
-                      <Link underline="hover" key="1" color="inherit" href="/" >{detail.new_topic_count} New Topics</Link>
-                      <Link   key="2"  href="/getting-started/installation/">{detail.total_topic_count} Topics</Link>
-                      <Link  key="2" color="inherit" href="/getting-started/installation/">{detail.members} Members</Link>
+                     {detail.total_topic_count !== 0 ? <Link underline="hover" key="1" color="inherit" href="/" >{detail.new_topic_count} New Topics</Link> : ""}
+                     {detail.total_topic_count !== 0 ?  <Link   key="2"  href="/getting-started/installation/">{detail.total_topic_count} Topics</Link> : <Link underline="hover" key="1" color="inherit" href="/" >Be the first to start a discussion</Link>}
+                      <Link  key="3" color="inherit" href="/getting-started/installation/">{detail.members} Members</Link>
                   </Breadcrumbs>
                     <span className='align-middle'>
                       <Badge className='float-right bg-danger' color='white' pill >
