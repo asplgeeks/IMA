@@ -221,7 +221,7 @@ console.log(params)
         </PerfectScrollbar>
       </div>
       </Col>
-      <Col xs='6' style={{borderLeft:"1px solid"}}>
+      <Col xs='6' style={openMail === true ? {} : {borderLeft:"1px solid", display:"none"}}>
       <MailDetails
         openMail={openMail}
         dispatch={dispatch}
