@@ -8,7 +8,8 @@ const AppRoutes = [
     exact: true,
     appLayout: true,
     className: 'email-application',
-    component: lazy(() => import('../../views/apps/email/MailCard')),
+    // component: lazy(() => import('../../views/apps/email/MailCard')),
+    component: lazy(() => import('../../views/apps/email')),
     meta: {
       navLink: '/apps/',
       // publicRoute: true

@@ -1,7 +1,8 @@
 import axios from 'axios'
 import axiosConfig from './../../../../../axiosConfig'
+// localStorage.setItem('token', r.data.token)
 
-const Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0MCwiaWF0IjoxNjQ4NzkwMzE5LCJleHAiOjE2NDg4MDgzMTl9.Y9gQB6jYTL2KoCAIBBmyGord1TV6PkSXfFIZv2AJuXc"
+const Token = localStorage.getItem('token')
 // ** Get tread list 
 export const gettreads = () => {
   return dispatch => {

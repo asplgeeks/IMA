@@ -90,7 +90,7 @@ const Router = () => {
        ** Then redirect user to login
        */
 
-      return <Redirect to='/apps/email/index' />
+      return <Redirect to='/login' />
     } else if (route.meta && route.meta.authRoute && isUserLoggedIn()) {
       console.log("second")
 
@@ -200,7 +200,7 @@ const Router = () => {
           exact
           path='/'
           render={() => {
-            return isUserLoggedIn() ? <Redirect to={DefaultRoute} /> : <Redirect to='/apps/email' />
+            return isUserLoggedIn() ? <Redirect to={DefaultRoute} /> : <Redirect to='/login' />
           }}
         />
         {/* Not Auth Route */}
