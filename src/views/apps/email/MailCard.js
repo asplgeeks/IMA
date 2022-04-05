@@ -37,12 +37,12 @@ console.log(mail)
   return (
     <Media tag='li'  >
      
-      <Media body>
+      <Media body onClick={() => onMailClick(mail.id)}>
       <img className='rounded mr-50 mb-50' src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/avatar-s-7.ba3f6823.jpg" alt="dsad" width='70' height='50' />
       <img className='rounded mr-50 mb-50' src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/avatar-s-7.ba3f6823.jpg" alt="dsad" width='70' height='50' />
       <img className='rounded mr-50 mb-50' src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/avatar-s-7.ba3f6823.jpg" alt="dsad" width='70' height='50' />
 
-        <div onClick={() => onMailClick(mail.id)}>
+        <div>
           <p>{htmlToString(mail.comment)}</p>
         </div>
         <div className='mail-details'>

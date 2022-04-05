@@ -60,7 +60,22 @@ const Sidebar = props => {
   const [modal, setModal] = useState(null)
   const [sentPop, setSentPop] = useState(false)
   const { mails, selectedMails, treadDetail } = store
-console.log(props)
+console.log(treadDetail)
+
+const [searchField, setSearchField] = useState("")
+
+const filteredPersons = treadDetail && treadDetail.data && treadDetail.data.filter(
+  person => {
+    return (
+      person && person
+      .display_name && person
+      .display_name
+      .toLowerCase()
+      .includes(value.toLowerCase())
+    )
+  }
+)
+
   const handleClick = () => {
     // setOpen(!open)
     setOpen(!open)
@@ -274,14 +289,14 @@ const renderModal = (
           </Row>
             </div>
             <PerfectScrollbar className='sidebar-menu-list' options={{ wheelPropagation: false }}>
-              {treadDetail && treadDetail.data && treadDetail.data.map((detail, index) => {
+              {filteredPersons && filteredPersons.map((detail, index) => {
                 return (
               <ListGroup tag='div' className='list-group-messages'>
                 <ListGroupItem
                  tag={Link}
-                  to='/apps/email'
+                  // to='/apps/email'
                   onClick={() => handleFolder(detail)}
-                  action
+                  // action
                   active={!Object.keys(params).length || handleActiveItem('inbox')}
                 >
                   <h5>{detail.display_name}</h5>

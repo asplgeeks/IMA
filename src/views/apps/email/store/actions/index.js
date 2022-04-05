@@ -4,7 +4,7 @@ import axiosConfig from './../../../../../axiosConfig'
 
 const Token = localStorage.getItem('token')
 // ** Get tread list 
-export const gettreads = () => {
+export const gettreads = (searchDetail) => {
   return dispatch => {
     return axiosConfig.post('/admin/getThreadUnreadCount', {
       userid:"40",
@@ -12,7 +12,7 @@ export const gettreads = () => {
       page_no:0,
       page_limit:10,
       sort_by:"status",
-      search_by:"",
+      search_by:searchDetail,
       thread_categoryid:"1"
   }, 
   {
@@ -73,6 +73,17 @@ export const getTopics = (params) => {
   }
 }
 
+
+// ** SELECT Current Mail
+export const selectCurrentMail = id => dispatch => {
+  return axiosConfig.post('/admin/getCommentDetails', { id }, {
+    headers: {
+      Authorization: Token
+    }}).then(res => {
+    console.log(res)
+    dispatch({ type: 'SELECT_CURRENT_MAIL', mail: res.data })
+  })
+}
 // ** UPDATE Mails
 export const updateMails = (emailIds, dataToUpdate) => {
   return (dispatch, getState) => {
@@ -100,13 +111,6 @@ export const paginateMail = (dir, emailId) => {
       dispatch({ type: 'PAGINATE_MAIL', data: res.data })
     })
   }
-}
-
-// ** SELECT Current Mail
-export const selectCurrentMail = id => dispatch => {
-  return axios.get('/apps/email/get-email', { id }).then(res => {
-    dispatch({ type: 'SELECT_CURRENT_MAIL', mail: res.data })
-  })
 }
 
 // ** SELECT Mail
