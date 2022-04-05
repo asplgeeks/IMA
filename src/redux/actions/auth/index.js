@@ -47,19 +47,26 @@ const authIdToken = ""
 // ** Handle User Login
 export const handleLogin = (data, props) => {
   console.log(data)
-  axios.post(`http://172.105.49.15:3030/api/user/login_user`, {
-    mobile_number:data.login_phone,
-    password:data.login_password
+  axios.put(`http://65.1.145.79/user/userLogin`, {
+    email:data.email_id,
+    password:data.password
+   }, 
+  {
+ auth: {
+    username: "asuWorks",
+    password: "ergbhjwfvbhjkegvfvkgbhjbhjksfdgvsdjfvhnklhnjklhjkSJKHhjkBHJKbhjkhjkkjBHJvHJKBHJK"
+  }
 }) 
 .then(r => {
   console.log(r)
-  if (r.data.data.status === true) {
+  if (r.data.status === true) {
+    console.log("sadasd", r)
     props.history.push('/dashboard')
     
-    localStorage.setItem('loginId', r.data.data._id)
-    // const createdbyID = localStorage.getItem('loginId')
-    // console.log(createdbyID)
-    localStorage.setItem('userData', JSON.stringify(data))
+    localStorage.setItem('loginId', r.data)
+    localStorage.setItem('token', r.data.token)
+    
+    // localStorage.setItem('userData', JSON.stringify(data))
   } else {
     toast.error(r.data.message, 
       {position: toast.POSITION.TOP_RIGHT})
@@ -178,6 +185,7 @@ export const SendOtp = (data, props) => {
   console.log(data, props)
     axios.post('http://172.105.49.15:3030/api/user/check_otp', {
       otp:data.login_otp
+
     })
     .then(r => {   
       console.log(r)

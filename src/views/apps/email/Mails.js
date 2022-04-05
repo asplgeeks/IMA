@@ -157,7 +157,7 @@ console.log(params)
       <div className='email-app-list'>
         <div className='app-fixed-search d-flex align-items-center'>
           <div className='sidebar-toggle d-block d-lg-none ml-1' onClick={() => setSidebarOpen(true)}>
-           <span className='dropdown_icon' style={{padding: "4px 1px"}}  ><img className='back_arrow' src={Back_arrow}  /> </span>
+           <span  style={{padding: "4px 1px"}}  ><img className='back_arrow' src={Back_arrow}  /> </span>
 
           </div>
           <div className='align-content-center menu justify-content-between w-100 details_navbar'>
@@ -221,7 +221,7 @@ console.log(params)
         </PerfectScrollbar>
       </div>
       </Col>
-      <Col xs='6' style={{borderLeft:"1px solid"}}>
+      <Col xs='6' style={openMail === true ? {} : {borderLeft:"1px solid", display:"none"}}>
       <MailDetails
         openMail={openMail}
         dispatch={dispatch}
