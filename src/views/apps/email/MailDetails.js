@@ -252,8 +252,6 @@ const MailDetails = props => {
     const value = event.target.value
     setFormValue(values => ({...values, [name]: value}))
   }
-<<<<<<< HEAD
-=======
 
   const uploadImage = (event) => {
     const bodyFormData = new FormData()
@@ -273,7 +271,6 @@ const MailDetails = props => {
 
   }
   console.log(formValue)
->>>>>>> 13d95ddaaf95c53a387a22f78cdd6456cccbf014
   // onsubmit
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -441,13 +438,8 @@ const MailDetails = props => {
                       <Icon.PlusCircle  className='cursor-pointer'  size={20} /> FILE
                       <input type='file'
                        name='attach_email_item' 
-<<<<<<< HEAD
-                       value={[formValue.attach_email_item] || []}
-                       onChange={handleChange}
-=======
                       //  value={formValue.attach_email_item || []}
                        onChange={uploadImage}
->>>>>>> 13d95ddaaf95c53a387a22f78cdd6456cccbf014
                        id='attach-email-item'
                       hidden />
                     </Label>
