@@ -44,6 +44,7 @@ const EmailApp = () => {
 
   // ** UseEffect: GET initial data on Mount
   useEffect(() => {
+    // params.folder 
     dispatch(getTopics({ q: query || '', folder: params.folder || 'inbox', label: params.label || '' }))
   }, [query, params.folder, params.label])
 

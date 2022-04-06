@@ -155,7 +155,7 @@ console.log(params)
      <Row>
        <Col xs='12' sm='12' lg='12' xl={openMail === true ? '6' : '12'}>
       <div className='email-app-list'>
-        <div className='app-fixed-search d-flex align-items-center'>
+        <div className='app-fixed-search d-flex align-items-center topic_navbar'>
           <div className='sidebar-toggle d-block d-lg-none ml-1' onClick={() => setSidebarOpen(true)}>
            <span  style={{padding: "4px 1px"}}  ><img className='back_arrow' src={Back_arrow}  /> </span>
 

@@ -23,7 +23,7 @@ const ThemeNavbar = props => {
      
        <h4><img src={logo} /> DISCUSSION FORUM</h4> 
       </div>
-      {/* <NavbarUser skin={skin} setSkin={setSkin} /> */}  
+      <NavbarUser skin={skin} setSkin={setSkin} />  
     </Fragment>
   )
 }

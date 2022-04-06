@@ -36,6 +36,16 @@ const AppRoutes = [
     meta: {
       navLink: '/apps/email'
     }
+  },
+  {
+    path: '/apps/data/:fuid/:user_id',
+    exact: true,
+    appLayout: true,
+    className: '',
+    component: lazy(() => import('../../views/apps/data')),
+    meta: {
+     publicRoute: true
+    }
   }
 ]
 

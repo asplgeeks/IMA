@@ -2,6 +2,8 @@
 import { useState, useContext, Fragment, useEffect } from 'react'
 import useJwt from '@src/auth/jwt/useJwt'
 import axios from 'axios'
+import axiosConfig from '../../../axiosConfig'
+
 import { data } from 'jquery'
 import Avatar from '@components/avatar'
 import {useHistory} from 'react-router-dom'
@@ -11,6 +13,23 @@ import { toast, Slide } from 'react-toastify'
 import app from './../../../base'
 import { getAuth, signInWithCustomToken } from "firebase/auth"
 import { getHomeRouteForLoggedInUser, isObjEmpty } from '@utils'
+
+
+// import firebase from "firebase/app";
+// import "firebase/auth";
+
+// export const FB_CONFIG = {
+//     apiKey: "AIzaSyCwB63I1xIoTJIlyz1VKkqUwQiMI-xC43k",
+//     authDomain: "ima-india-dev.firebaseapp.com",
+//     projectId: "ima-india-dev",
+//     // storageBucket: "ima-india-dev.appspot.com",
+//     // messagingSenderId: "1097438200753",
+//     appId: "1:1097438200753:web:ae7d84e71819fb0ed63390",
+// }
+
+// const firebaseApp = firebase.initializeApp(FB_CONFIG);
+// export const firebase_auth = firebaseApp.auth();
+
 
 // const config = useJwt.jwtConfig
 // const loginAuthID = localStorage.getItem('loginId')
@@ -44,61 +63,34 @@ const tosterContent = (props) => {
 // console.log(forIdToken())
 
 const authIdToken = ""
+
 // ** Handle User Login
 export const handleLogin = (data, props) => {
-  console.log(data)
-  axios.put(`http://65.1.145.79/user/userLogin`, {
-    email:data.email_id,
-    password:data.password
-   }, 
-  {
- auth: {
-    username: "asuWorks",
-    password: "ergbhjwfvbhjkegvfvkgbhjbhjksfdgvsdjfvhnklhnjklhjkSJKHhjkBHJKbhjkhjkkjBHJvHJKBHJK"
-  }
-}) 
-.then(r => {
-  console.log(r)
-  if (r.data.status === true) {
-    console.log("sadasd", r)
-    props.history.push('/dashboard')
-    
-    localStorage.setItem('loginId', r.data)
-    localStorage.setItem('token', r.data.token)
-    
-    // localStorage.setItem('userData', JSON.stringify(data))
+  const email = data.email_id
+  const password = data.password
+  app.auth().signInWithEmailAndPassword(email, password)
+  .then((user_info) => {
+
+    localStorage.setItem("fbUserId", JSON.stringify(user_info.user.uid))
+    // console.log("login data", JSON.stringify(user_info.user))
+
+    axiosConfig.put(`/user/getIdByEmail`, {
+      email: data.email_id 
+    }) 
+    .then(r => {
+  if (r.data.success === 1) {
+      localStorage.setItem("user_id", JSON.stringify(r.data.user.id))
+      props.history.push('/dashboard')
+
   } else {
-    toast.error(r.data.message, 
+      toast.error(r.data.message, 
       {position: toast.POSITION.TOP_RIGHT})
   }
-
-//   const Token = r.data.token
-//   console.log("loginToken", Token)
-//   app.auth().signInWithCustomToken(Token)
-//     .then((userCredential) => {
-//       // Signed in
-//       const user = userCredential.user
-//       console.log('User login successfully', userCredential)
-//     })
-//     .catch((error) => {
-//       const errorCode = error.code
-//       const errorMessage = error.message
-//       console.log('User login fail')
-//       console.log(errorMessage)
-//     })
-//   .then(function () {
-//    app.auth().currentUser.getIdToken(false).then(function (Token) {
-//      sessionStorage.setItem('id_token', Token)
-//      console.log(Token)
-//    })
-// })
-// .catch(function (error) {
-//    console.log("error", error)
-// })
-
+  })
 })
 .catch(err => {
-// alert("Number not exist")
+console.log("err", err)
+alert("Number not exist")
 })
 return dispatch => {
   dispatch({
@@ -118,17 +110,19 @@ return dispatch => {
 // ** Handle User Logout
 export const handleLogout = () => {
   return dispatch => {
-    app.auth().signOut().then(() => {
-    //  alert("signout successfull")
-    }).catch((error) => {
-      // An error happened.
-    })
-    dispatch({ type: 'LOGOUT'
-    //  [config.storageTokenKeyName]: null, [config.storageRefreshTokenKeyName]: null 
-    })
+    // app.auth().signOut().then(() => {
+    // //  alert("signout successfull")
+    // }).catch((error) => {
+    //   // An error happened.
+    // })
+    // dispatch({ type: 'LOGOUT'
+    // //  [config.storageTokenKeyName]: null, [config.storageRefreshTokenKeyName]: null 
+    // })
 
     // ** Remove user, accessToken & refreshToken from localStorage
-    localStorage.removeItem('userData')
+    localStorage.removeItem('user_id')
+    localStorage.removeItem('fbUserId')
+
     // localStorage.removeItem(config.storageTokenKeyName)
     // localStorage.removeItem(config.storageRefreshTokenKeyName)
   }

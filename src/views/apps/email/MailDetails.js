@@ -58,7 +58,6 @@ import {
   CornerUpRight,
   Trash2 } from 'react-feather'
 import PerfectScrollbar from 'react-perfect-scrollbar'
-import axiosConfig from './../../../axiosConfig'
 const moment = require('moment')
 const MailDetails = props => {
   // ** Props
@@ -253,25 +252,9 @@ const MailDetails = props => {
     const value = event.target.value
     setFormValue(values => ({...values, [name]: value}))
   }
-
-  const uploadImage = (event) => {
-    const name = event.target.name
-    const value = event.target.value
-    console.log(event.target.value)
-    axiosConfig.post('/admin/uploadFile', {
-            file:value
-          }, 
-          {
-          headers: {
-            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0MCwiaWF0IjoxNjQ5MTMzMjk0LCJleHAiOjE2NDkxNTEyOTR9.8Igs6qDV3jKwgXjEBCTFxar5PrGdtQ5xX-CcmTtKhic"
-          }}).then(r => console.log(r))
-          setFormValue(values => ({...values, [name]: value}))
-  }
-  console.log(formValue)
   // onsubmit
   const handleSubmit = (event) => {
     event.preventDefault()
-
     // setSentPop(true)
     // dispatch(addNewtreads(formValue, {setSentPop, toggleModal}))
     alert(formValue.comment)
@@ -286,7 +269,7 @@ const MailDetails = props => {
     >
 
       {mail !== null && mail !== undefined ? (
-        <div>
+        <Fragment>
      <div className='email-user-list' options={{ wheelPropagation: false }}>
        <div className='app-fixed-search d-flex align-items-center details_navbar'>
           <div className='sidebar-toggle d-block ml-1' onClick={handleGoBack} >
@@ -330,8 +313,8 @@ const MailDetails = props => {
 
           </div>
         </div>
-        <div style={{height:"540px", overflow:"scroll"}}>
-            <Row >
+
+            <Row className="topic_details">
               <Col sm='12'>
                 <div className='email-label'>
                   <p>"The pharmaceutical industry mainly influences drug regulation"</p>
@@ -436,8 +419,8 @@ const MailDetails = props => {
                       <Icon.PlusCircle  className='cursor-pointer'  size={20} /> FILE
                       <input type='file'
                        name='attach_email_item' 
-                       value={formValue.attach_email_item || []}
-                       onChange={uploadImage}
+                       value={[formValue.attach_email_item] || []}
+                       onChange={handleChange}
                        id='attach-email-item'
                       hidden />
                     </Label>
@@ -454,8 +437,7 @@ const MailDetails = props => {
              </form>
             </Row>
             </div>
-            </div>
-        </div>
+        </Fragment>
       ) : null}
 
     </div>
