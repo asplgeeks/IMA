@@ -59,6 +59,7 @@ const Sidebar = props => {
 
   const [modal, setModal] = useState(null)
   const [sentPop, setSentPop] = useState(false)
+  const [activeIndex, setActiveIndex] = useState()
   const { mails, selectedMails, treadDetail } = store
 console.log(treadDetail)
 
@@ -87,7 +88,8 @@ useEffect(() => {
   const params = useParams()
 
   // ** Functions To Handle Folder, Label & Compose
-  const handleFolder = folder => {
+  const handleFolder = (folder, index) => {
+    setActiveIndex(index)
     dispatch(getTopics({ ...store.params, folder }))
     dispatch(resetSelectedMail())
   }
@@ -290,19 +292,21 @@ const renderModal = (
             </div>
             <PerfectScrollbar className='sidebar-menu-list' options={{ wheelPropagation: false }}>
               {filteredPersons && filteredPersons.map((detail, index) => {
+                console.log(!Object.keys(params).length)
                 return (
               <ListGroup tag='div' className='list-group-messages'>
                 <ListGroupItem
                  tag={Link}
-                  // to='/apps/email'
-                  onClick={() => handleFolder(detail)}
+                 id={index}
+                  to='/apps/email'
+                  onClick={() => handleFolder(detail, index)}
                   // action
-                  active={!Object.keys(params).length || handleActiveItem('inbox')}
+                  active={activeIndex === index}
                 >
-                  <h5>{detail.display_name}</h5>
+                  <h5 style={activeIndex === index ? {color:"#EE3224"} : {}}>{detail.display_name}</h5>
                   <span className='broadcom_align'>
                     <Breadcrumbs separator="|" aria-label="breadcrumb">
-                     {detail.total_topic_count !== 0 ? <Link underline="hover" key="1" color="inherit" href="/" >{detail.new_topic_count} New Topics</Link> : ""}
+                     {detail.total_topic_count !== 0 ? <Link underline="hover" key="1" color="inherit" href="/" ><span style={activeIndex === index ? {color:"#EE3224"} : {}}>{detail.new_topic_count} New Topics</span></Link> : ""}
                      {detail.total_topic_count !== 0 ?  <Link   key="2"  href="/getting-started/installation/">{detail.total_topic_count} Topics</Link> : <Link underline="hover" key="1" color="inherit" href="/" >Be the first to start a discussion</Link>}
                       <Link  key="3" color="inherit" href="/getting-started/installation/">{detail.members} Members</Link>
                   </Breadcrumbs>
