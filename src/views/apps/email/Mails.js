@@ -68,7 +68,7 @@ console.log(params)
   const [search, setSearchVisible] = useState(false)
   const [threadDetails, setThreadDetails] = useState(mails)
   const [searchField, setSearchField] = useState("")
-
+const [mailId, setMailId] = useState()
   const filteredPersons = mails && mails.data && mails.data.filter(
     person => {
       return (
@@ -93,6 +93,7 @@ console.log(params)
   // ** Handles Update Functions
   const handleMailClick = id => {
     console.log(id)
+    setMailId(id)
     dispatch(selectCurrentMail(id))
     setOpenMail(true)
   }
@@ -136,6 +137,7 @@ console.log(params)
           <MailCard
             mail={mail}
             key={index}
+            mailId={mailId}
             dispatch={dispatch}
             selectMail={selectMail}
             updateMails={updateMails}
@@ -207,7 +209,7 @@ console.log(params)
           <p className='text-truncate mb-0 topic_title'>{params && params.folder && params.folder.display_name}</p>
           </div>
             <div className='action-right'>
-            <Info size={18} />
+            <Info size={18} style={{color:"#EE3224"}}/>
             </div>
         </div>
 

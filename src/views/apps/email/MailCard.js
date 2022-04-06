@@ -9,6 +9,7 @@ const MailCard = props => {
   // ** Props
   const {
     mail,
+    mailId,
     dispatch,
     selectMail,
     labelColors,
@@ -43,7 +44,7 @@ console.log(mail)
       <img className='rounded mr-50 mb-50' src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/avatar-s-7.ba3f6823.jpg" alt="dsad" width='70' height='50' />
 
         <div>
-          <p>{htmlToString(mail.comment)}</p>
+          <p style={mailId === mail.id ? {color:"#EE3224"} : {}}>{htmlToString(mail.comment)}</p>
         </div>
         <div className='mail-details'>
           <div className='mail-items'>
@@ -52,7 +53,7 @@ console.log(mail)
                 <Avatar className='mr-50' img="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/avatar-s-7.ba3f6823.jpg" imgHeight='50' imgWidth='50' />
                 <div>
                 <h5 className=''>{mail.comment_by}</h5>
-                <h6 className='text-muted '> {mail.commentor_designation} </h6>
+                <h6 className='text-muted'> {mail.commentor_designation} </h6>
                </div>
               </Media>
               <Media body  className='text-muted' style={{fontSize: "16px"}} >

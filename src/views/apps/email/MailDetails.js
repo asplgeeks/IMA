@@ -255,28 +255,26 @@ const MailDetails = props => {
   }
 
   const uploadImage = (event) => {
+    const bodyFormData = new FormData()
     const name = event.target.name
-    const value = event.target.value
-    console.log(event.target.value)
-    axiosConfig.post('/admin/uploadFile', {
-           data:{ 
-             file:value
-           }
-          }, 
-          {
-          headers: {
-            Auth: {
-              Username:'asuWorks',
-              Password:'ergbhjwfvbhjkegvfvkgbhjbhjksfdgvsdjfvhnklhnjklhjkSJKHhjkBHJKbhjkhjkkjBHJvHJKBHJK'
-            }
-          }}).then(r => console.log(r))
-          setFormValue(values => ({...values, [name]: value}))
+    const value = event.target.files
+    console.log(event.target.files)
+    bodyFormData.append('file', value[0])
+    const config = {
+      headers: {
+          'content-type': 'multipart/form-data'
+      }
+  }
+  
+  const fileList = event.target.files
+  console.log(fileList)
+    axiosConfig.post('/admin/uploadFile', bodyFormData, config).then(r => console.log(setFormValue(values => ({...values, [name]: [r.data && r.data.location]}))))
+
   }
   console.log(formValue)
   // onsubmit
   const handleSubmit = (event) => {
     event.preventDefault()
-
     // setSentPop(true)
     // dispatch(addNewtreads(formValue, {setSentPop, toggleModal}))
     alert(formValue.comment)
@@ -441,7 +439,7 @@ const MailDetails = props => {
                       <Icon.PlusCircle  className='cursor-pointer'  size={20} /> FILE
                       <input type='file'
                        name='attach_email_item' 
-                       value={formValue.attach_email_item || []}
+                      //  value={formValue.attach_email_item || []}
                        onChange={uploadImage}
                        id='attach-email-item'
                       hidden />
