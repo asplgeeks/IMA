@@ -427,6 +427,21 @@ $email_details_header_height: 5rem;
 
 // Extra small devices (portrait phones, less than 576px)
 @include media-breakpoint-down(xs) {
+
+  html .navbar-floating.footer-static .app-content .content-area-wrapper, html .navbar-floating.footer-static .app-content .kanban-wrapper
+  {
+    height: calc( var(--vh, 1vh) * 100 - calc( calc(calc(1rem * 1) - calc(0.8rem * 1)) + 0rem + 0rem + 0rem + 0rem )) !important;
+  }
+  .app-content {
+    padding: calc(1rem - 0.8rem + 0.4rem + 0rem) calc(1rem - 0.8rem) 0 calc(1rem - 0.7rem) !important;
+}
+.email-application .content-area-wrapper
+{
+  border-top:1px solid #ebe9f1 ;
+}
+  .hidden-xs{
+display: none !important;
+  }
   .email-application {
     .email-detail-head .mail-meta-item {
       display: flex;
@@ -1090,4 +1105,7 @@ margin-left: 0px !important;
   border-radius: 12px;
   width:90px;
   color: #EE3224 !important;
+}
+.row{
+  margin:0px !important;
 }

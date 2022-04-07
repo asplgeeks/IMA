@@ -272,11 +272,7 @@ const [uploadedImage, setUploadedImage] = useState([])
     // uploadedImage.push
     // setFormValue(values => ({...values, [name]: [r.data && r.data.location]}))
   }
-<<<<<<< HEAD
-  console.log(uploadedImage)
-=======
   console.log(formValue)
->>>>>>> 44cb70258b37a7d6a1715945f266dec70a036247
   // onsubmit
   const handleSubmit = (event) => {
     event.preventDefault()
