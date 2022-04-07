@@ -34,7 +34,10 @@ const MailCard = props => {
     handleMailClick(mail.id)
     handleMailReadUpdate([mail.id], true)
   }
-console.log(mail)
+
+//   const user = mail && mail.files
+//   console.log(user.toString())
+// const replaceBbj = JSON.parse(user.toString().replaceAll("\\", ""))
   return (
     <Media tag='li'  >
      

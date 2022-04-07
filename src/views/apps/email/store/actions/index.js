@@ -80,6 +80,29 @@ export const selectCurrentMail = id => dispatch => {
     dispatch({ type: 'SELECT_CURRENT_MAIL', mail: res.data })
   })
 }
+
+// add comment and subComment 
+export const addCommentSubComment = (title, images, detail, props) => {
+  console.log(props)
+  return dispatch => {
+    return axiosConfig.post('/admin/addUpdateThreadComment', {
+      comment_id:detail.topic_id,
+      thread_id:detail.thread_id,
+      comment:title.comment,
+      userid:detail.userid,
+      parent_id:detail.parent_id,
+      files:images
+  }).then(res => {
+    if (res.data.success === 1) {
+    console.log(res)
+    props.setOpenMail(false)
+  } else {
+    console.log(res)
+  }
+    })
+  }
+}
+
 // ** UPDATE Mails
 export const updateMails = (emailIds, dataToUpdate) => {
   return (dispatch, getState) => {

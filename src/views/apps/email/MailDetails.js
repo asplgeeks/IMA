@@ -25,7 +25,9 @@ import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
 // ** Custom Components
 import Avatar from '@components/avatar'
-
+import {
+  addCommentSubComment
+} from './store/actions'
 // ** Third Party Components
 import classnames from 'classnames'
 import {
@@ -268,17 +270,17 @@ const [uploadedImage, setUploadedImage] = useState([])
   
   const fileList = event.target.files
   console.log(fileList)
-    axiosConfig.post('/admin/uploadFile', bodyFormData, config).then(r => setUploadedImage([...uploadedImage, r.data.data.location]))
+    axiosConfig.post('/admin/uploadFile', bodyFormData, config).then(r => setUploadedImage([...uploadedImage, r.data.data]))
     // uploadedImage.push
     // setFormValue(values => ({...values, [name]: [r.data && r.data.location]}))
   }
-  console.log(formValue)
+  console.log(mail && mail)
   // onsubmit
   const handleSubmit = (event) => {
     event.preventDefault()
     // setSentPop(true)
-    // dispatch(addNewtreads(formValue, {setSentPop, toggleModal}))
-    alert(formValue.comment)
+    dispatch(addCommentSubComment(formValue, uploadedImage, mail && mail.data, props))
+    alert(formValue.title)
   }
 
   return (
@@ -342,7 +344,7 @@ const [uploadedImage, setUploadedImage] = useState([])
                   <p>"The pharmaceutical industry mainly influences drug regulation"</p>
                 </div>
           <div style={{
-            display: 'block', width: 320, padding: 30
+            display: 'block', maxWidth: 600, padding: 30
         }}> Images slider
           <Carousel
           activeIndex={2}
@@ -438,7 +440,7 @@ const [uploadedImage, setUploadedImage] = useState([])
           </FormControl>
           {uploadedImage && uploadedImage.map((image, index) => {
             return (<div className='image_box'>
-              <img src={image} alt='image'  width='70' height='50' style={{padding:"10px"}}/>
+              <img src={image.location} alt='image'  width='70' height='50' style={{padding:"10px"}}/>
               <Icon.XCircle  size={20} style={{float:"right"}}/>
               </div>)
           })}
