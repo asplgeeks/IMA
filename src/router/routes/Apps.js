@@ -2,20 +2,20 @@ import { lazy } from 'react'
 import { Redirect } from 'react-router-dom'
 
 const AppRoutes = [
-  {
+  // {
 
-    path: '/',
-    exact: true,
-    appLayout: true,
-    className: 'email-application',
-    // component: lazy(() => import('../../views/apps/email/MailCard')),
-    component: lazy(() => import('../../views/apps/email')),
-    meta: {
-      navLink: '/apps/',
-      // publicRoute: true
-      authRoute: true
-    }
-  },
+  //   path: '/',
+  //   exact: true,
+  //   appLayout: true,
+  //   className: 'email-application',
+  //   // component: lazy(() => import('../../views/apps/email/MailCard')),
+  //   component: lazy(() => import('../../views/apps/email')),
+  //   meta: {
+  //     navLink: '/apps/',
+  //     // publicRoute: true
+  //     authRoute: true
+  //   }
+  // },
   {
 
     path: '/apps',

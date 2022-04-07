@@ -58,6 +58,7 @@ import {
   CornerUpRight,
   Trash2 } from 'react-feather'
 import PerfectScrollbar from 'react-perfect-scrollbar'
+import axiosConfig from './../../../axiosConfig'
 const moment = require('moment')
 const MailDetails = props => {
   // ** Props
@@ -81,7 +82,7 @@ const MailDetails = props => {
   const [search, setSearchVisible] = useState(false)
   const [value, setValue] = useState("")
   const [formValue, setFormValue] = useState({})
-
+const [uploadedImage, setUploadedImage] = useState([])
  const items = [
     {
       altText: 'Slide 1',
@@ -267,10 +268,15 @@ const MailDetails = props => {
   
   const fileList = event.target.files
   console.log(fileList)
-    axiosConfig.post('/admin/uploadFile', bodyFormData, config).then(r => console.log(setFormValue(values => ({...values, [name]: [r.data && r.data.location]}))))
-
+    axiosConfig.post('/admin/uploadFile', bodyFormData, config).then(r => setUploadedImage([...uploadedImage, r.data.data.location]))
+    // uploadedImage.push
+    // setFormValue(values => ({...values, [name]: [r.data && r.data.location]}))
   }
+<<<<<<< HEAD
+  console.log(uploadedImage)
+=======
   console.log(formValue)
+>>>>>>> 44cb70258b37a7d6a1715945f266dec70a036247
   // onsubmit
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -282,7 +288,7 @@ const MailDetails = props => {
   return (
     <div
     // className='wrap-border side-navbar square-border d-none d-lg-block border_bottom_none border_top_none'
-      className={classnames(window.innerWidth > "480" ? 'wrap-border side-navbar square-border d-none d-lg-block border_bottom_none border_top_none' : 'email-app-details', {
+      className={classnames('email-app-details', {
         show: openMail
       })}
     >
@@ -324,7 +330,7 @@ const MailDetails = props => {
                     aria-label="toggle password visibility"
                     onClick={() => [setSearchVisible(!search), setValue("")] }
                   >
-              <img img className='img' src={Delete} />
+                   <img img className='img' src={Delete} />
                   </IconButton>
                 )
               }}
@@ -332,7 +338,8 @@ const MailDetails = props => {
 
           </div>
         </div>
-
+        <PerfectScrollbar className='email-user-list' options={{ wheelPropagation: true }}>
+          {/* <div style={{overflowY:"scroll", scrollbarWidth:"none"}}> */}
             <Row className="topic_details">
               <Col sm='12'>
                 <div className='email-label'>
@@ -412,6 +419,7 @@ const MailDetails = props => {
             <small className='text-muted'><Icon.XCircle  size={20} />Cancel </small>
               </Media>
               </Col>
+             
            <form onSubmit={handleSubmit}>
             <Col sm='12'>
             <div className='comment_box'>
@@ -432,12 +440,20 @@ const MailDetails = props => {
               // }
             />
           </FormControl>
+          {uploadedImage && uploadedImage.map((image, index) => {
+            return (<div className='image_box'>
+              <img src={image} alt='image'  width='70' height='50' style={{padding:"10px"}}/>
+              <Icon.XCircle  size={20} style={{float:"right"}}/>
+              </div>)
+          })}
+          
           <div className='comment_buttons'>
               <div className='comment_attachment'>
                     <Label className='mb-0 btn' for='attach-email-item'>
                       <Icon.PlusCircle  className='cursor-pointer'  size={20} /> FILE
                       <input type='file'
                        name='attach_email_item' 
+                       accept="image/*"
                       //  value={formValue.attach_email_item || []}
                        onChange={uploadImage}
                        id='attach-email-item'
@@ -455,6 +471,8 @@ const MailDetails = props => {
              </Col>
              </form>
             </Row>
+            {/* </div> */}
+            </PerfectScrollbar>
             </div>
         </Fragment>
       ) : null}

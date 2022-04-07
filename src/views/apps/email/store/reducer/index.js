@@ -18,10 +18,10 @@ const EmailReducer = (state = initialState, action) => {
     }
     case 'GET_MAILS':
       // ** If currentMail is not null / undefined then find and set currentMail
-      let currMail = null
-      if (state.currentMail !== null && state.currentMail !== undefined) {
-        currMail = action.data.emails.find(i => i.id === state.currentMail.id)
-      }
+      const currMail = null
+      // if (state.currentMail !== null && state.currentMail !== undefined) {
+      //   currMail = action.data.emails.find(i => i.id === state.currentMail.id)
+      // }
       return {
         ...state,
         mails: action.data,

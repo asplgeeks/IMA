@@ -81,7 +81,7 @@ export const handleLogin = (data, props) => {
     .then(r => {
   if (r.data.success === 1) {
       localStorage.setItem("user_id", JSON.stringify(r.data.user.id))
-      props.history.push('/dashboard')
+      props.history.push('/')
 
   } else {
       // toast.error(r.data.message, 
