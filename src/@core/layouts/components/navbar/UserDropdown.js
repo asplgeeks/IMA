@@ -44,7 +44,7 @@ const UserDropdown = () => {
           <span className='user-status'>{(userData && userData.role) || ''}</span> */}
         </div>
      
-        <Avatar img={userAvatar} imgHeight='40' imgWidth='40' status='online' />
+        <Avatar img={userAvatar} imgHeight='30' imgWidth='30' status='online' />
       </DropdownToggle>
       <DropdownMenu right>
         {/* <DropdownItem tag={Link} to='/pages/profile'>

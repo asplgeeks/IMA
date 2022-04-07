@@ -87,7 +87,9 @@ $email_details_header_height: 5rem;
 
     // Right content area common css starts
     .content-right {
-      width: calc(100% - #{$menu-expanded-width} - 164px);
+      // width: calc(100% - #{$menu-expanded-width} - 164px);
+      width: calc(100% - #{$menu-expanded-width});
+
       border-left: 1px solid $border-color;
       .email-app-list {
         height: 100%;
@@ -259,7 +261,9 @@ $email_details_header_height: 5rem;
     z-index: 2;
     visibility: hidden;
     top: 0;
-    width: calc(100% - #{$menu-expanded-width} - 164px);
+    // width: calc(100% - #{$menu-expanded-width} - 164px);
+    width: calc(100% - #{$menu-expanded-width});
+
     background-color: $white;
     transform: translateX(100%);
     transition: all 0.25s ease, color 0s;
@@ -465,6 +469,31 @@ $email_details_header_height: 5rem;
       }
     }
   }
+
+  .top-header
+  {
+    display:table;
+    width: 100%;
+    text-align: center;
+    h4{
+      color:#191617;
+       font-family:"SF Pro Text", "Medium";
+         display: table-cell;
+          vertical-align:middle;
+          font-size: 16px;
+          img{
+            margin-right: 15px;
+      height: 15px;
+          }
+    }
+  }
+  .vertical-layout .header-navbar .navbar-container ul.navbar-nav li.dropdown .dropdown-menu
+  {
+    top:35px !important
+  }
+  .app-content {
+    padding: calc(1rem - 0.8rem + 0.1rem + 0rem) calc(1rem - 0.8rem) 0 calc(1rem - 0.7rem) !important;
+}
 }
 
 @media (max-width: 359.98px) {

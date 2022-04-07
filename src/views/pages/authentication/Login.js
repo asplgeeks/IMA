@@ -291,21 +291,28 @@ const LoginV1 = props => {
                   value={password}
                   id='password'
                   name='password'
-                  className='input-group-merge'
+                  // className='input-group-merge'
                   onChange={e => setPassword(e.target.value)}
-                  // className={classnames({ 'is-invalid': errors['login_password'] })}
-                  innerRef={register({ 
-                    required: true,
-                    message:"please enter your valid password"
-                  })}
+                  // className={classnames({ 'is-invalid': errors['password'] })}
+                  innerRef={register({ required: true, message:"please enter your valid password" })}
                 />
-                  {errors.password && <p style={{color:"red"}}>{errors.password.message}</p>}  
+               
+                  {errors.password && <p style={{color:"red"}}>Please enter your valid password</p>}  
                 </FormGroup>
-              <FormGroup className="d-flex">
-                <CustomInput type='checkbox' className='custom-control-Primary' id='remember-me' label='' /><label >By continuing you agree to <Link to='/pages' style={{color:"#ed1d25" }}>
+              <FormGroup >
+                <div className="d-flex" >
+                <CustomInput type='checkbox' className='custom-control-Primary' id='remember_me' name="remember_me"
+                innerRef={register({ required: true, message:"please select" })}
+                 label='' /><label >By continuing you agree to <Link to='/pages' style={{color:"#ed1d25" }}>
                 <span>Terms & Conditions</span> </Link></label>
+                {errors.remember_me && <p style={{color:"red"}}>Please select</p>}  
+
+                </div>
+                
+
               </FormGroup>
-              <Button.Ripple    type='submit' className="sign_in_btn" block>
+
+              <Button.Ripple   type='submit' className="sign_in_btn" block>
                 Sign in
               </Button.Ripple>
             </Form>
