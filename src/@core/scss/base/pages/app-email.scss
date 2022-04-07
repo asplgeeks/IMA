@@ -770,7 +770,7 @@ color: #5e5873 !important;
 
 
 .pdf_view{
-  margin-top: 10px;
+  margin-top: 10px !important;
   // width: max-content;
 
   // img{
@@ -788,7 +788,7 @@ color: #5e5873 !important;
     align-items: center;
 
     .pdf-img{
-      background: #ff1919;
+      background: #ff1919 !important;
       // padding: 10px 5px 8px 0px;
       border-radius: 8px;
       display: grid;
@@ -1054,4 +1054,11 @@ p{
 }
 .content{
 margin-left: 0px !important;
+}
+
+.image_box{
+  border: 0px solid #D9DCE1;
+  border-radius: 12px;
+  width:90px;
+  color: #EE3224 !important;
 }

@@ -154,10 +154,10 @@ const [mailId, setMailId] = useState()
 
   return (
     <Fragment>
-     <Row>
-       <Col xs='12' sm='12' lg='12' xl={openMail === true ? '6' : '12'}>
+     {/* <Row>
+       <Col xs='12' sm='12' lg='12' xl={openMail === true ? '6' : '12'}> */}
       <div className='email-app-list'>
-        <div className='app-fixed-search d-flex align-items-center'>
+        <div className='app-fixed-search d-flex align-items-center topic_navbar'>
           <div className='sidebar-toggle d-block d-lg-none ml-1' onClick={() => setSidebarOpen(true)}>
            <span  style={{padding: "4px 1px"}}  ><img className='back_arrow' src={Back_arrow}  /> </span>
 
@@ -222,8 +222,8 @@ const [mailId, setMailId] = useState()
         )} 
         </PerfectScrollbar>
       </div>
-      </Col>
-      <Col xs='6' style={openMail === true ? {} : {borderLeft:"1px solid", display:"none"}}>
+      {/* </Col> */}
+      {/* <Col xs='6' style={openMail === true ? {} : {borderLeft:"1px solid", display:"none"}}> */}
       <MailDetails
         openMail={openMail}
         dispatch={dispatch}
@@ -240,8 +240,8 @@ const [mailId, setMailId] = useState()
         formatDateToMonthShort={formatDateToMonthShort}
       />
       <ComposePopUp composeOpen={composeOpen} toggleCompose={toggleCompose} />
-      </Col>
-      </Row>
+      {/* </Col>
+      </Row> */}
       {/* <MailDetails
         openMail={openMail}
         dispatch={dispatch}
