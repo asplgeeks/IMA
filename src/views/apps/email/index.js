@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom'
 // ** Email App Component Imports
 import Mails from './Mails'
 import Sidebar from './Sidebar'
-import Navbar from './Navbar'
+// import Navbar from './Navbar'
 // ** Third Party Components
 import classnames from 'classnames'
 
@@ -44,13 +44,14 @@ const EmailApp = () => {
 
   // ** UseEffect: GET initial data on Mount
   useEffect(() => {
+   
     // params.folder 
     dispatch(getTopics({ q: query || '', folder: params.folder || 'inbox', label: params.label || '' }))
   }, [query, params.folder, params.label])
 
   return (
     <Fragment>
-      <Navbar />
+      {/* <Navbar /> */}
       <Sidebar
         store={store}
         dispatch={dispatch}

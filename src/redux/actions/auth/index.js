@@ -3,6 +3,7 @@ import { useState, useContext, Fragment, useEffect } from 'react'
 import useJwt from '@src/auth/jwt/useJwt'
 import axios from 'axios'
 import axiosConfig from '../../../axiosConfig'
+import Swal from 'sweetalert2'
 
 import { data } from 'jquery'
 import Avatar from '@components/avatar'
@@ -83,14 +84,28 @@ export const handleLogin = (data, props) => {
       props.history.push('/')
 
   } else {
-      toast.error(r.data.message, 
-      {position: toast.POSITION.TOP_RIGHT})
+      // toast.error(r.data.message, 
+      // {position: toast.POSITION.TOP_RIGHT})
+      Swal.fire({
+        title: 'Error!',
+        text: 'There is no user record corresponding to this identifier. The user may have been deleted.',
+        icon: 'error',
+        confirmButtonText: 'Try Again',
+        confirmButtonColor: '#EE3224'
+      })
   }
   })
 })
 .catch(err => {
-console.log("err", err)
-alert("Number not exist")
+// console.log("err", err)
+// alert("Number not exist")
+Swal.fire({
+  title: 'Error!',
+  text: 'There is no user record corresponding to this identifier. The user may have been deleted.',
+  icon: 'error',
+  confirmButtonText: 'Try Again',
+  confirmButtonColor: '#EE3224'
+})
 })
 return dispatch => {
   dispatch({
