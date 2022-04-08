@@ -91,7 +91,7 @@ export const addCommentSubComment = (title, images, detail, props) => {
       comment:title.comment,
       userid:detail.userid,
       parent_id:detail.parent_id,
-      files:images
+      files:JSON.stringify(images)
   }).then(res => {
     if (res.data.success === 1) {
     console.log(res)
