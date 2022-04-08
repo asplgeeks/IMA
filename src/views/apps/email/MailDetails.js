@@ -76,7 +76,8 @@ const MailDetails = props => {
     handleFolderUpdate,
     handleLabelsUpdate,
     handleMailReadUpdate,
-    formatDateToMonthShort
+    formatDateToMonthShort,
+    resetSelectedMail
   } = props
   console.log(mail)
   // ** States
@@ -280,7 +281,7 @@ const [uploadedImage, setUploadedImage] = useState([])
     event.preventDefault()
     // setSentPop(true)
     dispatch(addCommentSubComment(formValue, uploadedImage, mail && mail.data, props))
-    alert(formValue.title)
+    // alert(formValue.title)
   }
 
   return (

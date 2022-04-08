@@ -37,7 +37,7 @@ const MailCard = props => {
 
 //   const user = mail && mail.files
 //   console.log(user.toString())
-// const replaceBbj = JSON.parse(user.toString().replaceAll("\\", ""))
+// const replaceBbj = JSON.parse(user.replaceAll("\\", ""))
   return (
     <Media tag='li'  >
      

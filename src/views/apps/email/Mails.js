@@ -333,6 +333,7 @@ const [modal, setModal] = useState(false)
         setOpenMail={setOpenMail}
         updateMails={updateMails}
         paginateMail={paginateMail}
+        resetSelectedMail={resetSelectedMail}
         updateMailLabel={updateMailLabel}
         handleMailToTrash={handleMailToTrash}
         handleFolderUpdate={handleFolderUpdate}

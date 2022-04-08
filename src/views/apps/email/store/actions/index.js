@@ -86,7 +86,7 @@ export const addCommentSubComment = (title, images, detail, props) => {
   console.log(props)
   return dispatch => {
     return axiosConfig.post('/admin/addUpdateThreadComment', {
-      comment_id:detail.topic_id,
+      // comment_id:detail.topic_id,
       thread_id:detail.thread_id,
       comment:title.comment,
       userid:detail.userid,
@@ -96,6 +96,7 @@ export const addCommentSubComment = (title, images, detail, props) => {
     if (res.data.success === 1) {
     console.log(res)
     props.setOpenMail(false)
+    props.resetSelectedMail()
   } else {
     console.log(res)
   }
