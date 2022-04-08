@@ -6,6 +6,7 @@ import MailCard from './MailCard'
 import MailDetails from './MailDetails'
 import ComposePopUp from './ComposePopup'
 import * as Icon from 'react-feather'
+import Models from './../../components/Model'
 
 // ** Utils
 import { formatDateToMonthShort } from '@utils'
@@ -13,9 +14,13 @@ import { formatDateToMonthShort } from '@utils'
 import InputAdornment from "@material-ui/core/InputAdornment"
 import TextField from "@material-ui/core/TextField"
 import SearchIcon from "@material-ui/icons/Search"
-// import PlusIcon from "@material-ui/icons/Plus"
+import FormControl from '@material-ui/core/FormControl'
+import InputLabel from '@material-ui/core/InputLabel'
 
 import { IconButton } from "@material-ui/core"
+
+import Input from '@material-ui/core/Input'
+
 import CancelRoundedIcon from "@material-ui/icons/CancelRounded"
 
 // ** Third Party Components
@@ -23,15 +28,17 @@ import PerfectScrollbar from 'react-perfect-scrollbar'
 import {
   InputGroup,
   InputGroupAddon,
-  Input,
   InputGroupText,
   CustomInput,
   DropdownMenu,
   DropdownItem,
   DropdownToggle,
   UncontrolledDropdown,
+  Button,
   Row,
-  Col
+  Col,
+  Label,
+  Modal, ModalHeader, ModalBody, ModalFooter
 } from 'reactstrap'
 import { Menu, ArrowLeftCircle, Folder, Tag, Mail, Trash, Edit2, Info } from 'react-feather'
 
@@ -41,6 +48,11 @@ import Refresh from "../../../Images/refresh.svg"
 import Back_arrow from "../../../Images/backarrow.svg"
 import Plus from "../../../Images/add.svg"
 import Delete from "../../../Images/delete.svg"
+
+import Adnewgreen from './../../../Images/addnewgreen.svg'
+import Thread from './../../../Images/thread.svg'
+import Path from './../../../Images/path.svg'
+
 
 const Mails = props => {
   // ** Props
@@ -62,13 +74,14 @@ const Mails = props => {
   } = props
 
   const { mails, selectedMails, params, currentMail } = store
-console.log(params)
   // ** States
   const [openMail, setOpenMail] = useState(false)
   const [search, setSearchVisible] = useState(false)
   const [threadDetails, setThreadDetails] = useState(mails)
   const [searchField, setSearchField] = useState("")
 const [mailId, setMailId] = useState()
+const [modal, setModal] = useState(false)
+
   const filteredPersons = mails && mails.data && mails.data.filter(
     person => {
       return (
@@ -79,7 +92,6 @@ const [mailId, setMailId] = useState()
       )
     }
   )
-
 
   // console.log("searchable items", filteredPersons)
   // ** Variables
@@ -152,9 +164,98 @@ const [mailId, setMailId] = useState()
     // }
   }
 
+  const toggleModal = status => {
+    console.log("status1", status)
+    if (modal !== status) {
+      setModal(status)
+    } else {
+      setModal(false)
+    }
+  }
+
+  const renderModal = (
+    <div className={'theme-{item.modalColor}'} >
+      <Modal
+        isOpen={modal === true}
+        toggle={() => toggleModal(true)}
+        className='modal-dialog-centered'
+        modalClassName="modal-success" >
+        <ModalBody className="comment_model">
+          <img className='img' src={Adnewgreen} />
+          <h5>Add New Comment</h5>
+          <form >
+          {/* onSubmit={handleSubmit} */}
+          <Row>
+      <Col md={12} sm={12}>
+     <FormControl variant="standard" >
+        <InputLabel htmlFor="input-with-icon-adornment">
+        Comment
+        </InputLabel>
+        <Input
+          id="input-with-icon-adornment"
+          placeholder="Add Comment"
+          name="title"
+          multiline
+         rows={2}
+          // value={formValue.title || ''}
+          // onChange={handleChange}
+          startAdornment={
+            <InputAdornment position="start">
+              <img src={Thread}></img>
+            </InputAdornment>
+          }
+        />
+      </FormControl>
+      </Col>
+      <FormControl variant="standard">
+      <div className='files'>
+                    <Label className='mb-0 btn lable-btn' for='attach-email-item'>
+                      <Icon.PlusCircle  className='cursor-pointer'  size={20} /> FILE
+                      </Label>
+                      <Label>
+                      <input type='file'
+                       name='attach_email_item' 
+                       accept="image/*"
+                      //  value={formValue.attach_email_item || []}
+                      //  onChange={uploadImage}
+                       id='attach-email-item'
+                      hidden />
+                    </Label>
+                  </div>
+      </FormControl>
+      <Col md={12} sm={12}>
+        <div className='button_send_request'>
+             <Button.Ripple color='success' type='submit' >
+        <span className='align-middle ms-25'>SUBMIT</span>
+        <Icon.ArrowRightCircle  size={20} />
+      </Button.Ripple>
+      </div>
+      </Col>
+      </Row>
+      </form>
+        </ModalBody>
+        <ModalFooter className="thread-model-footer">
+          <Button color="modal-success" onClick={() => toggleModal(false)}>
+            CANCEL
+          </Button>
+        </ModalFooter>
+      </Modal>
+    </div>
+  )
+
   return (
     <Fragment>
+            <div>{renderModal}</div>
+            <div>
+        <Models
+      // modal = {sentPop} 
+      toggleModal={() => toggleSentModal()}
+      style={{borderRadius:'30px'}}
+      />
+      </div>
+
      {/* <Row>
+     
        <Col xs='12' sm='12' lg='12' xl={openMail === true ? '6' : '12'}> */}
       <div className='email-app-list'>
         <div className='app-fixed-search d-flex align-items-center topic_navbar'>
@@ -170,7 +271,7 @@ const [mailId, setMailId] = useState()
           <span className='align-middle dropdown_icon mr20'  ><Icon.Plus /> </span>
           <span className='align-middle dropdown_icon '   onClick={() => [setSearchVisible(!search)] }>  <SearchIcon /> </span> */}
           <span className='align-middle  mr20'   ><img className='img' src={Refresh}  /></span>
-          <span className='align-middle  mr20'  ><img className='img' src={Plus}  /> </span>
+          <span className='align-middle  mr20' onClick={() => toggleModal(true)}  ><img className='img' src={Plus}  /> </span>
           <span className='align-middle ' onClick={() => [setSearchVisible(!search)] }> <img className='img' src={Search}  /> </span>
           </div>
           </span> : <TextField
