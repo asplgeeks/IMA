@@ -6,7 +6,7 @@ import { Link, useParams } from 'react-router-dom'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { Mail, Send, Edit2, Star, Info, Trash, Search} from 'react-feather'
 import * as Icon from 'react-feather'
-
+import { useForm } from 'react-hook-form'
 import { Button, ListGroup, ListGroupItem, Badge, Media, Col, Row, Modal, ModalHeader, ModalBody, ModalFooter, InputGroup, InputGroupText} from 'reactstrap'
 
 import Breadcrumbs from '@material-ui/core/Breadcrumbs'
@@ -51,11 +51,12 @@ import Delete from "../../../Images/delete.svg"
 
 const Sidebar = props => {
   // ** Props
+  const { register, errors, setValue, handleSubmit } = useForm()
   const { store, sidebarOpen, toggleCompose, dispatch, getTopics, resetSelectedMail, setSidebarOpen, gettreads } = props
   const [open, setOpen] = useState(false)
   const [search, setSearchVisible] = useState(false)
   const [formValue, setFormValue] = useState({})
-  const [value, setValue] = useState("")
+  const [value, setValues] = useState("")
 
   const [modal, setModal] = useState(null)
   const [sentPop, setSentPop] = useState(false)
@@ -125,7 +126,6 @@ useEffect(() => {
     setSentPop(false)
   }
 
-
 // form input
   const handleChange = (event) => {
     const name = event.target.name
@@ -133,10 +133,10 @@ useEffect(() => {
     setFormValue(values => ({...values, [name]: value}))
   }
 // onsubmit
-  const handleSubmit = (event) => {
-    event.preventDefault()
+  const onSubmit = data => {
+    // event.preventDefault()
     // setSentPop(true)
-    dispatch(addNewtreads(formValue, {setSentPop, toggleModal}))
+    dispatch(addNewtreads(data, {setSentPop, toggleModal}))
     // alert(formValue.title)
   }
 //---------------------------
@@ -157,7 +157,7 @@ const renderModal = (
             You can always request to admin to create a new one. 
             However, the creation is at the discretion of the admin.
           </p>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)}>
           <Row>
       <Col md={12} sm={12}>
      <FormControl variant="standard" >
@@ -168,8 +168,9 @@ const renderModal = (
           id="input-with-icon-adornment"
           placeholder="Add Title"
           name="title"
-          value={formValue.title || ''}
-          onChange={handleChange}
+          // value={formValue.title || ''}
+          // onChange={handleChange}
+          {...register("title", { required: "This is required." })}
           startAdornment={
             <InputAdornment position="start">
               {/* <Icon.Edit2 /> */}
@@ -178,6 +179,7 @@ const renderModal = (
           }
         />
       </FormControl>
+      {errors.title && errors.title.type === 'required' && <p style={{color:"red"}}>Title is required</p>}
       </Col>
       <Col md={12} sm={12}>
 
@@ -189,8 +191,8 @@ const renderModal = (
           id="TEST"
           placeholder="Add Description"
           name='thread'
-          value={formValue.thread || ''}
-          onChange={handleChange}
+          className={classnames({ 'is-invalid': errors['thread'] })}
+          {...register("thread", { required: "This is required." })}
           startAdornment={
             <InputAdornment position="start">
                <img src={Path}></img>
@@ -198,6 +200,7 @@ const renderModal = (
           }
         />
       </FormControl>
+      {errors.thread && errors.thread.type === 'required' && <p style={{color:"red"}}>Thread is required</p>}
       </Col>
       <Col md={12} sm={12}>
         <div className='button_send_request'>
@@ -207,7 +210,6 @@ const renderModal = (
       </Button.Ripple>
       </div>
       </Col>
-
       </Row>
       </form>
         </ModalBody>
@@ -258,7 +260,7 @@ const renderModal = (
           variant="outlined"
           fullWidth
           size="small"
-          onChange={(e) => setValue(e.target.value)}
+          onChange={(e) => setValues(e.target.value)}
           value={value}
           InputProps={{
                   startAdornment: (
@@ -269,7 +271,7 @@ const renderModal = (
                   endAdornment:(
                   <IconButton className='delete_btn'
                     aria-label="toggle password visibility"
-                    onClick={() => [setSearchVisible(!search), setValue("")] }
+                    onClick={() => [setSearchVisible(!search), setValues("")] }
                   >
                     <img img className='img' src={Delete} />
                   </IconButton>
