@@ -132,6 +132,12 @@ const [uploadedImage, setUploadedImage] = useState([])
     }
   }
 
+  const deleteFunction = (i) => {
+    const clearImage = uploadedImage && uploadedImage.filter((image, index) => {
+      return uploadedImage.indexOf(image) !== i
+    })
+    setUploadedImage(clearImage)
+  }
   // ** Renders Attachments
   const renderAttachments = arr => {
     return arr.map((item, index) => {
@@ -442,7 +448,7 @@ const [uploadedImage, setUploadedImage] = useState([])
           {uploadedImage && uploadedImage.map((image, index) => {
             return (<div className='image_box'>
               <img src={image.location} alt='image'  width='70' height='50' style={{padding:"10px"}}/>
-              <Icon.XCircle  size={20} style={{float:"right"}}/>
+              <Icon.XCircle  size={20} style={{float:"right"}} onClick={() => deleteFunction(index)}/>
               </div>)
           })}
           

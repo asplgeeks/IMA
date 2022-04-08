@@ -28,7 +28,7 @@ import TextField from "@material-ui/core/TextField"
 import SearchIcon from "@material-ui/icons/Search"
 import { IconButton } from "@material-ui/core"
 import CancelRoundedIcon from "@material-ui/icons/CancelRounded"
-
+import FormHelperText from '@material-ui/core/FormHelperText'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
@@ -51,7 +51,7 @@ import Delete from "../../../Images/delete.svg"
 
 const Sidebar = props => {
   // ** Props
-  const { register, errors, setValue, handleSubmit } = useForm()
+  const { register, formState: { errors }, setValue, handleSubmit } = useForm()
   const { store, sidebarOpen, toggleCompose, dispatch, getTopics, resetSelectedMail, setSidebarOpen, gettreads } = props
   const [open, setOpen] = useState(false)
   const [search, setSearchVisible] = useState(false)
@@ -133,10 +133,11 @@ useEffect(() => {
     setFormValue(values => ({...values, [name]: value}))
   }
 // onsubmit
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     // event.preventDefault()
+    console.log(data, formValue)
     // setSentPop(true)
-    dispatch(addNewtreads(data, {setSentPop, toggleModal}))
+    dispatch(addNewtreads(formValue, {setSentPop, toggleModal}))
     // alert(formValue.title)
   }
 //---------------------------
@@ -168,18 +169,21 @@ const renderModal = (
           id="input-with-icon-adornment"
           placeholder="Add Title"
           name="title"
-          // value={formValue.title || ''}
-          // onChange={handleChange}
-          {...register("title", { required: "This is required." })}
+          value={formValue.title || ''}
+          onChange={handleChange}
+          aria-describedby="component-error-text"
           startAdornment={
             <InputAdornment position="start">
               {/* <Icon.Edit2 /> */}
               <img src={Thread}></img>
             </InputAdornment>
           }
+          {...register("title", { required: "First Name is required." })}
+          error={Boolean(errors.title)}
+          helperText={errors.title?.message}
         />
+      {/* <FormHelperText id="input-with-icon-adornment">Error</FormHelperText> */}
       </FormControl>
-      {errors.title && errors.title.type === 'required' && <p style={{color:"red"}}>Title is required</p>}
       </Col>
       <Col md={12} sm={12}>
 
@@ -191,16 +195,19 @@ const renderModal = (
           id="TEST"
           placeholder="Add Description"
           name='thread'
-          className={classnames({ 'is-invalid': errors['thread'] })}
-          {...register("thread", { required: "This is required." })}
+          value={formValue.thread || ''}
+          onChange={handleChange}
           startAdornment={
             <InputAdornment position="start">
                <img src={Path}></img>
             </InputAdornment>
           }
+          {...register("thread", { required: "First Name is required." })}
+          error={Boolean(errors.thread)}
+          helperText={errors.thread?.message}
         />
+        {/* <FormHelperText id="TEST">Error</FormHelperText> */}
       </FormControl>
-      {errors.thread && errors.thread.type === 'required' && <p style={{color:"red"}}>Thread is required</p>}
       </Col>
       <Col md={12} sm={12}>
         <div className='button_send_request'>
@@ -210,6 +217,7 @@ const renderModal = (
       </Button.Ripple>
       </div>
       </Col>
+
       </Row>
       </form>
         </ModalBody>
