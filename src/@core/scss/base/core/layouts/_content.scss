@@ -428,7 +428,7 @@ html {
 
 @include media-breakpoint-down(xs) {
   html body .app-content {
-    padding: calc(1rem - 0.8rem + 3.4rem + 0rem) calc(1rem - 0.8rem) 0 calc(1rem - 0.7rem) !important;
+    padding: calc(1rem - 0.8rem + 0.4rem + 0rem) calc(1rem - 0.8rem) 0 calc(1rem - 0.7rem) !important;
   
   
     // padding: calc(#{$content-padding} - 0.8rem + #{$navbar-height} + #{$floating-nav-margin})

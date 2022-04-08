@@ -155,12 +155,12 @@ const VerticalLayout = props => {
       ) : null}
 
       <Navbar
-        // expand='lg'
+        expand='lg'
         light={skin !== 'dark'}
         dark={skin === 'dark' || bgColorCondition}
         color={bgColorCondition ? navbarColor : undefined}
         className={classnames(
-          `header-navbar navbar d-xs-none lign-items-center ${navbarClasses[navbarType] || 'floating-nav'} navbar-border`
+          `header-navbar navbar hidden-xs align-items-center ${navbarClasses[navbarType] || 'floating-nav'} navbar-border`
         )}
       >
         <div className='navbar-container d-flex content'>
