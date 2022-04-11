@@ -2,18 +2,28 @@ import axios from 'axios'
 import axiosConfig from './../../../../../axiosConfig'
 // localStorage.setItem('token', r.data.token)
 
-const Token = localStorage.getItem('token')
+const UserId = localStorage.getItem('user_id')
+console.log(UserId)
+// Get Category List for thread 
+export const CategoryList = () => {
+  return dispatch => {
+    return axiosConfig.post('/admin/listThreadCategories').then(res => {
+      console.log(res)
+      dispatch({ type: 'GET_LISTOF_CATEGORY', data: res.data })
+    })
+  }
+}
 // ** Get tread list 
-export const gettreads = (searchDetail) => {
+export const gettreads = (catId) => {
   return dispatch => {
     return axiosConfig.post('/admin/getThreadUnreadCount', {
-      userid:"40",
+      userid:UserId,
       status:"",
       page_no:0,
       page_limit:10,
       sort_by:"status",
-      search_by:searchDetail,
-      thread_categoryid:"1"
+      search_by:'',
+      thread_categoryid:catId
   }).then(res => {
       dispatch({ type: 'GET_TREAD', data: res.data })
     })
@@ -24,27 +34,19 @@ export const gettreads = (searchDetail) => {
 export const addNewtreads = (formValue, props) => {
   return dispatch => {
     return axiosConfig.post('/admin/addThread', {
-      userid:"40",
+      userid:UserId,
       threadcategory_id:"1",
       admin_note:"note",
       display_name:formValue.title,
       display_desc:formValue.thread,
-      moderator_ids:"40"
-  }, 
-  {
-  headers: {
-    Authorization: Token
-  }}).then(res => {
+      moderator_ids:""
+  }).then(res => {
       console.log(res)
       axiosConfig.post('/admin/addThread', {
     threadid:res.data.data[0].thread_id,
     selection_type:"0",
-    selected_ids:"40"
-    }, 
-    {
-    headers: {
-      Authorization: Token
-    }}).then(r => console.log(r))
+    selected_ids:UserId
+    }).then(r => console.log(r))
       props.setSentPop(true)
       props.toggleModal()
     })
@@ -58,11 +60,7 @@ export const getTopics = (params) => {
     return axiosConfig.post('/admin/getCommentIdList', {
       thread_id:params.folder.thread_id,
       comment_id:""
-  }, 
-  {
-  headers: {
-    Authorization: Token
-  }}).then(res => {
+  }).then(res => {
       console.log(res)
       dispatch({ type: 'GET_MAILS', data: res.data, params })
     })
@@ -72,10 +70,7 @@ export const getTopics = (params) => {
 
 // ** SELECT Current Mail
 export const selectCurrentMail = id => dispatch => {
-  return axiosConfig.post('/admin/getCommentDetails', { id }, {
-    headers: {
-      Authorization: Token
-    }}).then(res => {
+  return axiosConfig.post('/admin/getCommentDetails', { id }).then(res => {
     console.log(res)
     dispatch({ type: 'SELECT_CURRENT_MAIL', mail: res.data })
   })

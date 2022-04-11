@@ -1,5 +1,6 @@
 // ** Initial State
 const initialState = {
+  categoryDetail:[],
   treadDetail:[],
   mails: [],
   params: {},
@@ -10,6 +11,12 @@ const initialState = {
 
 const EmailReducer = (state = initialState, action) => {
   switch (action.type) {
+    case 'GET_LISTOF_CATEGORY':
+    return {
+      ...state,
+      categoryDetail:action.data,
+      params:action.params
+    }
     case 'GET_TREAD': 
     return {
       ...state,

@@ -71,9 +71,9 @@ export const handleLogin = (data, props) => {
   const password = data.password
   app.auth().signInWithEmailAndPassword(email, password)
   .then((user_info) => {
-
+console.log(user_info)
     localStorage.setItem("fbUserId", JSON.stringify(user_info.user.uid))
-    // console.log("login data", JSON.stringify(user_info.user))
+    console.log("login data", user_info.user.uid)
 
     axiosConfig.put(`/user/getIdByEmail`, {
       email: data.email_id 
