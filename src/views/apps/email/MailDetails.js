@@ -131,31 +131,23 @@ const params = {
   spaceBetween:20
 }
 
+// ..show the files
+const userFiles = mail && mail.data && mail.data.files
+const USER_File_TYPE = JSON.parse(userFiles && userFiles.replaceAll("\"\"", "\""))
+console.log(USER_File_TYPE)
 const SwiperMultiSlides = () => {
   return (
         <Swiper dir={isRtl ? 'rtl' : 'ltr'} {...params}>
+          {USER_File_TYPE && USER_File_TYPE.map((image, index) => {
+            return (
           <SwiperSlide>
-            <img src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/banner-32.b109b076.jpg" alt='swiper 1' className='img-fluid' />
+            <img src={image.location} alt='swiper 1' className='img-fluid' style={{borderRadius:"20px"}}/>
           </SwiperSlide>
-          <SwiperSlide>
-            <img src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/banner-31.492c95ac.jpg" alt='swiper 2' className='img-fluid' />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/banner-32.b109b076.jpg" alt='swiper 3' className='img-fluid' />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/banner-31.492c95ac.jpg" alt='swiper 4' className='img-fluid' />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/banner-31.492c95ac.jpg" alt='swiper 5' className='img-fluid' />
-          </SwiperSlide>
-        </Swiper>
+        )
+      })}       
+    </Swiper>
   )
 }
-
-// ..show the files
-const userFiles = mail && mail.data && mail.data.files
-const USER_File_TYPE = JSON.parse(userFiles && userFiles)
 
   // ** Handle show replies, go back, folder & read click functions
   const handleShowReplies = e => {
@@ -277,14 +269,18 @@ const USER_File_TYPE = JSON.parse(userFiles && userFiles)
         }}> Images slider */}
                  {SwiperMultiSlides()}
           {/* </div> */}
-          {USER_File_TYPE && USER_File_TYPE.type !== "image" ? <div className='pdf_view'>
-             <span className='pdf_text'>
+
+          {USER_File_TYPE && USER_File_TYPE.map((image, index) => {
+          return (<div className='pdf_view'>
+            {image.mimetype === "application/pdf" ? <span className='pdf_text'>
                <span className='view'>
                <span className='pdf-img'><img src={PDF} /><span className='size'>5 MB</span></span>
-            <span className='pdf-title'> Full name of the PDF file uploaded with.pdf</span>
+            <span className='pdf-title'>{image.originalname}</span>
              </span>
-             </span>
-              </div> : ''}
+             </span> : ''}
+              </div>)
+              })
+            }
 
               <Media> 
             <div className='avatar'>
