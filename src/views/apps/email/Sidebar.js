@@ -6,8 +6,8 @@ import { Link, useParams } from 'react-router-dom'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { Mail, Send, Edit2, Star, Info, Trash, Search} from 'react-feather'
 import * as Icon from 'react-feather'
-
-import { Button, ListGroup, ListGroupItem, Badge, Media, Col, Row, Modal, ModalHeader, ModalBody, ModalFooter, InputGroup, InputGroupText} from 'reactstrap'
+import { Controller, useForm } from 'react-hook-form'
+import { Button, ListGroup, ListGroupItem, Badge, Form, Media, Col, Row, Modal, ModalHeader, ModalBody, ModalFooter, InputGroup, InputGroupText} from 'reactstrap'
 
 import Breadcrumbs from '@material-ui/core/Breadcrumbs'
 import Typography from '@material-ui/core/Typography'
@@ -28,14 +28,15 @@ import TextField from "@material-ui/core/TextField"
 import SearchIcon from "@material-ui/icons/Search"
 import { IconButton } from "@material-ui/core"
 import CancelRoundedIcon from "@material-ui/icons/CancelRounded"
-
+import FormHelperText from '@material-ui/core/FormHelperText'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import Models from './../../components/Model'
 import {
-  addNewtreads
+  addNewtreads,
+  CategoryList
 } from './store/actions'
 
 import Adnew from './../../../Images/addnew.svg'
@@ -51,17 +52,19 @@ import Delete from "../../../Images/delete.svg"
 
 const Sidebar = props => {
   // ** Props
+  const { register, errors, setValue, handleSubmit, control } = useForm()
   const { store, sidebarOpen, toggleCompose, dispatch, getTopics, resetSelectedMail, setSidebarOpen, gettreads } = props
   const [open, setOpen] = useState(false)
   const [search, setSearchVisible] = useState(false)
   const [formValue, setFormValue] = useState({})
-  const [value, setValue] = useState("")
+  const [value, setValues] = useState("")
 
   const [modal, setModal] = useState(null)
   const [sentPop, setSentPop] = useState(false)
   const [activeIndex, setActiveIndex] = useState()
-  const { mails, selectedMails, treadDetail } = store
-console.log(treadDetail)
+  const [catId, setCateid] = useState('')
+  const { mails, selectedMails, treadDetail, categoryDetail } = store
+console.log(categoryDetail)
 
 const [searchField, setSearchField] = useState("")
 
@@ -77,12 +80,19 @@ const filteredPersons = treadDetail && treadDetail.data && treadDetail.data.filt
   }
 )
 
+const getCategoryId = (catDetail) => {
+  setCateid(catDetail.id)
+}
   const handleClick = () => {
     // setOpen(!open)
     setOpen(!open)
   }
+
+  useEffect(() => {
+    dispatch(CategoryList())
+  }, [open])
 useEffect(() => {
-  dispatch(gettreads())
+  dispatch(gettreads(catId))
 }, [])
   // ** Vars
   const params = useParams()
@@ -125,18 +135,19 @@ useEffect(() => {
     setSentPop(false)
   }
 
-
 // form input
   const handleChange = (event) => {
     const name = event.target.name
     const value = event.target.value
     setFormValue(values => ({...values, [name]: value}))
   }
-// onsubmit
-  const handleSubmit = (event) => {
-    event.preventDefault()
+
+  console.log(errors)
+// handleSubmit
+  const onSubmit = (data) => {
+    console.log(data)
     // setSentPop(true)
-    dispatch(addNewtreads(formValue, {setSentPop, toggleModal}))
+    dispatch(addNewtreads(data, {setSentPop, toggleModal}))
     // alert(formValue.title)
   }
 //---------------------------
@@ -157,46 +168,70 @@ const renderModal = (
             You can always request to admin to create a new one. 
             However, the creation is at the discretion of the admin.
           </p>
-          <form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit(onSubmit)}>
           <Row>
       <Col md={12} sm={12}>
      <FormControl variant="standard" >
         <InputLabel htmlFor="input-with-icon-adornment">
         Thread Title
         </InputLabel>
+        <Controller 
+        control={control}
+        name="title"
+        as={
         <Input
           id="input-with-icon-adornment"
           placeholder="Add Title"
-          name="title"
-          value={formValue.title || ''}
-          onChange={handleChange}
+          className={classnames({ 'is-invalid': errors['title'] })}
+         innerRef={register("title", {required:true, validate: value => value !== ''})}
+          // value={formValue.title || ''}
+          // onChange={handleChange}
           startAdornment={
             <InputAdornment position="start">
               {/* <Icon.Edit2 /> */}
               <img src={Thread}></img>
             </InputAdornment>
           }
+          // error={formValue.title === undefined}
+          // helperText={formValue.title === undefined ? "please fill something" : ''}
         />
+        }
+        />
+        {errors.title && <p style={{color:"red"}}>Title is required</p>}
       </FormControl>
       </Col>
+
       <Col md={12} sm={12}>
 
       <FormControl variant="standard">
         <InputLabel htmlFor="input-with-icon-adornment">
         Why should it be added as a new thread?
         </InputLabel>
+        <Controller 
+        control={control}
+        name="thread"
+        defaultValue={''}
+        as={
         <Input
           id="TEST"
           placeholder="Add Description"
-          name='thread'
-          value={formValue.thread || ''}
-          onChange={handleChange}
+          name="thread"
+          // name='thread'
+          // value={formValue.thread || ''}
+          // onChange={handleChange}
+          className={classnames({ 'is-invalid': errors['thread'] })}
+          ref={register({required:true, validate: value => value !== ""})}
           startAdornment={
             <InputAdornment position="start">
                <img src={Path}></img>
             </InputAdornment>
           }
+          // error={formValue.thread === undefined}
         />
+        }
+        />
+        {console.log(errors)}
+         {errors.thread && errors.thread.type === 'required' && <p style={{color:"red"}}>Thread is required</p>}
       </FormControl>
       </Col>
       <Col md={12} sm={12}>
@@ -209,7 +244,7 @@ const renderModal = (
       </Col>
 
       </Row>
-      </form>
+      </Form>
         </ModalBody>
         <ModalFooter className="thread-model-footer">
           <Button color="modal-success" onClick={() => toggleModal(3)}>
@@ -258,7 +293,7 @@ const renderModal = (
           variant="outlined"
           fullWidth
           size="small"
-          onChange={(e) => setValue(e.target.value)}
+          onChange={(e) => setValues(e.target.value)}
           value={value}
           InputProps={{
                   startAdornment: (
@@ -269,7 +304,7 @@ const renderModal = (
                   endAdornment:(
                   <IconButton className='delete_btn'
                     aria-label="toggle password visibility"
-                    onClick={() => [setSearchVisible(!search), setValue("")] }
+                    onClick={() => [setSearchVisible(!search), setValues("")] }
                   >
                     <img img className='img' src={Delete} />
                   </IconButton>
@@ -278,14 +313,17 @@ const renderModal = (
             /> }
 
  <Collapse in={open} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItem button >
+   {categoryDetail && categoryDetail.data && categoryDetail.data.map((detail, index) => {
+           return (<List component="div" disablePadding>
+              <ListItem button onClick={() => getCategoryId(detail)}>
                 <ListItemIcon>
                   <StarBorder />
                 </ListItemIcon>
-                <ListItemText inset primary="Starred" />
+                <ListItemText inset primary={detail.cat_name} />
               </ListItem>
-            </List>
+            </List>)
+               
+   })}
           </Collapse>
           </Col> 
           </Row>

@@ -2,18 +2,28 @@ import axios from 'axios'
 import axiosConfig from './../../../../../axiosConfig'
 import Swal from 'sweetalert2'
 
-const User_id = localStorage.getItem('user_id')
+const UserId = localStorage.getItem('user_id')
+console.log(UserId)
+// Get Category List for thread 
+export const CategoryList = () => {
+  return dispatch => {
+    return axiosConfig.post('/admin/listThreadCategories').then(res => {
+      console.log(res)
+      dispatch({ type: 'GET_LISTOF_CATEGORY', data: res.data })
+    })
+  }
+}
 // ** Get tread list 
-export const gettreads = (searchDetail) => {
+export const gettreads = (catId) => {
   return dispatch => {
     return axiosConfig.post('/admin/getThreadUnreadCount', {
-      userid:"40",
+      userid:UserId,
       status:"",
       page_no:0,
       page_limit:10,
       sort_by:"status",
-      search_by:searchDetail,
-      thread_categoryid:"1"
+      search_by:'',
+      thread_categoryid:catId
   }).then(res => {
       dispatch({ type: 'GET_TREAD', data: res.data })
     })
@@ -24,18 +34,18 @@ export const gettreads = (searchDetail) => {
 export const addNewtreads = (formValue, props) => {
   return dispatch => {
     return axiosConfig.post('/admin/addThread', {
-      userid:"40",
+      userid:UserId,
       threadcategory_id:"1",
       admin_note:"note",
       display_name:formValue.title,
       display_desc:formValue.thread,
-      moderator_ids:"40"
+      moderator_ids:""
   }).then(res => {
       console.log(res)
       axiosConfig.post('/admin/addThread', {
     threadid:res.data.data[0].thread_id,
     selection_type:"0",
-    selected_ids:"40"
+    selected_ids:UserId
     }).then(r => console.log(r))
       props.setSentPop(true)
       props.toggleModal()
@@ -74,7 +84,7 @@ export const addCommentSubComment = (title, images, detail, props) => {
       // comment_id:detail.topic_id,
       thread_id:detail.thread_id,
       comment:title.comment,
-      userid:User_id,
+      userid:UserId,
       parent_id:detail.parent_id,
       files:JSON.stringify(images)
   }).then(res => {
@@ -95,7 +105,7 @@ export const addTopic = (comment_data, images, detail, props) => {
     return axiosConfig.post('/admin/addUpdateThreadComment', {
       thread_id:detail.thread_id,
       comment:comment_data,
-      userid:User_id,
+      userid:UserId,
       parent_id:0,
       comment_id:0,
       files:JSON.stringify(images)
