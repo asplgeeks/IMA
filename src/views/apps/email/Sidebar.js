@@ -93,7 +93,7 @@ const getCategoryId = (catDetail) => {
   }, [open])
 useEffect(() => {
   dispatch(gettreads(catId))
-}, [])
+}, [catId])
   // ** Vars
   const params = useParams()
 

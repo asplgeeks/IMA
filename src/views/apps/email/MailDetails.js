@@ -4,7 +4,7 @@ import { Fragment, useState } from 'react'
 
 // ** Utils
 import { formatDate } from '@utils'
-
+import { useRTL } from '@hooks/useRTL'
 import * as Icon from 'react-feather'
 import SearchIcon from "@material-ui/icons/Search"
 //-------------------
@@ -25,6 +25,22 @@ import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
 // ** Custom Components
 import Avatar from '@components/avatar'
+import { Swiper, SwiperSlide } from 'swiper/react'
+// import { Card, CardHeader, CardTitle, CardBody } from 'reactstrap'
+
+import '@styles/react/libs/swiper/swiper.scss'
+import SwiperCore, {
+  Navigation,
+  Pagination,
+  EffectFade,
+  EffectCube,
+  EffectCoverflow,
+  Autoplay,
+  Lazy,
+  Virtual
+} from 'swiper'
+SwiperCore.use([Navigation, Pagination, EffectFade, EffectCube, EffectCoverflow, Autoplay, Lazy, Virtual])
+
 import {
   addCommentSubComment
 } from './store/actions'
@@ -40,6 +56,7 @@ import {
   CardBody,
   CardFooter,
   CardHeader,
+  CardTitle,
   DropdownMenu,
   DropdownItem,
   DropdownToggle,
@@ -62,6 +79,8 @@ import {
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import axiosConfig from './../../../axiosConfig'
 const moment = require('moment')
+
+
 const MailDetails = props => {
   // ** Props
   const {
@@ -81,46 +100,13 @@ const MailDetails = props => {
   } = props
   console.log(mail)
   // ** States
+  const [isRtl, setIsRtl] = useRTL()
   const [showReplies, setShowReplies] = useState(false)
   const [search, setSearchVisible] = useState(false)
   const [value, setValue] = useState("")
   const [formValue, setFormValue] = useState({})
 const [uploadedImage, setUploadedImage] = useState([])
- const items = [
-    {
-      altText: 'Slide 1',
-      caption: 'Slide 1',
-      key: 1,
-      src: 'https://picsum.photos/id/123/1200/600'
-    }, {
-      altText: 'Slide 2',
-      caption: 'Slide 2',
-      key: 2,
-      src: 'https://picsum.photos/id/456/1200/600'
-    },
-    {
-      altText: 'Slide 3',
-      caption: 'Slide 3',
-      key: 3,
-      src: 'https://picsum.photos/id/678/1200/600'
-    }
-  ]
 
-  const slides = items && items.map((item) => {
-    return (
-      <CarouselItem
-        onExiting={() => setAnimating(true)}
-        onExited={() => setAnimating(false)}
-        key={item.src}
-      >
-        <img src={item.src} alt={item.altText} height="320px" />
-        <CarouselCaption
-          captionText={item.caption}
-          captionHeader={item.caption}
-        />
-      </CarouselItem>
-    )
-  })
   // ** Renders Labels
   const renderLabels = arr => {
     if (arr && arr.length) {
@@ -139,101 +125,37 @@ const [uploadedImage, setUploadedImage] = useState([])
     setUploadedImage(clearImage)
   }
   // ** Renders Attachments
-  const renderAttachments = arr => {
-    return arr.map((item, index) => {
-      return (
-        <a
-          key={item.fileName}
-          href='/'
-          onClick={e => e.preventDefault()}
-          className={classnames({
-            'mb-50': index + 1 !== arr.length
-          })}
-        >
-          <img src={item.thumbnail} alt={item.fileName} width='16' className='mr-50' />
-          <span className='text-muted font-weight-bolder align-text-top'>{item.fileName}</span>
-          <span className='text-muted font-small-2 ml-25'>{`(${item.size})`}</span>
-        </a>
-      )
-    })
-  }
 
-  // ** Renders Messages
-  const renderMessage = obj => {
-    return (
-      <Card>
-        <CardHeader className='email-detail-head'>
-          <div className='user-details d-flex justify-content-between align-items-center flex-wrap'>
-            <Avatar img={obj.from.avatar} className='mr-75' imgHeight='48' imgWidth='48' />
-            <div className='mail-items'>
-              <h5 className='mb-0'>{obj.from.name}</h5>
-              <UncontrolledDropdown className='email-info-dropup'>
-                <DropdownToggle className='font-small-3 text-muted cursor-pointer' tag='span' caret>
-                  {obj.from.email}
-                </DropdownToggle>
-                <DropdownMenu>
-                  <Table className='font-small-3' size='sm' borderless>
-                    <tbody>
-                      <tr>
-                        <td className='text-right text-muted align-top'>From:</td>
-                        <td>{obj.from.email}</td>
-                      </tr>
-                      <tr>
-                        <td className='text-right text-muted align-top'>To:</td>
-                        <td>{obj.to[0].email}</td>
-                      </tr>
-                      <tr>
-                        <td className='text-right text-muted align-top'>Date:</td>
-                        <td>
-                          {formatDateToMonthShort(obj.time)}, {formatDateToMonthShort(obj.time, false)}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </Table>
-                </DropdownMenu>
-              </UncontrolledDropdown>
-            </div>
-          </div>
-          <div className='mail-meta-item d-flex align-items-center'>
-            <small className='mail-date-time text-muted'>{formatDate(obj.time)}</small>
-            <UncontrolledDropdown className='ml-50'>
-              <DropdownToggle className='cursor-pointer' tag='span'>
-                <MoreVertical size={14} />
-              </DropdownToggle>
-              <DropdownMenu right>
-                <DropdownItem className='d-flex align-items-center w-100'>
-                  <CornerUpLeft className='mr-50' size={14} />
-                  Reply
-                </DropdownItem>
-                <DropdownItem className='d-flex align-items-center w-100'>
-                  <CornerUpRight className='mr-50' size={14} />
-                  Forward
-                </DropdownItem>
-                <DropdownItem className='d-flex align-items-center w-100'>
-                  <Trash2 className='mr-50' size={14} />
-                  Delete
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
-          </div>
-        </CardHeader>
-        <CardBody className='mail-message-wrapper pt-2'>
-          <div className='mail-message' dangerouslySetInnerHTML={{ __html: obj.message }}></div>
-        </CardBody>
-        {obj.attachments && obj.attachments.length ? (
-          <CardFooter>
-            <div className='mail-attachments'>
-              <div className='d-flex align-items-center mb-1'>
-                <Paperclip size={16} />
-                <h5 className='font-weight-bolder text-body mb-0 ml-50'>{obj.attachments.length} Attachment</h5>
-              </div>
-              <div className='d-flex flex-column'>{renderAttachments(obj.attachments)}</div>
-            </div>
-          </CardFooter>
-        ) : null}
-      </Card>
-    )
-  }
+const params = {
+  slidesPerView: 3,
+  spaceBetween:20
+}
+
+const SwiperMultiSlides = () => {
+  return (
+        <Swiper dir={isRtl ? 'rtl' : 'ltr'} {...params}>
+          <SwiperSlide>
+            <img src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/banner-32.b109b076.jpg" alt='swiper 1' className='img-fluid' />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/banner-31.492c95ac.jpg" alt='swiper 2' className='img-fluid' />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/banner-32.b109b076.jpg" alt='swiper 3' className='img-fluid' />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/banner-31.492c95ac.jpg" alt='swiper 4' className='img-fluid' />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/banner-31.492c95ac.jpg" alt='swiper 5' className='img-fluid' />
+          </SwiperSlide>
+        </Swiper>
+  )
+}
+
+// ..show the files
+const userFiles = mail && mail.data && mail.data.files
+const USER_File_TYPE = JSON.parse(userFiles && userFiles)
 
   // ** Handle show replies, go back, folder & read click functions
   const handleShowReplies = e => {
@@ -348,30 +270,21 @@ const [uploadedImage, setUploadedImage] = useState([])
             <Row className="topic_details">
               <Col sm='12'>
                 <div className='email-label'>
-                  <p>"The pharmaceutical industry mainly influences drug regulation"</p>
+                  <p>{mail && mail.data && mail.data.comment}</p>
                 </div>
-          <div style={{
+          {/* <div style={{
             display: 'block', maxWidth: 600, padding: 30
-        }}> Images slider
-          <Carousel
-          activeIndex={2}
-          next={function noRefCheck () {}}
-          previous={function noRefCheck () {}}
-    >
-      <CarouselIndicators items={items} activeIndex={0} onClickHandler={function noRefCheck () {}} />
-      {slides}
-      <CarouselControl direction="prev" directionText="Previous" onClickHandler={function noRefCheck () {}} />
-      <CarouselControl direction="next" directionText="Next" onClickHandler={function noRefCheck () {}} />
-    </Carousel>
-          </div>
-              <div className='pdf_view'>
+        }}> Images slider */}
+                 {SwiperMultiSlides()}
+          {/* </div> */}
+          {USER_File_TYPE && USER_File_TYPE.type !== "image" ? <div className='pdf_view'>
              <span className='pdf_text'>
                <span className='view'>
                <span className='pdf-img'><img src={PDF} /><span className='size'>5 MB</span></span>
             <span className='pdf-title'> Full name of the PDF file uploaded with.pdf</span>
              </span>
              </span>
-              </div>
+              </div> : ''}
 
               <Media> 
             <div className='avatar'>
@@ -458,7 +371,7 @@ const [uploadedImage, setUploadedImage] = useState([])
                       <Icon.PlusCircle  className='cursor-pointer'  size={20} /> FILE
                       <input type='file'
                        name='attach_email_item' 
-                       accept="image/*"
+                       accept="image/*, application/pdf"
                       //  value={formValue.attach_email_item || []}
                        onChange={uploadImage}
                        id='attach-email-item'
