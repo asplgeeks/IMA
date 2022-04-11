@@ -750,6 +750,16 @@ color: #5e5873 !important;
     text-align: center; 
   }
 }
+.comment_model-footer
+{
+  display: table;
+  width: 100%; 
+  text-align: center;
+  button{
+    color: #FF0000;
+    text-align: center; 
+  }
+}
 
 .details_svg{
   border: 2px solid #444444 !important;
@@ -1168,7 +1178,7 @@ margin-left: 0px !important;
     .lable-btn{
       background: #FF0000;
       color: #fff;
-      margin-left: 15px;
+      // margin-left: 15px;
     }
   }
   button{
@@ -1187,4 +1197,28 @@ margin-left: 0px !important;
       }
     }
   }
+}
+.image_box{
+  width: 90px;
+    height: 90px;
+    position: relative;
+    float: left;
+    margin-right: 12px;
+    margin-bottom: 12px;
+    svg{
+      position: absolute;
+      left: 100%;
+      margin-left: -22px;
+      margin-top: 2px;
+      cursor: pointer;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0px 0px 8px #5e5858;
+    }
+    img{
+      width: 90px;
+    height: 90px;
+        border-radius: 4px;
+
+    }
 }

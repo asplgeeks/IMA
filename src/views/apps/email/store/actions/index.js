@@ -1,6 +1,6 @@
 import axios from 'axios'
 import axiosConfig from './../../../../../axiosConfig'
-// localStorage.setItem('token', r.data.token)
+import Swal from 'sweetalert2'
 
 const UserId = localStorage.getItem('user_id')
 console.log(UserId)
@@ -84,7 +84,7 @@ export const addCommentSubComment = (title, images, detail, props) => {
       // comment_id:detail.topic_id,
       thread_id:detail.thread_id,
       comment:title.comment,
-      userid:detail.userid,
+      userid:UserId,
       parent_id:detail.parent_id,
       files:JSON.stringify(images)
   }).then(res => {
@@ -94,6 +94,40 @@ export const addCommentSubComment = (title, images, detail, props) => {
     props.resetSelectedMail()
   } else {
     console.log(res)
+  }
+    })
+  }
+}
+
+// add comment and subComment 
+export const addTopic = (comment_data, images, detail, props) => {
+  return dispatch => {
+    return axiosConfig.post('/admin/addUpdateThreadComment', {
+      thread_id:detail.thread_id,
+      comment:comment_data,
+      userid:UserId,
+      parent_id:0,
+      comment_id:0,
+      files:JSON.stringify(images)
+  }).then(res => {
+    if (res.data.success === 1) { 
+      Swal.fire({
+        title: 'Success!',
+        text: 'Topic submitted successfully',
+        icon: 'success',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#28c76f'
+      })
+ return "success"
+  } else {
+    Swal.fire({
+      title: 'Error!',
+      text: 'Something Went Wrong !',
+      icon: 'error',
+      confirmButtonText: 'Try Again',
+      confirmButtonColor: '#EE3224'
+    })
+    return "error"
   }
     })
   }
