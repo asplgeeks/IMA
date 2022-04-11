@@ -1,13 +1,13 @@
 // ** React Imports
-import { Fragment, useState } from 'react'
-
+import { Fragment, useState  } from 'react'
+import classnames from 'classnames'
 // ** Mail Components Imports
 import MailCard from './MailCard'
 import MailDetails from './MailDetails'
 import ComposePopUp from './ComposePopup'
 import * as Icon from 'react-feather'
 import Models from './../../components/Model'
-
+import { Controller, useForm } from 'react-hook-form'
 // ** Utils
 import { formatDateToMonthShort } from '@utils'
 
@@ -22,6 +22,9 @@ import { IconButton } from "@material-ui/core"
 import Input from '@material-ui/core/Input'
 
 import CancelRoundedIcon from "@material-ui/icons/CancelRounded"
+
+import axiosConfig from './../../../axiosConfig'
+import {addTopic} from './store/actions'
 
 // ** Third Party Components
 import PerfectScrollbar from 'react-perfect-scrollbar'
@@ -53,6 +56,8 @@ import Adnewgreen from './../../../Images/addnewgreen.svg'
 import Thread from './../../../Images/thread.svg'
 import Path from './../../../Images/path.svg'
 
+import BlockUi from 'react-block-ui'
+import 'react-block-ui/style.css'
 
 const Mails = props => {
   // ** Props
@@ -75,13 +80,20 @@ const Mails = props => {
 
   const { mails, selectedMails, params, currentMail } = store
   // ** States
+  // mails
+  // console.log("sdadadas", params && params.folder)
+  const { register, errors, handleSubmit, control } = useForm()
+
   const [openMail, setOpenMail] = useState(false)
   const [search, setSearchVisible] = useState(false)
   const [threadDetails, setThreadDetails] = useState(mails)
   const [searchField, setSearchField] = useState("")
-const [mailId, setMailId] = useState()
-const [modal, setModal] = useState(false)
+  const [mailId, setMailId] = useState()
 
+  const [blocking_state, setBlocking] = useState(false)
+
+  const [modal, setModal] = useState(false)
+  const [uploadedImage, setUploadedImage] = useState([])
   const filteredPersons = mails && mails.data && mails.data.filter(
     person => {
       return (
@@ -92,7 +104,6 @@ const [modal, setModal] = useState(false)
       )
     }
   )
-
   // console.log("searchable items", filteredPersons)
   // ** Variables
   const labelColors = {
@@ -173,40 +184,89 @@ const [modal, setModal] = useState(false)
     }
   }
 
+
+//--------------handel submit----------------------------//
+const onSubmit = (data) => {
+  // console.log("data", params && params.folder)
+  dispatch(addTopic(data.comment, uploadedImage, params && params.folder, props)).then(info => { 
+    console.log("info", info) 
+    if (info === "success") {
+      setModal(false)
+      setUploadedImage([])
+    }
+   })
+   .catch(err => {
+    console.log("err", err) 
+   })
+  }
+
+  const uploadImage = (event) => {
+    setBlocking(true)
+    const bodyFormData = new FormData()
+    const name = event.target.name
+    const value = event.target.files
+    console.log("sadasdasd", event.target.files)
+    bodyFormData.append('file', value[0])
+    const config = {
+      headers: {
+          'content-type': 'multipart/form-data'
+      }
+  }
+  
+  const fileList = event.target.files
+    axiosConfig.post('/admin/uploadFile', bodyFormData, config).then(r => [setBlocking(false), setUploadedImage([...uploadedImage, r.data.data])])
+  }
+//-----------------------delete image----------------------------------//
+  const deleteImage = (i) => {
+    const clearImage = uploadedImage && uploadedImage.filter((image, index) => {
+      return uploadedImage.indexOf(image) !== i
+    })
+    setUploadedImage(clearImage)
+  }
+
   const renderModal = (
     <div className={'theme-{item.modalColor}'} >
       <Modal
         isOpen={modal === true}
         toggle={() => toggleModal(true)}
         className='modal-dialog-centered'
-        modalClassName="modal-success" >
+        modalClassName="modal-success" >     
+         <BlockUi tag="div" blocking={blocking_state}>
+
         <ModalBody className="comment_model">
           <img className='img' src={Adnewgreen} />
-          <h5>Add New Comment</h5>
-          <form >
-          {/* onSubmit={handleSubmit} */}
-          <Row>
+          <h5>Add New Topic</h5>
+
+     <form  onSubmit={handleSubmit(onSubmit)}>
+      <Row>
       <Col md={12} sm={12}>
      <FormControl variant="standard" >
         <InputLabel htmlFor="input-with-icon-adornment">
-        Comment
+        Topic Title
         </InputLabel>
+       <Controller
+       control={control}
+       name="comment"
+       as={
         <Input
-          id="input-with-icon-adornment"
-          placeholder="Add Comment"
-          name="title"
+          id="comment"
+          placeholder="Add Topic"
+          className={classnames({ 'is-invalid': errors['comment'] })}
           multiline
-         rows={2}
-          // value={formValue.title || ''}
-          // onChange={handleChange}
+          ref={register("comment", {required:true, validate: value => value !== undefined })}
+          rows={2}
           startAdornment={
-            <InputAdornment position="start">
-              <img src={Thread}></img>
-            </InputAdornment>
+          <InputAdornment position="start">
+          <img src={Thread}></img>
+          </InputAdornment>
           }
         />
+       }
+       />
+          {errors.comment && <p style={{color:"red"}}>Please enter topic</p>}  
       </FormControl>
       </Col>
+      <Col md={12} sm={12}>
       <FormControl variant="standard">
       <div className='files'>
                     <Label className='mb-0 btn lable-btn' for='attach-email-item'>
@@ -217,12 +277,25 @@ const [modal, setModal] = useState(false)
                        name='attach_email_item' 
                        accept="image/*"
                       //  value={formValue.attach_email_item || []}
-                      //  onChange={uploadImage}
+                       onChange={uploadImage}
                        id='attach-email-item'
                       hidden />
                     </Label>
                   </div>
-      </FormControl>
+      </FormControl> 
+      </Col>
+      <Col md={12} sm={12}>
+      <FormControl variant="standard">
+        <div> 
+          {uploadedImage && uploadedImage.map((image, index) => {
+                return (<div className='image_box'>
+                <Icon.XCircle  size={20} style={{float:"right"}} onClick={() => deleteImage(index)}/>
+                  <img src={image.location} />
+                  </div>)
+              })}
+          </div>
+        </FormControl> 
+      </Col>
       <Col md={12} sm={12}>
         <div className='button_send_request'>
              <Button.Ripple color='success' type='submit' >
@@ -233,12 +306,16 @@ const [modal, setModal] = useState(false)
       </Col>
       </Row>
       </form>
+      
+
         </ModalBody>
-        <ModalFooter className="thread-model-footer">
+        <ModalFooter className="comment_model-footer">
           <Button color="modal-success" onClick={() => toggleModal(false)}>
             CANCEL
           </Button>
         </ModalFooter>
+        </BlockUi>
+
       </Modal>
     </div>
   )
@@ -271,7 +348,7 @@ const [modal, setModal] = useState(false)
           <span className='align-middle dropdown_icon mr20'  ><Icon.Plus /> </span>
           <span className='align-middle dropdown_icon '   onClick={() => [setSearchVisible(!search)] }>  <SearchIcon /> </span> */}
           <span className='align-middle  mr20'   ><img className='img' src={Refresh}  /></span>
-          <span className='align-middle  mr20' onClick={() => toggleModal(true)}  ><img className='img' src={Plus}  /> </span>
+          {params && params.folder !== "" ? <span className='align-middle  mr20' onClick={() => toggleModal(true)}  ><img className='img' src={Plus}  /> </span> : " " }
           <span className='align-middle ' onClick={() => [setSearchVisible(!search)] }> <img className='img' src={Search}  /> </span>
           </div>
           </span> : <TextField

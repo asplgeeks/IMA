@@ -1,8 +1,8 @@
 import axios from 'axios'
 import axiosConfig from './../../../../../axiosConfig'
-// localStorage.setItem('token', r.data.token)
+import Swal from 'sweetalert2'
 
-const Token = localStorage.getItem('token')
+const User_id = localStorage.getItem('user_id')
 // ** Get tread list 
 export const gettreads = (searchDetail) => {
   return dispatch => {
@@ -30,21 +30,13 @@ export const addNewtreads = (formValue, props) => {
       display_name:formValue.title,
       display_desc:formValue.thread,
       moderator_ids:"40"
-  }, 
-  {
-  headers: {
-    Authorization: Token
-  }}).then(res => {
+  }).then(res => {
       console.log(res)
       axiosConfig.post('/admin/addThread', {
     threadid:res.data.data[0].thread_id,
     selection_type:"0",
     selected_ids:"40"
-    }, 
-    {
-    headers: {
-      Authorization: Token
-    }}).then(r => console.log(r))
+    }).then(r => console.log(r))
       props.setSentPop(true)
       props.toggleModal()
     })
@@ -58,11 +50,7 @@ export const getTopics = (params) => {
     return axiosConfig.post('/admin/getCommentIdList', {
       thread_id:params.folder.thread_id,
       comment_id:""
-  }, 
-  {
-  headers: {
-    Authorization: Token
-  }}).then(res => {
+  }).then(res => {
       console.log(res)
       dispatch({ type: 'GET_MAILS', data: res.data, params })
     })
@@ -72,10 +60,7 @@ export const getTopics = (params) => {
 
 // ** SELECT Current Mail
 export const selectCurrentMail = id => dispatch => {
-  return axiosConfig.post('/admin/getCommentDetails', { id }, {
-    headers: {
-      Authorization: Token
-    }}).then(res => {
+  return axiosConfig.post('/admin/getCommentDetails', { id }).then(res => {
     console.log(res)
     dispatch({ type: 'SELECT_CURRENT_MAIL', mail: res.data })
   })
@@ -89,7 +74,7 @@ export const addCommentSubComment = (title, images, detail, props) => {
       // comment_id:detail.topic_id,
       thread_id:detail.thread_id,
       comment:title.comment,
-      userid:detail.userid,
+      userid:User_id,
       parent_id:detail.parent_id,
       files:JSON.stringify(images)
   }).then(res => {
@@ -99,6 +84,40 @@ export const addCommentSubComment = (title, images, detail, props) => {
     props.resetSelectedMail()
   } else {
     console.log(res)
+  }
+    })
+  }
+}
+
+// add comment and subComment 
+export const addTopic = (comment_data, images, detail, props) => {
+  return dispatch => {
+    return axiosConfig.post('/admin/addUpdateThreadComment', {
+      thread_id:detail.thread_id,
+      comment:comment_data,
+      userid:User_id,
+      parent_id:0,
+      comment_id:0,
+      files:JSON.stringify(images)
+  }).then(res => {
+    if (res.data.success === 1) { 
+      Swal.fire({
+        title: 'Success!',
+        text: 'Topic submitted successfully',
+        icon: 'success',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#28c76f'
+      })
+ return "success"
+  } else {
+    Swal.fire({
+      title: 'Error!',
+      text: 'Something Went Wrong !',
+      icon: 'error',
+      confirmButtonText: 'Try Again',
+      confirmButtonColor: '#EE3224'
+    })
+    return "error"
   }
     })
   }
