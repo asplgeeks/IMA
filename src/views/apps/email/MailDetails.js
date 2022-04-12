@@ -19,14 +19,22 @@ import Search from "../../../Images/Search.svg"
 import Refresh from "../../../Images/refresh.svg"
 import Back_arrow from "../../../Images/backarrow.svg"
 import Delete from "../../../Images/delete.svg"
-
+import Adnewgreen from './../../../Images/addnewgreen.svg'
+import Thread from './../../../Images/thread.svg'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
+
 // ** Custom Components
 import Avatar from '@components/avatar'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import { useDispatch, useSelector } from 'react-redux'
 // import { Card, CardHeader, CardTitle, CardBody } from 'reactstrap'
+
+import BlockUi from 'react-block-ui'
+import 'react-block-ui/style.css'
+//**UseForm Hook */
+import { Controller, useForm } from 'react-hook-form'
 
 import '@styles/react/libs/swiper/swiper.scss'
 import SwiperCore, {
@@ -64,11 +72,7 @@ import {
   Media,
   input,
   Label,
-  Carousel,
-  CarouselIndicators,
-  CarouselCaption,
-  CarouselItem,
-  CarouselControl 
+  Modal, ModalHeader, ModalBody, ModalFooter
 } from 'reactstrap'
 import {
   Paperclip,
@@ -80,8 +84,8 @@ import PerfectScrollbar from 'react-perfect-scrollbar'
 import axiosConfig from './../../../axiosConfig'
 const moment = require('moment')
 
-
 const MailDetails = props => {
+  const { register, errors, handleSubmit, control } = useForm()
   // ** Props
   const {
     mail,
@@ -98,26 +102,34 @@ const MailDetails = props => {
     formatDateToMonthShort,
     resetSelectedMail
   } = props
+  const [searchField, setSearchField] = useState("")
+  const store = useSelector(state => state.email)
   const history = useHistory()
-  console.log(history)
-  // ** States
-  const [isRtl, setIsRtl] = useRTL()
-  const [showReplies, setShowReplies] = useState(false)
-  const [search, setSearchVisible] = useState(false)
-  const [value, setValue] = useState("")
-  const [formValue, setFormValue] = useState({})
-const [uploadedImage, setUploadedImage] = useState([])
+    // ** States
+    const [isRtl, setIsRtl] = useRTL()
+    const [showReplies, setShowReplies] = useState(false)
+    const [search, setSearchVisible] = useState(false)
+    const [value, setValue] = useState("")
+    const [formValue, setFormValue] = useState({})
+    const [modal, setModal] = useState(false)
+  const [uploadedImage, setUploadedImage] = useState([])
+  const [blocking_state, setBlocking] = useState(false)
+  const [commentDetail, setCommentDetail] = useState()
+  const { mails, selectedMails, currentMail } = store
 
-  // ** Renders Labels
-  const renderLabels = arr => {
-    if (arr && arr.length) {
-      return arr.map(label => (
-        <Badge key={label} color={`light-${labelColors[label]}`} className='mr-50 text-capitalize' pill>
-          {label}
-        </Badge>
-      ))
+  // comment sub comment data
+  const filteredPersons = mails && mails.data && mails.data.filter(
+    person => {
+      return (
+        person
+        .commentor_designation
+        .toLowerCase()
+        .includes(searchField.toLowerCase())
+      )
     }
-  }
+  )
+
+  console.log(filteredPersons)
 
   const deleteFunction = (i) => {
     const clearImage = uploadedImage && uploadedImage.filter((image, index) => {
@@ -125,8 +137,8 @@ const [uploadedImage, setUploadedImage] = useState([])
     })
     setUploadedImage(clearImage)
   }
-  // ** Renders Attachments
 
+  // ** Renders Attachments
 const params = {
   slidesPerView: 3,
   spaceBetween:20
@@ -141,9 +153,9 @@ const SwiperMultiSlides = () => {
         <Swiper dir={isRtl ? 'rtl' : 'ltr'} {...params}>
           {USER_File_TYPE && USER_File_TYPE.map((image, index) => {
             return (
-          <SwiperSlide>
-            <img src={image.location} alt='swiper 1' className='img-fluid' style={{borderRadius:"20px"}}/>
-          </SwiperSlide>
+        <SwiperSlide>
+        {image.mimetype.slice(0, 5) === "image" ?   <img src={image.location} alt='swiper 1' className='img-fluid' style={{borderRadius:"20px", width:"300px", height:"200px"}}/> : ''}
+         </SwiperSlide> 
         )
       })}       
     </Swiper>
@@ -161,9 +173,14 @@ const SwiperMultiSlides = () => {
     history.replace('/apps')
   }
 
-  const handleFolderClick = (e, folder, id) => {
-    handleFolderUpdate(e, folder, [id])
-    handleGoBack()
+  const toggleModal = (status, detail) => {
+    console.log("status1", status, detail)
+    if (modal !== status) {
+      setModal(status)
+      setCommentDetail(detail)
+    } else {
+      setModal(false)
+    }
   }
 
   const handleReadClick = () => {
@@ -199,12 +216,119 @@ const SwiperMultiSlides = () => {
   }
   console.log(mail && mail)
   // onsubmit
-  const handleSubmit = (event) => {
-    event.preventDefault()
+  const onSubmit = (data) => {
     // setSentPop(true)
-    dispatch(addCommentSubComment(formValue, uploadedImage, mail && mail.data, props))
+    console.log(data, uploadedImage, commentDetail, props)
+    dispatch(addCommentSubComment(data.comment, uploadedImage, commentDetail, props))
+    // dispatch(addTopic(data.comment, uploadedImage, params && params.folder, props)).then(info => { 
+    //   console.log("info", info) 
+    //   if (info === "success") {
+    //     setModal(false)
+    //     setUploadedImage([])
+    //   }
+    //  })
+    //  .catch(err => {
+    //   console.log("err", err) 
+    //  })
     // alert(formValue.title)
   }
+
+    // ** Renders Labels
+    const renderModal = (
+      <div className={'theme-{item.modalColor}'} >
+        <Modal
+          isOpen={modal === true}
+          toggle={() => toggleModal(true)}
+          className='modal-dialog-centered'
+          modalClassName="modal-success" >     
+           <BlockUi tag="div" blocking={blocking_state}>
+  
+          <ModalBody className="comment_model">
+            <img className='img' src={Adnewgreen} />
+            <h5>Add Reply</h5>
+  
+       <form  onSubmit={handleSubmit(onSubmit)}>
+        <Row>
+        <Col md={12} sm={12}>
+       <FormControl variant="standard" >
+          <InputLabel htmlFor="input-with-icon-adornment">
+          Comment
+          </InputLabel>
+         <Controller
+         control={control}
+         name="comment"
+         as={
+          <Input
+            id="comment"
+            placeholder="Add Topic"
+            className={classnames({ 'is-invalid': errors['comment'] })}
+            multiline
+            ref={register("comment", {required:true, validate: value => value !== undefined })}
+            rows={2}
+            startAdornment={
+            <InputAdornment position="start">
+            <img src={Thread}></img>
+            </InputAdornment>
+            }
+          />
+         }
+         />
+            {errors.comment && <p style={{color:"red"}}>Please enter your comment</p>}  
+        </FormControl>
+        </Col>
+        <Col md={12} sm={12}>
+        <FormControl variant="standard">
+        <div className='files'>
+                      <Label className='mb-0 btn lable-btn' for='attach-email-item'>
+                        <Icon.PlusCircle  className='cursor-pointer'  size={20} /> FILE
+                        </Label>
+                        <Label>
+                        <input type='file'
+                         name='attach_email_item' 
+                         accept="image/*, application/pdf"
+                        //  value={formValue.attach_email_item || []}
+                         onChange={uploadImage}
+                         id='attach-email-item'
+                        hidden />
+                      </Label>
+                    </div>
+        </FormControl> 
+        </Col>
+        <Col md={12} sm={12}>
+        <FormControl variant="standard">
+          <div> 
+            {uploadedImage && uploadedImage.map((image, index) => {
+                  return (<div className='image_box'>
+                  <Icon.XCircle  size={20} style={{float:"right"}} onClick={() => deleteImage(index)}/>
+                    <img src={image.location} />
+                    </div>)
+                })}
+            </div>
+          </FormControl> 
+        </Col>
+        <Col md={12} sm={12}>
+          <div className='button_send_request'>
+               <Button.Ripple color='success' type='submit' >
+          <span className='align-middle ms-25'>SUBMIT</span>
+          <Icon.ArrowRightCircle  size={20} />
+        </Button.Ripple>
+        </div>
+        </Col>
+        </Row>
+        </form>
+        
+  
+          </ModalBody>
+          <ModalFooter className="comment_model-footer">
+            <Button color="modal-success" onClick={() => toggleModal(false)}>
+              CANCEL
+            </Button>
+          </ModalFooter>
+          </BlockUi>
+  
+        </Modal>
+      </div>
+    )
 
   return (
     <div
@@ -213,7 +337,7 @@ const SwiperMultiSlides = () => {
         show: openMail
       })}
     >
-
+<div>{renderModal}</div>
       {mail !== null && mail !== undefined ? (
         <Fragment>
      <div className='email-user-list' options={{ wheelPropagation: false }}>
@@ -225,7 +349,7 @@ const SwiperMultiSlides = () => {
         
           { search === false ?  <span className='broadcom_align float-right'>
           <div className='sidebar_search'>
-          <span className='align-middle mr20'   ><img className='img' src={Refresh}  /> </span>
+          <span className='align-middle mr20'   ><img className='img' src={Refresh}  onClick={() => resetSelectedMail()}/> </span>
           {/* <span className='align-middle dropdown_icon mr20'  ><Icon.Plus /> </span> */}
           <span className='align-middle  '   onClick={() => [setSearchVisible(!search)] }>  <img className='img' src={Search} /> </span>
           {/* <span className='align-middle dropdown_icon '   onClick={() => [setSearchVisible(!search)] }>  <SearchIcon /> </span> */}
@@ -271,10 +395,10 @@ const SwiperMultiSlides = () => {
         }}> Images slider */}
                  {SwiperMultiSlides()}
           {/* </div> */}
-
-          {USER_File_TYPE && USER_File_TYPE.map((image, index) => {
+</Col>
+{USER_File_TYPE && USER_File_TYPE.map((image, index) => {
           return (<div className='pdf_view'>
-            {image.mimetype === "application/pdf" ? <span className='pdf_text'>
+            {image.mimetype.slice(0, 11) === "application" ? <span className='pdf_text'>
                <span className='view'>
                <span className='pdf-img'><img src={PDF} /><span className='size'>5 MB</span></span>
             <span className='pdf-title'>{image.originalname}</span>
@@ -283,7 +407,7 @@ const SwiperMultiSlides = () => {
               </div>)
               })
             }
-
+            <Col md="12">
               <Media> 
             <div className='avatar'>
             <img  src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/avatar-s-7.ba3f6823.jpg" height='25' width='25' />
@@ -302,91 +426,65 @@ const SwiperMultiSlides = () => {
                 <small className='text-muted'>{mail && mail.data && mail.data.comment_count} Comments </small>
                 </div>
                 <div>
-                <small className='text-muted'><img src={Reply} />Comment </small>
+                <small className='text-muted'><img src={Reply} /> Comment </small>
                 </div>
               </Media>
               </Col>
-                    
             </Row>
-            <Row className="comment_details">
-            <Col sm='12'>
-
-            <Media> 
-            <div className='avatar'>
-            <img  src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/avatar-s-7.ba3f6823.jpg" height='50' width='50' />
-
-            </div>
-              <div>
-              <span className='user_name'>{mail && mail.data && mail.data.comment_by}</span>
-              <span className='text-muted '> {mail && mail.data && mail.data.commentor_designation} </span>
-              </div>
-            </Media>
-            <p>
-            {mail && mail.data && mail.data.comment}
-            </p>
-             </Col>
-            </Row>
-
-        
-            <Row className="comment">
-            <Col sm='12'>
-            <Media body  className='text-muted' style={{fontSize: "16px"}} >
-            <small className='text-muted'> {moment(mail && mail.data && mail.data.created_datetime).format("DD MMMM  YYYY")}</small>
-            <small className='text-muted'><Icon.XCircle  size={20} />Cancel </small>
-              </Media>
-              </Col>
-             
-           <form onSubmit={handleSubmit} style={{width:"100%"}}>
-            <Col sm='12'>
-            <div className='comment_box'>
-            <FormControl variant="standard">
-            <Input
-              id="TEST"
-              name="comment"
-              placeholder="Add Reply"
-              floatingLabelText="MultiLine and FloatingLabel"
-              multiline
-              rows={3}
-              value={formValue.comment || ''}
-              onChange={handleChange}
-              // startAdornment={
-              //   <InputAdornment position="start">
-              //     <Icon.Edit2  />
-              //   </InputAdornment>
-              // }
-            />
-          </FormControl>
-          {uploadedImage && uploadedImage.map((image, index) => {
-            return (<div className='image_box'>
-              <img src={image.location} alt='image'  width='70' height='50' style={{padding:"10px"}}/>
-              <Icon.XCircle  size={20} style={{float:"right"}} onClick={() => deleteFunction(index)}/>
-              </div>)
-          })}
-          
-          <div className='comment_buttons'>
-              <div className='comment_attachment'>
-                    <Label className='mb-0 btn' for='attach-email-item'>
-                      <Icon.PlusCircle  className='cursor-pointer'  size={20} /> FILE
-                      <input type='file'
-                       name='attach_email_item' 
-                       accept="image/*, application/pdf"
-                      //  value={formValue.attach_email_item || []}
-                       onChange={uploadImage}
-                       id='attach-email-item'
-                      hidden />
-                    </Label>
+            {filteredPersons && filteredPersons.map((detail, index) => {
+              return (<div>
+                <Row className="comment_details">
+                <Col sm='12'>
+                <Media> 
+                <div className='avatar'>
+                <img  src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/avatar-s-7.ba3f6823.jpg" height='50' width='50' />
+    
+                </div>
+                  <div>
+                  <span className='user_name'>{detail.comment_by}</span>
+                  <span className='text-muted '> {detail.commentor_designation} </span>
                   </div>
-                  <div className='btn_send_request'>
-                <Button.Ripple type='submit' >
-                  <span className='align-middle ms-25'>POST REPLY</span>
-                  <Icon.ArrowRightCircle  size={20} />
-                </Button.Ripple>
-              </div>
-          </div>
-          </div>
-             </Col>
-             </form>
-            </Row>
+                </Media>
+                <p>
+                {detail.comment}
+                </p>
+            <small className='text-muted'> {moment(detail.created_datetime).format("DD MMMM  YYYY")}
+                </small>
+                <div style={{float:"right"}} onClick={() => toggleModal(true, detail)}>
+                <small className='text-muted'><img src={Reply} />Comment </small>
+                </div>
+                 </Col>
+                </Row>
+                {detail.subcomments ?  <Row className="comment_details">
+                {detail.subcomments.map((subComment, index) => {
+                  return (
+                  <Col sm='12'>
+                <Media> 
+                <div className='avatar'>
+                <img  src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/avatar-s-7.ba3f6823.jpg" height='50' width='50' />
+    
+                </div>
+                  <div>
+                  <span className='user_name'>{subComment.comment_by}</span>
+                  <span className='text-muted '> {subComment.commentor_designation} </span>
+                  </div>
+                </Media>
+                <p>
+                {subComment.comment}
+                </p>
+            <small className='text-muted'> {moment(subComment.created_datetime).format("DD MMMM  YYYY")}
+                </small>
+                <div style={{float:"right"}} onClick={() => toggleModal(true, subComment)}>
+                <small className='text-muted'><img src={Reply} />Reply </small>
+                </div>
+                 </Col>
+                     )
+                    })
+                  }
+                </Row> : ''}
+                </div>)
+            })}
+
             {/* </div> */}
             </PerfectScrollbar>
             </div>
