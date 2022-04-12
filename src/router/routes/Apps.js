@@ -28,7 +28,7 @@ const AppRoutes = [
     }
   },
   {
-    path: '/apps/email/:id',
+    path: '/apps/email',
     exact: true,
     appLayout: true,
     className: 'email-application',

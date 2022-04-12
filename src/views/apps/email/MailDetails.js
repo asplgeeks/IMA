@@ -334,7 +334,7 @@ const SwiperMultiSlides = () => {
               </Media>
               </Col>
              
-           <form onSubmit={handleSubmit}>
+           <form onSubmit={handleSubmit} style={{width:"100%"}}>
             <Col sm='12'>
             <div className='comment_box'>
             <FormControl variant="standard">

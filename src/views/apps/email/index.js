@@ -29,7 +29,7 @@ import '@styles/react/apps/app-email.scss'
 const EmailApp = () => {
   // ** States
   const [query, setQuery] = useState('')
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(true)
   const [composeOpen, setComposeOpen] = useState(false)
 
   // ** Toggle Compose Function
