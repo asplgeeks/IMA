@@ -1222,3 +1222,86 @@ margin-left: 0px !important;
 
     }
 }
+
+
+.category_list {
+  .MuiListItemIcon-root{
+    min-width: 30px !important;
+  }
+
+  .MuiListItemText-inset{
+    padding-left: 5px !important;
+    .MuiTypography-body1{
+      font-size: 14pt;
+    color: #444444;
+    font-family: "Helvetica Neue","Medium" !important;
+    }
+  }
+  .class_active{
+
+    .MuiListItemIcon-root{
+      svg{
+        color: #EE3224  !important;
+      }
+    }
+    .MuiTypography-body1{
+      color: #EE3224 !important;
+    }
+  } 
+}
+
+
+.comment_data{
+  display: flex;
+  flex-wrap: wrap;
+.pdf_view{
+  margin-top: 10px !important;
+  height: 50px;
+  width: 70px;
+  margin-right: 10px !important;
+  .img{
+    height: 50px;
+    width: 70px;
+  }
+.pdf_text{
+  background: #ff1919 !important;
+    border-radius:4px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    height: 50px;
+    width: 70px;
+    .pdf-img{
+     
+      display: grid;
+      padding: 3px;
+      // width: 40px;
+      img{
+        height: 25px;
+        padding: 1px 2px 2px;
+        margin: auto;
+      }
+      
+      }
+    }
+    .view{
+      display: grid;
+    align-items: center;
+    // border-radius: 8px;
+    .size{
+      font-family: "Helvetica Neue", "Medium";
+      color: #ffff;
+      font-size: 8pt;
+      text-align: center;
+  }
+  .pdf{
+    font-family: "Helvetica Neue", "Medium";
+    color: #ffff;
+    font-size: 11pt;
+    
+    }
+}
+
+}
+
+}

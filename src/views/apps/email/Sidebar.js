@@ -63,6 +63,7 @@ const Sidebar = props => {
   const [sentPop, setSentPop] = useState(false)
   const [activeIndex, setActiveIndex] = useState()
   const [catId, setCateid] = useState('')
+  // const [category, setCategory] = useState('')
   const { mails, selectedMails, treadDetail, categoryDetail } = store
 console.log(categoryDetail)
 
@@ -82,6 +83,7 @@ const filteredPersons = treadDetail && treadDetail.data && treadDetail.data.filt
 
 const getCategoryId = (catDetail) => {
   setCateid(catDetail.id)
+  setOpen(false)
 }
   const handleClick = () => {
     // setOpen(!open)
@@ -93,7 +95,7 @@ const getCategoryId = (catDetail) => {
   }, [open])
 useEffect(() => {
   dispatch(gettreads(catId))
-}, [])
+}, [catId])
   // ** Vars
   const params = useParams()
 
@@ -314,10 +316,10 @@ const renderModal = (
 
  <Collapse in={open} timeout="auto" unmountOnExit>
    {categoryDetail && categoryDetail.data && categoryDetail.data.map((detail, index) => {
-           return (<List component="div" disablePadding>
-              <ListItem button onClick={() => getCategoryId(detail)}>
+           return (<List component="div"  className="category_list" disablePadding>
+              <ListItem button className={detail.id === catId ? "class_active" : ""} onClick={() => getCategoryId(detail)}>
                 <ListItemIcon>
-                  <StarBorder />
+                  <Icon.ChevronRight />
                 </ListItemIcon>
                 <ListItemText inset primary={detail.cat_name} />
               </ListItem>
@@ -336,7 +338,7 @@ const renderModal = (
                 <ListGroupItem
                  tag={Link}
                  id={index}
-                  to='/apps/email'
+                  to={`/apps/email/${index}`} //</ListGroup>"/apps/email/${index}"
                   onClick={() => handleFolder(detail, index)}
                   // action
                   active={activeIndex === index}

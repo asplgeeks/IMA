@@ -300,12 +300,14 @@ const LoginV1 = props => {
                   {errors.password && <p style={{color:"red"}}>Please enter your valid password</p>}  
                 </FormGroup>
               <FormGroup >
-                <div className="d-flex" >
+                <div>
+                  <span className="d-flex">
                 <CustomInput type='checkbox' className='custom-control-Primary' id='remember_me' name="remember_me"
                 innerRef={register({ required: true, message:"please select" })}
-                 label='' /><label >By continuing you agree to <Link to='/pages' style={{color:"#ed1d25" }}>
+                 label='' /><label >By continuing you agree to <Link to='/' style={{color:"#ed1d25" }}>
                 <span>Terms & Conditions</span> </Link></label>
-                {errors.remember_me && <p style={{color:"red"}}>Please select</p>}  
+                </span>
+                {errors.remember_me && <p style={{color:"red"}}>Are you agree terms and condition ? </p>}  
 
                 </div>
                 
