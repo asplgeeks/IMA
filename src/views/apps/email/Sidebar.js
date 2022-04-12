@@ -334,7 +334,7 @@ const renderModal = (
                 return (
               <ListGroup tag='div' className='list-group-messages'>
                 <ListGroupItem
-                 tag={Link}
+                //  tag={Link}
                  id={index}
                   to='/apps/email'
                   onClick={() => handleFolder(detail, index)}
