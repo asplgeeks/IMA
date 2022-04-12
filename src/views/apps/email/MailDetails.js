@@ -410,7 +410,7 @@ const SwiperMultiSlides = () => {
             <Col md="12">
               <Media> 
             <div className='avatar'>
-            <img  src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/avatar-s-7.ba3f6823.jpg" height='25' width='25' />
+            <img  src={mail.image_url} height='25' width='25' />
 
             </div>
               <div>
@@ -432,12 +432,13 @@ const SwiperMultiSlides = () => {
               </Col>
             </Row>
             {filteredPersons && filteredPersons.map((detail, index) => {
+              
               return (<div>
                 <Row className="comment_details">
                 <Col sm='12'>
                 <Media> 
                 <div className='avatar'>
-                <img  src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/avatar-s-7.ba3f6823.jpg" height='50' width='50' />
+                <img  src={detail.image_url} height='50' width='50' />
     
                 </div>
                   <div>
