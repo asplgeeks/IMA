@@ -31,14 +31,7 @@ import {addTopic} from './store/actions'
 // ** Third Party Components
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  CustomInput,
-  DropdownMenu,
-  DropdownItem,
-  DropdownToggle,
-  UncontrolledDropdown,
+  UncontrolledTooltip,
   Button,
   Row,
   Col,
@@ -57,7 +50,7 @@ import Delete from "../../../Images/delete.svg"
 import Adnewgreen from './../../../Images/addnewgreen.svg'
 import Thread from './../../../Images/thread.svg'
 import Path from './../../../Images/path.svg'
-
+import pdf_image from './../../../Images/pdf_logo.png'
 import BlockUi from 'react-block-ui'
 import 'react-block-ui/style.css'
 
@@ -207,11 +200,11 @@ const onSubmit = (data) => {
     const bodyFormData = new FormData()
     const name = event.target.name
     const value = event.target.files
-    console.log("sadasdasd", event.target.files)
     bodyFormData.append('file', value[0])
     const config = {
       headers: {
-          'content-type': 'multipart/form-data'
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'multipart/form-data'
       }
   }
   
@@ -225,7 +218,7 @@ const onSubmit = (data) => {
     })
     setUploadedImage(clearImage)
   }
-
+ 
   const renderModal = (
     <div className={'theme-{item.modalColor}'} >
       <Modal
@@ -277,7 +270,7 @@ const onSubmit = (data) => {
                       <Label>
                       <input type='file'
                        name='attach_email_item' 
-                       accept="image/*"
+                       accept="image/*, application/pdf"
                       //  value={formValue.attach_email_item || []}
                        onChange={uploadImage}
                        id='attach-email-item'
@@ -290,9 +283,9 @@ const onSubmit = (data) => {
       <FormControl variant="standard">
         <div> 
           {uploadedImage && uploadedImage.map((image, index) => {
-                return (<div className='image_box'>
+              return (<div className='image_box'>
                 <Icon.XCircle  size={20} style={{float:"right"}} onClick={() => deleteImage(index)}/>
-                  <img src={image.location} />
+                  <img src={ image.mimetype === "application/pdf" ? pdf_image : image.location} />
                   </div>)
               })}
           </div>
@@ -308,11 +301,9 @@ const onSubmit = (data) => {
       </Col>
       </Row>
       </form>
-      
-
         </ModalBody>
         <ModalFooter className="comment_model-footer">
-          <Button color="modal-success" onClick={() => toggleModal(false)}>
+          <Button color="modal-success" onClick={() => [toggleModal(false), setUploadedImage([])]}>
             CANCEL
           </Button>
         </ModalFooter>
@@ -387,11 +378,14 @@ const onSubmit = (data) => {
         <PerfectScrollbar className='email-user-list' options={{ wheelPropagation: false }}>
         <div className='app-action light-gray-bg'>
           <div className='action-left' style={{width:"100%"}}>
-          <p className='text-truncate mb-0 topic_title'>{params && params.folder && params.folder.display_name}</p>
+          <p className='text-truncate mb-0 topic_title'>{params && params.folder && params.folder.display_name} </p>
           </div>
             <div className='action-right'>
-            <Info size={18} style={{color:"#EE3224"}}/>
+            <Info size={18} id='positionLeft' style={{color:"#EE3224"}}/>
             </div>
+            <UncontrolledTooltip placement='left' target='positionLeft'>
+            {params && params.folder && params.folder.display_name}
+            </UncontrolledTooltip>
         </div>
 
           {mails && mails.data && mails.data.length ? (

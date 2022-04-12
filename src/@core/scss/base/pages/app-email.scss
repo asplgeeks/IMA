@@ -56,9 +56,13 @@ $email_details_header_height: 5rem;
           color: #444444;
               }        
         h5{
+
           font-size: 14pt;
           color: #444444;
           font-family: "Helvetica Neue","Medium" !important;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
         }
         .badge-white{
           font-size: 9pt;
@@ -423,6 +427,10 @@ $email_details_header_height: 5rem;
   .email-application #compose-mail .ql-editor {
     min-height: 150px;
   }
+  .email-application .content-area-wrapper .sidebar .email-app-sidebar {
+    width: 100%;
+    position: fixed;
+  }
 }
 
 // Extra small devices (portrait phones, less than 576px)
@@ -466,7 +474,7 @@ display: none !important;
         .email-media-list li .mail-details {
           display: block;
           .mail-items {
-            width: 70%;
+            width: 100%;
             display: inline-grid;
           }
           .mail-meta-item {
@@ -1018,6 +1026,7 @@ p{
 }
 
 //--------------------------TEXT---------------------------//@at-root
+.email-app-list{
 .topic_navbar{
   .menu{
     display: flex;
@@ -1035,32 +1044,94 @@ p{
     font-size: 12pt;
     font-family: "SF Pro Text" !important;
   }
+}
   .email-media-list
   {
-    .media{
+    .topic_info{
+     // topic_info
+      padding: 1rem !important;
       .media-body
       {
+        .comment_data{
+          display: flex;
+          flex-wrap: wrap;
+          margin-bottom: 15px;
+        .pdf_view{
+          margin-top: 10px !important;
+          height: 50px;
+          width: 70px;
+          margin-right: 10px !important;
+          .img{
+            height: 50px;
+            width: 70px;
+          }
+        .pdf_text{
+          background: #ff1919 !important;
+            border-radius:4px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            height: 50px;
+            width: 70px;
+            .pdf-img{
+             
+              display: grid;
+              padding: 3px;
+              // width: 40px;
+              img{
+                height: 25px;
+                padding: 1px 2px 2px;
+                margin: auto;
+              }
+              
+              }
+            }
+            .view{
+              display: grid;
+            align-items: center;
+            // border-radius: 8px;
+            .size{
+              font-family: "Helvetica Neue", "Medium";
+              color: #ffff;
+              font-size: 8pt;
+              text-align: center;
+          }
+          .pdf{
+            font-family: "Helvetica Neue", "Medium";
+            color: #ffff;
+            font-size: 11pt;
+            
+            }
+        }
+        
+        }
+        
+        }
         p{
           font-family:" Helvetica Neue", "Medium" !important;
-           font-size: 12pt;
+           font-size: 13pt;
+          color: #444444;
         }
         .mail-details, .mail-items{
+            width: 100%;
           .media{
                align-items: center !important;
                h5{
                 font-family: "Helvetica Neue", "Bold" !important;
-                font-size: 14pt;
+                font-size: 13pt;
                 color: #707070;
+                margin: 0px;
                }
                h6{
-                font-size: 12pt;
+                font-size: 11pt;
                 font-family: "Helvetica Neue", "Regular" !important;
                 color: #999999 !important;
+                margin: 0px;
                }
           }
           .media-body{
             font-size: 13pt;
-            font-family: "Helvetica Neue", "Regular";
+            font-family: "Helvetica Neue";
             color: #999999 !important;
           }
 
@@ -1253,57 +1324,3 @@ margin-left: 0px !important;
 }
 
 
-.comment_data{
-  display: flex;
-  flex-wrap: wrap;
-.pdf_view{
-  margin-top: 10px !important;
-  height: 50px;
-  width: 70px;
-  margin-right: 10px !important;
-  .img{
-    height: 50px;
-    width: 70px;
-  }
-.pdf_text{
-  background: #ff1919 !important;
-    border-radius:4px;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    height: 50px;
-    width: 70px;
-    .pdf-img{
-     
-      display: grid;
-      padding: 3px;
-      // width: 40px;
-      img{
-        height: 25px;
-        padding: 1px 2px 2px;
-        margin: auto;
-      }
-      
-      }
-    }
-    .view{
-      display: grid;
-    align-items: center;
-    // border-radius: 8px;
-    .size{
-      font-family: "Helvetica Neue", "Medium";
-      color: #ffff;
-      font-size: 8pt;
-      text-align: center;
-  }
-  .pdf{
-    font-family: "Helvetica Neue", "Medium";
-    color: #ffff;
-    font-size: 11pt;
-    
-    }
-}
-
-}
-
-}

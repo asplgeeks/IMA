@@ -22,14 +22,14 @@ const MailCard = props => {
     formatDateToMonthShort
   } = props
 
-  // ** Function to render labels
-  const renderLabels = arr => {
-    if (arr && arr.length) {
-      return arr.map(label => (
-        <span key={label} className={`bullet bullet-${labelColors[label]} bullet-sm mx-50`}></span>
-      ))
-    }
-  }
+  // // ** Function to render labels
+  // const renderLabels = arr => {
+  //   if (arr && arr.length) {
+  //     return arr.map(label => (
+  //       <span key={label} className={`bullet bullet-${labelColors[label]} bullet-sm mx-50`}></span>
+  //     ))
+  //   }
+  // }
 
   // ** Function to handle read & mail click
   const onMailClick = () => {
@@ -37,15 +37,11 @@ const MailCard = props => {
     handleMailReadUpdate([mail.id], true)
   }
 
-//   const user = mail && mail.files
-//   console.log(user.toString())
-// const replaceBbj = JSON.parse(user.replaceAll("\\", ""))
-// {console.log("files", JSON.parse(mail.files.replaceAll("\"\"", "\""))) }
+
 const files = JSON.parse(mail.files.replaceAll("\"\"", "\""))
   return (
-    <Media tag='li'  >
-     
-      <Media body onClick={() => onMailClick(mail.id)}>
+    <Media tag='li' className="topic_info"  >
+     <Media body onClick={() => onMailClick(mail.id)}>
         <div className='comment_data'>
         { files.map((img) => {
           { console.log("img", img) }
@@ -65,37 +61,18 @@ const files = JSON.parse(mail.files.replaceAll("\"\"", "\""))
           }
      }) }
      </div>
-      <div>
-      {/* <div className='pdf_view'>
-        <img className='rounded img mr-50 mb-50' src="https://ima-discussion.s3.ap-south-1.amazonaws.com/discussionforum/pexels-pixabay-60597.jpg" alt="" />
-      </div>
-       */}
-              {/* <div className='pdf_view'>
-             <span className='pdf_text'>
-             <span className='pdf-img'><img src={PDF} /> </span>
-               <span className='view'>
-               <span className='pdf'>PDF</span>
-               <span className='size'>5 MB</span>
-               </span>
-             </span>
-              </div> */}
-            
-              </div>
-{/* JSON.parse(files.replaceAll("\"\"", "\"")) */}
-        <div>
-          <p style={mailId === mail.id ? {color:"#EE3224"} : {}}>{htmlToString(mail.comment)}</p>
-        </div>
+       <p style={mailId === mail.id ? {color:"#EE3224"} : {}}>{htmlToString(mail.comment)}</p>
         <div className='mail-details'>
           <div className='mail-items'>
-          <Media>
-           
-                <Avatar className='mr-50' img="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/avatar-s-7.ba3f6823.jpg" imgHeight='50' imgWidth='50' />
+          <Media className="user_info">
+          {/* {console.log("mail", mail) } */}
+                <Avatar className='mr-50' img={mail.image_url} imgHeight='50' imgWidth='50' />
                 <div>
                 <h5 className=''>{mail.comment_by}</h5>
                 <h6 className='text-muted'> {mail.commentor_designation} </h6>
                </div>
               </Media>
-              <Media body  className='text-muted' style={{fontSize: "16px"}} >
+              <Media body  className='text-muted'>
               <small className='text-muted'> Be the first to comment     
                   </small>
                   <span className='text-muted ml-50 mr-25'>|</span>

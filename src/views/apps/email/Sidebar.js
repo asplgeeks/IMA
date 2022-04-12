@@ -338,9 +338,10 @@ const renderModal = (
                 <ListGroupItem
                 //  tag={Link}
                  id={index}
-                  to={`/apps/email/${index}`} //</ListGroup>"/apps/email/${index}"
-                  onClick={() => handleFolder(detail, index)}
+                  to= '/apps'//{`/apps/email/${index}`} //</ListGroup>"/apps/email/${index}"
+                  onClick={() => [handleFolder(detail, index), setSidebarOpen(false)]}
                   // action
+                  //onClick={() => setSidebarOpen(true)}
                   active={activeIndex === index}
                 >
                   <h5 style={activeIndex === index ? {color:"#EE3224"} : {}}>{detail.display_name}</h5>
