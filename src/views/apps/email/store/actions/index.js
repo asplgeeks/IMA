@@ -77,50 +77,15 @@ export const selectCurrentMail = id => dispatch => {
 }
 
 // add comment and subComment 
-export const addCommentSubComment = (title, images, detail, props) => {
+export const addCommentSubComment = (title, images, detail, props, replyDetail) => {
   console.log(props)
   return dispatch => {
     return axiosConfig.post('/admin/addUpdateThreadComment', {
       comment_id:"",
-      thread_id:detail.thread_id,
+      thread_id:(detail && detail.thread_id) || replyDetail.thread_id,
       comment:title,
       userid:UserId,
-      parent_id:detail.id,
-      files:JSON.stringify(images)
-  }).then(res => {
-    if (res.data.success === 1) { 
-      Swal.fire({
-        title: 'Success!',
-        text: 'Topic submitted successfully',
-        icon: 'success',
-        confirmButtonText: 'OK',
-        confirmButtonColor: '#28c76f'
-      })
- return "success"
-  } else {
-    Swal.fire({
-      title: 'Error!',
-      text: 'Something Went Wrong !',
-      icon: 'error',
-      confirmButtonText: 'Try Again',
-      confirmButtonColor: '#EE3224'
-    })
-    return "error"
-  }
-    })
-  }
-}
-
-// add comment and subComment 
-export const ReplyOnComment = (title, images, detail, props) => {
-  console.log(props)
-  return dispatch => {
-    return axiosConfig.post('/admin/addUpdateThreadComment', {
-      comment_id:detail.id,
-      thread_id:detail.thread_id,
-      comment:title,
-      userid:UserId,
-      parent_id:detail.id,
+      parent_id:(detail && detail.id) || replyDetail.id,
       files:JSON.stringify(images)
   }).then(res => {
     if (res.data.success === 1) { 

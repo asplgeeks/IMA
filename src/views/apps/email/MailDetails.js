@@ -112,10 +112,11 @@ const MailDetails = props => {
     const [value, setValue] = useState("")
     const [formValue, setFormValue] = useState({})
     const [modal, setModal] = useState(false)
-  const [uploadedImage, setUploadedImage] = useState([])
-  const [blocking_state, setBlocking] = useState(false)
-  const [commentDetail, setCommentDetail] = useState()
-  const { mails, selectedMails, currentMail } = store
+      const [uploadedImage, setUploadedImage] = useState([])
+      const [blocking_state, setBlocking] = useState(false)
+      const [commentDetail, setCommentDetail] = useState()
+      const [replyDetail, setReplyDetail] = useState()
+      const { mails, selectedMails, currentMail } = store
 
   // comment sub comment data
   const filteredPersons = mails && mails.data && mails.data.filter(
@@ -173,6 +174,16 @@ const SwiperMultiSlides = () => {
     history.replace('/apps')
   }
 
+  const toggleForReply = (status, detail) => {
+    console.log("status1", status, detail)
+    if (modal !== status) {
+      setModal(status)
+      setReplyDetail(detail)
+    } else {
+      setModal(false)
+    }
+  }
+
   const toggleModal = (status, detail) => {
     console.log("status1", status, detail)
     if (modal !== status) {
@@ -218,21 +229,47 @@ const SwiperMultiSlides = () => {
   // onsubmit
   const onSubmit = (data) => {
     // setSentPop(true)
-    console.log(data, uploadedImage, commentDetail, props)
-    dispatch(addCommentSubComment(data.comment, uploadedImage, commentDetail, props))
-    // dispatch(addTopic(data.comment, uploadedImage, params && params.folder, props)).then(info => { 
-    //   console.log("info", info) 
-    //   if (info === "success") {
-    //     setModal(false)
-    //     setUploadedImage([])
-    //   }
-    //  })
-    //  .catch(err => {
-    //   console.log("err", err) 
-    //  })
+    // console.log(data, uploadedImage, commentDetail, props, replyDetail)
+    dispatch(addCommentSubComment(data.comment, uploadedImage, commentDetail, props, replyDetail)).then(info => { 
+      console.log("info", info) 
+      if (info === "success") {
+        setModal(false)
+        // setUploadedImage([])
+      }
+     })
+     .catch(err => {
+      console.log("err", err) 
+     })
     // alert(formValue.title)
   }
 
+  // COMMENT TREE SECTION 
+  const Subcomment = ({ subComment }) => {
+    return (
+      <Col sm='12'>
+      <Media> 
+      <div className='avatar'>
+      <img  src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/avatar-s-7.ba3f6823.jpg" height='50' width='50' />
+
+      </div>
+        <div>
+        <span className='user_name'>{subComment.comment_by}</span>
+        <span className='text-muted '> {subComment.commentor_designation} </span>
+        </div>
+      </Media>
+      <p>
+      {subComment.comment}
+      </p>
+  <small className='text-muted'> {moment(subComment.created_datetime).format("DD MMMM  YYYY")}
+      </small>
+      <div style={{float:"right"}} onClick={() => toggleForReply(true, subComment)}>
+      <small className='text-muted'><img src={Reply} />Reply </small>
+      </div>
+      {/* <Subcomment responses={responses}/> */}
+       </Col>
+    )
+}
+// console.log(Responses())
     // ** Renders Labels
     const renderModal = (
       <div className={'theme-{item.modalColor}'} >
@@ -327,6 +364,39 @@ const SwiperMultiSlides = () => {
           </BlockUi>
   
         </Modal>
+      </div>
+    )
+
+    const SubComment = ({filteredPersons}) => ( 
+      <div>
+               {filteredPersons && filteredPersons.map((detail, index) => {
+              return (<div>
+                <Row className="comment_details" style={detail && detail.subcomments && detail.subcomments.length > 1 ? {marginLeft: "40px !important"} : {}}>
+                <Col sm='12'>
+                <Media> 
+                <div className='avatar'>
+                <img  src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/avatar-s-7.ba3f6823.jpg" height='50' width='50' />
+    
+                </div>
+                  <div>
+                  <span className='user_name'>{detail.comment_by}</span>
+                  <span className='text-muted '> {detail.commentor_designation} </span>
+                  </div>
+                </Media>
+                <p>
+                {detail.comment}
+                </p>
+            <small className='text-muted'> {moment(detail.created_datetime).format("DD MMMM  YYYY")}
+                </small>
+                <div style={{float:"right"}} onClick={() => toggleModal(true, detail)}>
+                <small className='text-muted'><img src={Reply} />Comment </small>
+                </div>
+                {/* <p>{detail && detail.subcomments && detail.subcomments.length}</p> */}
+                 </Col>
+                </Row>
+                {detail.subcomments ?  <SubComment className="subcomment" filteredPersons={detail.subcomments} /> : ''}
+                </div>)
+            })}
       </div>
     )
 
@@ -431,60 +501,8 @@ const SwiperMultiSlides = () => {
               </Media>
               </Col>
             </Row>
-            {filteredPersons && filteredPersons.map((detail, index) => {
-              return (<div>
-                <Row className="comment_details">
-                <Col sm='12'>
-                <Media> 
-                <div className='avatar'>
-                <img  src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/avatar-s-7.ba3f6823.jpg" height='50' width='50' />
-    
-                </div>
-                  <div>
-                  <span className='user_name'>{detail.comment_by}</span>
-                  <span className='text-muted '> {detail.commentor_designation} </span>
-                  </div>
-                </Media>
-                <p>
-                {detail.comment}
-                </p>
-            <small className='text-muted'> {moment(detail.created_datetime).format("DD MMMM  YYYY")}
-                </small>
-                <div style={{float:"right"}} onClick={() => toggleModal(true, detail)}>
-                <small className='text-muted'><img src={Reply} />Comment </small>
-                </div>
-                 </Col>
-                </Row>
-                {detail.subcomments ?  <Row className="comment_details">
-                {detail.subcomments.map((subComment, index) => {
-                  return (
-                  <Col sm='12'>
-                <Media> 
-                <div className='avatar'>
-                <img  src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/avatar-s-7.ba3f6823.jpg" height='50' width='50' />
-    
-                </div>
-                  <div>
-                  <span className='user_name'>{subComment.comment_by}</span>
-                  <span className='text-muted '> {subComment.commentor_designation} </span>
-                  </div>
-                </Media>
-                <p>
-                {subComment.comment}
-                </p>
-            <small className='text-muted'> {moment(subComment.created_datetime).format("DD MMMM  YYYY")}
-                </small>
-                <div style={{float:"right"}} onClick={() => toggleModal(true, subComment)}>
-                <small className='text-muted'><img src={Reply} />Reply </small>
-                </div>
-                 </Col>
-                     )
-                    })
-                  }
-                </Row> : ''}
-                </div>)
-            })}
 
+            <SubComment filteredPersons={filteredPersons}/>
             {/* </div> */}
             </PerfectScrollbar>
             </div>
