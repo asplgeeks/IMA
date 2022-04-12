@@ -1,5 +1,7 @@
 // ** React Imports
 import { Fragment, useState  } from 'react'
+import { useHistory, Link } from "react-router-dom"
+
 import classnames from 'classnames'
 // ** Mail Components Imports
 import MailCard from './MailCard'
@@ -327,10 +329,11 @@ const onSubmit = (data) => {
        <Col xs='12' sm='12' lg='12' xl={openMail === true ? '6' : '12'}> */}
       <div className='email-app-list'>
         <div className='app-fixed-search d-flex align-items-center topic_navbar'>
+          <Link to='/apps'>
           <div className='sidebar-toggle d-block d-lg-none ml-1' onClick={() => setSidebarOpen(true)}>
-           <span  style={{padding: "4px 1px"}}  ><img className='back_arrow' src={Back_arrow}  /> </span>
-
+           <span  style={{padding: "4px 1px"}}  ><img className='back_arrow' src={Back_arrow}/> </span>
           </div>
+          </Link>
           <div className='align-content-center menu justify-content-between w-100 details_navbar'>
           <span className='title'> TOPIC </span> 
           { search === false ? <span className='broadcom_align float-right'>

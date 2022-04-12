@@ -1,7 +1,7 @@
 
 // ** React Imports
 import { Fragment, useState } from 'react'
-
+import { useHistory } from "react-router-dom"
 // ** Utils
 import { formatDate } from '@utils'
 import { useRTL } from '@hooks/useRTL'
@@ -98,7 +98,8 @@ const MailDetails = props => {
     formatDateToMonthShort,
     resetSelectedMail
   } = props
-  console.log(mail)
+  const history = useHistory()
+  console.log(history)
   // ** States
   const [isRtl, setIsRtl] = useRTL()
   const [showReplies, setShowReplies] = useState(false)
@@ -157,6 +158,7 @@ const SwiperMultiSlides = () => {
 
   const handleGoBack = () => {
     setOpenMail(false)
+    history.replace('/apps')
   }
 
   const handleFolderClick = (e, folder, id) => {
