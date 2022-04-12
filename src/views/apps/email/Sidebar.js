@@ -331,8 +331,9 @@ const renderModal = (
           </Row>
             </div>
             <PerfectScrollbar className='sidebar-menu-list' options={{ wheelPropagation: false }}>
-              {filteredPersons && filteredPersons.map((detail, index) => {
-                console.log(!Object.keys(params).length)
+             
+            {filteredPersons && filteredPersons.length ? (
+              filteredPersons.map((detail, index) => {
                 return (
               <ListGroup tag='div' className='list-group-messages'>
                 <ListGroupItem
@@ -359,7 +360,9 @@ const renderModal = (
                 </ListGroupItem>
               </ListGroup>
                 )
-              })}
+              })) : (<ListGroup tag='div' className='list-group-messages'>
+              <ListGroupItem >
+                <h5>No Thread Found !</h5> </ListGroupItem> </ListGroup>) }
             </PerfectScrollbar>
             <div className='light-gray-bg create-thread'>
             <Media onClick={() => toggleModal(3)}>

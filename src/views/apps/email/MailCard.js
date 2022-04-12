@@ -66,7 +66,10 @@ const files = JSON.parse(mail.files.replaceAll("\"\"", "\""))
           <div className='mail-items'>
           <Media className="user_info">
           {/* {console.log("mail", mail) } */}
-                <Avatar className='mr-50' img={mail.image_url} imgHeight='50' imgWidth='50' />
+                {/* <Avatar className='mr-50' img={mail.image_url} imgHeight='50' imgWidth='50' /> */}
+                <div className="avatar mr-50">
+                <img class="" src={mail.image_url} alt="avatarImg" height="50" width="50" />
+                </div>
                 <div>
                 <h5 className=''>{mail.comment_by}</h5>
                 <h6 className='text-muted'> {mail.commentor_designation} </h6>

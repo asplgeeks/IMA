@@ -480,7 +480,7 @@ const SwiperMultiSlides = () => {
             <Col md="12">
               <Media> 
             <div className='avatar'>
-            <img  src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/avatar-s-7.ba3f6823.jpg" height='25' width='25' />
+            <img  src={mail.image_url} height='25' width='25' />
 
             </div>
               <div>

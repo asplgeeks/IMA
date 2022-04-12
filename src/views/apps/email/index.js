@@ -66,9 +66,9 @@ const EmailApp = () => {
       <div className='content-right'>
         <div className='content-body'>
           <div
-            className={classnames('body-content-overlay', {
-              show: sidebarOpen
-            })}
+            // className={classnames('body-content-overlay', {
+            //   show: sidebarOpen
+            // })}
             onClick={() => setSidebarOpen(false)}>
 
           </div>

@@ -392,7 +392,7 @@ const onSubmit = (data) => {
             <ul className='email-media-list'>{renderMails()}</ul>
           ) : (
             <div className='no-results d-block'>
-              <h5>No Items Found</h5>
+              <h5>No Topic Found</h5>
             </div>
         )} 
         </PerfectScrollbar>
