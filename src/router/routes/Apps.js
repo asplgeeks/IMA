@@ -28,14 +28,14 @@ const AppRoutes = [
     }
   },
   {
-    path: '/apps/email',
-    // exact: true,
+    path: '/apps/email/:id',
+    exact: true,
     appLayout: true,
     className: 'email-application',
-    component: lazy(() => import('../../views/apps/email')),
-    meta: {
-      navLink:'/apps/email'
-    }
+    component: lazy(() => import('../../views/apps/email'))
+    // meta: {
+    //   navLink:'/apps/email'
+    // }
   },
   {
     path: '/apps/data/:fuid/:user_id',

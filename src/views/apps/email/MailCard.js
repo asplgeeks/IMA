@@ -4,6 +4,8 @@ import { htmlToString } from '@utils'
 import Avatar from '@components/avatar'
 import { Star, Paperclip } from 'react-feather'
 import { CustomInput, Media, Row, Col } from 'reactstrap'
+import PDF from "../../../Images/pdf.svg"
+
 const moment = require('moment')
 const MailCard = props => {
   // ** Props
@@ -38,14 +40,48 @@ const MailCard = props => {
 //   const user = mail && mail.files
 //   console.log(user.toString())
 // const replaceBbj = JSON.parse(user.replaceAll("\\", ""))
+// {console.log("files", JSON.parse(mail.files.replaceAll("\"\"", "\""))) }
+const files = JSON.parse(mail.files.replaceAll("\"\"", "\""))
   return (
     <Media tag='li'  >
      
       <Media body onClick={() => onMailClick(mail.id)}>
-      <img className='rounded mr-50 mb-50' src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/avatar-s-7.ba3f6823.jpg" alt="dsad" width='70' height='50' />
-      <img className='rounded mr-50 mb-50' src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/avatar-s-7.ba3f6823.jpg" alt="dsad" width='70' height='50' />
-      <img className='rounded mr-50 mb-50' src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/avatar-s-7.ba3f6823.jpg" alt="dsad" width='70' height='50' />
+        <div className='comment_data'>
+        { files.map((img) => {
+          { console.log("img", img) }
+          if (img.mimetype === "application/pdf") {
+            return (<div className='pdf_view'>
+            <span className='pdf_text'>
+            <span className='pdf-img'><img src={PDF} /> </span>
+              <span className='view'>
+              <span className='pdf'>PDF</span>
+              <span className='size'>{(img.size / (1024 * 1024)).toFixed(1)} MB</span>
+              </span>
+            </span>
+             </div>) 
+             } else {
+            return (<div className='pdf_view'> <img className='rounded img mr-50 mb-50' src={img.location} alt={img.originalname} /> </div>) 
 
+          }
+     }) }
+     </div>
+      <div>
+      {/* <div className='pdf_view'>
+        <img className='rounded img mr-50 mb-50' src="https://ima-discussion.s3.ap-south-1.amazonaws.com/discussionforum/pexels-pixabay-60597.jpg" alt="" />
+      </div>
+       */}
+              {/* <div className='pdf_view'>
+             <span className='pdf_text'>
+             <span className='pdf-img'><img src={PDF} /> </span>
+               <span className='view'>
+               <span className='pdf'>PDF</span>
+               <span className='size'>5 MB</span>
+               </span>
+             </span>
+              </div> */}
+            
+              </div>
+{/* JSON.parse(files.replaceAll("\"\"", "\"")) */}
         <div>
           <p style={mailId === mail.id ? {color:"#EE3224"} : {}}>{htmlToString(mail.comment)}</p>
         </div>
