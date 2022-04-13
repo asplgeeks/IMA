@@ -26,7 +26,7 @@ import Input from '@material-ui/core/Input'
 import CancelRoundedIcon from "@material-ui/icons/CancelRounded"
 
 import axiosConfig from './../../../axiosConfig'
-import {addTopic} from './store/actions'
+import {addTopic, getTopics} from './store/actions'
 
 // ** Third Party Components
 import PerfectScrollbar from 'react-perfect-scrollbar'
@@ -188,6 +188,7 @@ const onSubmit = (data) => {
     if (info === "success") {
       setModal(false)
       setUploadedImage([])
+      dispatch(getTopics({...store.params}))
     }
    })
    .catch(err => {
@@ -341,7 +342,7 @@ const onSubmit = (data) => {
           {/* <span className='align-middle dropdown_icon mr20'   ><Icon.RotateCw  style={{padding:"4px"}} /> </span>
           <span className='align-middle dropdown_icon mr20'  ><Icon.Plus /> </span>
           <span className='align-middle dropdown_icon '   onClick={() => [setSearchVisible(!search)] }>  <SearchIcon /> </span> */}
-          <span className='align-middle  mr20'   ><img className='img' src={Refresh}  /></span>
+          <span className='align-middle  mr20'   ><img className='img' src={Refresh}  onClick={() => dispatch(getTopics({ ...store.params }))}/></span>
           {params && params.folder !== "" ? <span className='align-middle  mr20' onClick={() => toggleModal(true)}  ><img className='img' src={Plus}  /> </span> : " " }
           <span className='align-middle ' onClick={() => [setSearchVisible(!search)] }> <img className='img' src={Search}  /> </span>
           </div>

@@ -22,6 +22,7 @@ const MailCard = props => {
     formatDateToMonthShort
   } = props
 
+  console.log(mail)
   // // ** Function to render labels
   // const renderLabels = arr => {
   //   if (arr && arr.length) {
