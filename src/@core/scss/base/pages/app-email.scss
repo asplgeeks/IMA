@@ -131,7 +131,7 @@ $email_details_header_height: 5rem;
     .email-user-list {
       position: relative;
       height: calc(
-        100% - calc(3.49rem + 1.32rem)
+        70% - calc(3.49rem + 1.32rem)
       ); // ? search box height (3.49rem) + select all section height (3.32rem)
       .email-media-list {
         padding: 0;

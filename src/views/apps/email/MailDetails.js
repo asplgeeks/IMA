@@ -144,7 +144,7 @@ const MailDetails = props => {
 
   // ** Renders Attachments
 const param = {
-  slidesPerView: 3,
+  slidesPerView: 2,
   spaceBetween:20
 }
 
@@ -299,7 +299,7 @@ const SwiperMultiSlides = () => {
   
        <form  onSubmit={handleSubmit(onSubmit)}>
         <Row>
-        <Col md={12} sm={12}>
+        <Col md={12} sm={12} xl={6}>
        <FormControl variant="standard" >
           <InputLabel htmlFor="input-with-icon-adornment">
           Comment
@@ -386,7 +386,7 @@ const SwiperMultiSlides = () => {
                 <Col sm='12'>
                 <Media> 
                 <div className='avatar'>
-                <img  src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/avatar-s-7.ba3f6823.jpg" height='50' width='50' />
+                <img  src={detail.image_url} height='50' width='50' />
     
                 </div>
                   <div>
@@ -440,14 +440,15 @@ const SwiperMultiSlides = () => {
   return (
     <div
     // className='wrap-border side-navbar square-border d-none d-lg-block border_bottom_none border_top_none'
-      className={classnames('email-app-details', {
+       className={classnames(window.innerWidth > "480" ? 'wrap-border side-navbar square-border d-none d-lg-block border_bottom_none border_top_none' : 'email-app-details', {
         show: openMail
       })}
+
     >
 <div>{renderModal}</div>
       {mail !== null && mail !== undefined ? (
         <Fragment>
-     <div className='email-user-list' options={{ wheelPropagation: false }}>
+     <div className='email-user-list'>
        <div className='app-fixed-search d-flex align-items-center details_navbar'>
           <div className='sidebar-toggle d-block ml-1' onClick={handleGoBack} >
            <span className='' style={{padding: "5px 1px"}}  ><img className='img' src={Back_arrow}  /> </span>
@@ -490,7 +491,7 @@ const SwiperMultiSlides = () => {
 
           </div>
         </div>
-        <PerfectScrollbar className='email-user-list' options={{ wheelPropagation: true }}>
+        <PerfectScrollbar  options={{ wheelPropagation: false }}>
           {/* <div style={{overflowY:"scroll", scrollbarWidth:"none"}}> */}
             <Row className="topic_details">
               <Col sm='12'>

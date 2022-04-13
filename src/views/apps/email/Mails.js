@@ -325,9 +325,9 @@ const onSubmit = (data) => {
       />
       </div>
 
-     {/* <Row>
+     <Row>
      
-       <Col xs='12' sm='12' lg='12' xl={openMail === true ? '6' : '12'}> */}
+       <Col xs='12' sm='12' lg='12' xl={openMail === true ? '6' : '12'} style={{padding:"0px"}}>
       <div className='email-app-list'>
         <div className='app-fixed-search d-flex align-items-center topic_navbar'>
           <Link to='/apps'>
@@ -398,8 +398,8 @@ const onSubmit = (data) => {
         )} 
         </PerfectScrollbar>
       </div>
-      {/* </Col> */}
-      {/* <Col xs='6' style={openMail === true ? {} : {borderLeft:"1px solid", display:"none"}}> */}
+      </Col>
+      <Col xs='12' xl='6' style={openMail === true ? {padding:"0px"} : {borderLeft:"1px solid", display:"none"}}>
       <MailDetails
         openMail={openMail}
         dispatch={dispatch}
@@ -416,10 +416,11 @@ const onSubmit = (data) => {
         handleMailReadUpdate={handleMailReadUpdate}
         formatDateToMonthShort={formatDateToMonthShort}
       />
+            </Col>
+      </Row>
       <ComposePopUp composeOpen={composeOpen} toggleCompose={toggleCompose} />
-      {/* </Col>
-      </Row> */}
-      {/* <MailDetails
+
+      <MailDetails
         openMail={openMail}
         dispatch={dispatch}
         mail={store.currentMail}
@@ -433,7 +434,7 @@ const onSubmit = (data) => {
         handleLabelsUpdate={handleLabelsUpdate}
         handleMailReadUpdate={handleMailReadUpdate}
         formatDateToMonthShort={formatDateToMonthShort}
-      /> */}
+      />
     </Fragment>
   )
 }
