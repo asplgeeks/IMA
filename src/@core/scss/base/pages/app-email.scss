@@ -431,6 +431,11 @@ $email_details_header_height: 5rem;
     width: 100%;
     position: fixed;
   }
+  .swiper_img{
+    border-radius:10px;
+    //  width:300px;
+      height:90px;
+  }
 }
 
 // Extra small devices (portrait phones, less than 576px)
@@ -792,6 +797,11 @@ color: #5e5873 !important;
   p{
     font-size: 12pt;
     font-family: "Helvetica Neue", "Medium" !important;
+    padding-top: 10px;
+    img{
+      height: 15px !important;
+      padding-right: 5px;
+    }
   }
   .media{
     margin: 15px 0px 5px 0px;
@@ -1323,4 +1333,8 @@ margin-left: 0px !important;
   } 
 }
 
-
+.swiper_img{
+  border-radius:10px;
+   width:300px;
+    height:200px;
+}
