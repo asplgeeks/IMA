@@ -55,7 +55,7 @@ export const addNewtreads = (formValue, props) => {
 
 // ** GET Mails
 export const getTopics = (params) => {
-  console.log(params)
+  // console.log(params)
   return dispatch => {
     return axiosConfig.post('/admin/getCommentIdList', {
       thread_id:params.folder.thread_id,
@@ -130,6 +130,9 @@ export const addTopic = (comment_data, images, detail, props) => {
         confirmButtonText: 'OK',
         confirmButtonColor: '#28c76f'
       })
+      
+      // dispatch({ type: 'GET_TREAD', data: res.data })
+
  return "success"
   } else {
     Swal.fire({

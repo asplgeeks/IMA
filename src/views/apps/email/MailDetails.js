@@ -52,8 +52,7 @@ import SwiperCore, {
 SwiperCore.use([Navigation, Pagination, EffectFade, EffectCube, EffectCoverflow, Autoplay, Lazy, Virtual])
 
 import {
-  addCommentSubComment,
-  getTopics
+  addCommentSubComment
 } from './store/actions'
 // ** Third Party Components
 import classnames from 'classnames'
@@ -119,7 +118,7 @@ const MailDetails = props => {
       const [blocking_state, setBlocking] = useState(false)
       const [commentDetail, setCommentDetail] = useState()
       const [replyDetail, setReplyDetail] = useState()
-      const { mails, selectedMails, currentMail, params } = store
+      const { mails, selectedMails, currentMail } = store
 
   // comment sub comment data
   const filteredPersons = mails && mails.data && mails.data.filter(
@@ -143,7 +142,7 @@ const MailDetails = props => {
   }
 
   // ** Renders Attachments
-const param = {
+const params = {
   slidesPerView: 3,
   spaceBetween:20
 }
@@ -154,7 +153,7 @@ const USER_File_TYPE = JSON.parse(userFiles && userFiles.replaceAll("\"\"", "\""
 console.log(USER_File_TYPE)
 const SwiperMultiSlides = () => {
   return (
-        <Swiper dir={isRtl ? 'rtl' : 'ltr'} {...param}>
+        <Swiper dir={isRtl ? 'rtl' : 'ltr'} {...params}>
           {USER_File_TYPE && USER_File_TYPE.map((image, index) => {
                if (image.mimetype === "application/pdf") {
             return ("")
@@ -425,7 +424,7 @@ const SwiperMultiSlides = () => {
         
           { search === false ?  <span className='broadcom_align float-right'>
           <div className='sidebar_search'>
-          <span className='align-middle mr20'   ><img className='img' src={Refresh}  onClick={() => dispatch(getTopics({ ...store.params }))}/> </span>
+          <span className='align-middle mr20'   ><img className='img' src={Refresh}  onClick={() => resetSelectedMail()}/> </span>
           {/* <span className='align-middle dropdown_icon mr20'  ><Icon.Plus /> </span> */}
           <span className='align-middle  '   onClick={() => [setSearchVisible(!search)] }>  <img className='img' src={Search} /> </span>
           {/* <span className='align-middle dropdown_icon '   onClick={() => [setSearchVisible(!search)] }>  <SearchIcon /> </span> */}

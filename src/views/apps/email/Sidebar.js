@@ -53,7 +53,7 @@ import Delete from "../../../Images/delete.svg"
 const Sidebar = props => {
   // ** Props
   const { register, errors, setValue, handleSubmit, control } = useForm()
-  const { store, sidebarOpen, toggleCompose, dispatch, getTopics, resetSelectedMail, setSidebarOpen, gettreads } = props
+  const { store, sidebarOpen, toggleCompose, dispatch, getTopics, resetSelectedMail, setSidebarOpen, gettreads, setReloadthread, reloadthread } = props
   const [open, setOpen] = useState(false)
   const [search, setSearchVisible] = useState(false)
   const [formValue, setFormValue] = useState({})
@@ -65,7 +65,7 @@ const Sidebar = props => {
   const [catId, setCateid] = useState('')
   // const [category, setCategory] = useState('')
   const { mails, selectedMails, treadDetail, categoryDetail } = store
-console.log(categoryDetail)
+// console.log(categoryDetail)
 
 const [searchField, setSearchField] = useState("")
 
@@ -93,9 +93,10 @@ const getCategoryId = (catDetail) => {
   useEffect(() => {
     dispatch(CategoryList())
   }, [open])
+  
 useEffect(() => {
   dispatch(gettreads(catId))
-}, [catId])
+}, [catId, reloadthread])
   // ** Vars
   const params = useParams()
 
@@ -144,10 +145,10 @@ useEffect(() => {
     setFormValue(values => ({...values, [name]: value}))
   }
 
-  console.log(errors)
+  // console.log(errors)
 // handleSubmit
   const onSubmit = (data) => {
-    console.log(data)
+    // console.log(data)
     // setSentPop(true)
     dispatch(addNewtreads(data, {setSentPop, toggleModal}))
     // alert(formValue.title)
@@ -232,7 +233,7 @@ const renderModal = (
         />
         }
         />
-        {console.log(errors)}
+        {/* {console.log(errors)} */}
          {errors.thread && errors.thread.type === 'required' && <p style={{color:"red"}}>Thread is required</p>}
       </FormControl>
       </Col>
