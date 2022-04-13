@@ -148,6 +148,11 @@ const param = {
   spaceBetween:20
 }
 
+const commentparam = {
+  slidesPerView: 1,
+  spaceBetween:10
+}
+
 // ..show the files
 const userFiles = mail && mail.data && mail.data.files
 const USER_File_TYPE = JSON.parse(userFiles && userFiles.replaceAll("\"\"", "\""))
@@ -392,6 +397,32 @@ const SwiperMultiSlides = () => {
                 <p>
                 {detail.comment}
                 </p>
+
+        <Swiper dir={isRtl ? 'rtl' : 'ltr'} {...commentparam}>
+          {JSON.parse(detail && detail.files.replaceAll("\"\"", "\"")).map((image, index) => {
+               if (image.mimetype === "application/pdf") {
+            return ("")
+           } else {
+          return (
+            <SwiperSlide>
+            {image.mimetype.slice(0, 5) === "image" ?   <img src={image.location} alt='swiper 1' className='img-fluid swiper_img_comment' /> : ''}
+             </SwiperSlide> 
+            )
+        }
+
+      })}       
+    </Swiper>
+
+                {JSON.parse(detail && detail.files.replaceAll("\"\"", "\"")).map((image, index) => {
+                  return (<div className='pdf_view_comment'>
+                  {image.mimetype.slice(0, 11) === "application" ? <span className='pdf_text'>
+                     <span className='view'>
+                     <span className='pdf-img'><img src={PDF} /><span className='size'>5 MB</span></span>
+                  <span className='pdf-title'>{image.originalname}</span>
+                   </span>
+                   </span> : ''}
+                    </div>)
+                })}
             <small className='text-muted'> {moment(detail.created_datetime).format("DD MMMM  YYYY")}
                 </small>
                 <div style={{float:"right"}} onClick={() => toggleModal(true, detail)}>

@@ -893,6 +893,58 @@ color: #5e5873 !important;
 
 }
 
+.pdf_view_comment{
+  margin-top: 10px !important;
+  margin-right: 10px !important;
+  display: flex;
+  // width: max-content;
+
+  // img{
+  //   height: 30px;
+  //   width: 30px;
+  //   border-radius: 8px 0px 0px 8px;
+  //   margin-top: -5px;
+  // }
+
+.pdf_text{
+  // padding: 10px 5px 8px 0px;
+    // background: #fff;
+    border-radius:8px;
+    display: flex !important;
+    align-items: center;
+
+    .pdf-img{
+      background: #ff1919 !important;
+      // padding: 10px 5px 8px 0px;
+      border-radius: 8px;
+      display: grid;
+      padding: 3px;
+      width: 40px;
+      img{
+        margin: auto;
+      }
+      .size{
+        font-family: "Helvetica Neue", "Medium";
+        color: #ffff;
+        font-size: 7pt;
+        text-align: center;
+      }
+    }
+    .view{
+      display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 8px;
+    .pdf-title
+    {
+      padding: 0px 10px 0px 10px;
+      
+    }
+    }
+}
+
+}
+
 }
 
 .comment_details{
@@ -1337,4 +1389,10 @@ margin-left: 0px !important;
   border-radius:10px;
    width:300px;
     height:200px;
+}
+
+.swiper_img_comment{
+  border-radius:10px;
+   width:150px;
+    height:80px;
 }
