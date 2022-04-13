@@ -21,6 +21,8 @@ import Back_arrow from "../../../Images/backarrow.svg"
 import Delete from "../../../Images/delete.svg"
 import Adnewgreen from './../../../Images/addnewgreen.svg'
 import Thread from './../../../Images/thread.svg'
+import Quote from './../../../Images/quote.svg'
+
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
@@ -154,11 +156,16 @@ const SwiperMultiSlides = () => {
   return (
         <Swiper dir={isRtl ? 'rtl' : 'ltr'} {...param}>
           {USER_File_TYPE && USER_File_TYPE.map((image, index) => {
-            return (
-        <SwiperSlide>
-        {image.mimetype.slice(0, 5) === "image" ?   <img src={image.location} alt='swiper 1' className='img-fluid' style={{borderRadius:"20px", width:"300px", height:"200px"}}/> : ''}
-         </SwiperSlide> 
-        )
+               if (image.mimetype === "application/pdf") {
+            return ("")
+           } else {
+          return (
+            <SwiperSlide>
+            {image.mimetype.slice(0, 5) === "image" ?   <img src={image.location} alt='swiper 1' className='img-fluid swiper_img' /> : ''}
+             </SwiperSlide> 
+            )
+        }
+
       })}       
     </Swiper>
   )
@@ -354,8 +361,6 @@ const SwiperMultiSlides = () => {
         </Col>
         </Row>
         </form>
-        
-  
           </ModalBody>
           <ModalFooter className="comment_model-footer">
             <Button color="modal-success" onClick={() => toggleModal(false)}>
@@ -459,7 +464,7 @@ const SwiperMultiSlides = () => {
             <Row className="topic_details">
               <Col sm='12'>
                 <div className='email-label'>
-                  <p>{mail && mail.data && mail.data.comment}</p>
+                  <p><img src={Quote}></img> {mail && mail.data && mail.data.comment}</p>
                 </div>
           {/* <div style={{
             display: 'block', maxWidth: 600, padding: 30
