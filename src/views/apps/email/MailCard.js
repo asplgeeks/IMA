@@ -22,7 +22,7 @@ const MailCard = props => {
     formatDateToMonthShort
   } = props
 
-  console.log(mail)
+  // console.log(mail)
   // // ** Function to render labels
   // const renderLabels = arr => {
   //   if (arr && arr.length) {
@@ -43,9 +43,8 @@ const files = JSON.parse(mail.files.replaceAll("\"\"", "\""))
   return (
     <Media tag='li' className="topic_info"  >
      <Media body onClick={() => onMailClick(mail.id)}>
-        <div className='comment_data'>
+        <div className='comment_data'  style={files.length ? {} : {display:"none"}} >
         { files.map((img) => {
-          { console.log("img", img) }
           if (img.mimetype === "application/pdf") {
             return (<div className='pdf_view'>
             <span className='pdf_text'>

@@ -32,6 +32,7 @@ const EmailApp = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [composeOpen, setComposeOpen] = useState(false)
 
+  const [reloadthread, setReloadthread] = useState(false)
   // ** Toggle Compose Function
   const toggleCompose = () => setComposeOpen(!composeOpen)
 
@@ -61,6 +62,10 @@ const EmailApp = () => {
         toggleCompose={toggleCompose}
         setSidebarOpen={setSidebarOpen}
         resetSelectedMail={resetSelectedMail}
+        setReloadthread={setReloadthread}
+        reloadthread={reloadthread}
+
+        
   />
   
       <div className='content-right'>
@@ -88,6 +93,8 @@ const EmailApp = () => {
             updateMailLabel={updateMailLabel}
             selectCurrentMail={selectCurrentMail}
             resetSelectedMail={resetSelectedMail}
+            setReloadthread={setReloadthread}
+            reloadthread={reloadthread}
           />
         </div>
       </div>

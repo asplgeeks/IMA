@@ -70,10 +70,13 @@ const Mails = props => {
     setSidebarOpen,
     updateMailLabel,
     resetSelectedMail,
-    selectCurrentMail
+    selectCurrentMail,
+    setReloadthread,
+    reloadthread
   } = props
 
   const { mails, selectedMails, params, currentMail } = store
+  const [paramsData, setParamsData] = useState(params)
   // ** States
   // mails
   // console.log("sdadadas", params && params.folder)
@@ -110,7 +113,7 @@ const Mails = props => {
 
   // ** Handles Update Functions
   const handleMailClick = id => {
-    console.log(id)
+    // console.log(id)
     setMailId(id)
     dispatch(selectCurrentMail(id))
     setOpenMail(true)
@@ -148,9 +151,9 @@ const Mails = props => {
   // ** Renders Mail
   const renderMails = () => {
     // if (mails && mails.length) {
-      console.log(mails)
+      // console.log(mails)
       return filteredPersons.map((mail, index) => {
-        console.log(mail)
+        // console.log(mail)
         return (
           <MailCard
             mail={mail}
@@ -171,7 +174,7 @@ const Mails = props => {
   }
 
   const toggleModal = status => {
-    console.log("status1", status)
+    // console.log("status1", status)
     if (modal !== status) {
       setModal(status)
     } else {
@@ -182,17 +185,20 @@ const Mails = props => {
 
 //--------------handel submit----------------------------//
 const onSubmit = (data) => {
-  // console.log("data", params && params.folder)
+  setBlocking(true)
   dispatch(addTopic(data.comment, uploadedImage, params && params.folder, props)).then(info => { 
-    console.log("info", info) 
     if (info === "success") {
       setModal(false)
+      setReloadthread(!reloadthread)
       setUploadedImage([])
       dispatch(getTopics({...store.params}))
+      // dispatch(gettreads({...store.params}))
+      setBlocking(false)
     }
    })
    .catch(err => {
-    console.log("err", err) 
+    // console.log("err", err) 
+    setBlocking(false)
    })
   }
 
@@ -379,7 +385,7 @@ const onSubmit = (data) => {
         <PerfectScrollbar className='email-user-list' options={{ wheelPropagation: false }}>
         <div className='app-action light-gray-bg'>
           <div className='action-left' style={{width:"100%"}}>
-          <p className='text-truncate mb-0 topic_title'>{params && params.folder && params.folder.display_name} </p>
+          <p className='text-truncate mb-0 topic_title'>{(params && params.folder && params.folder.display_name) || (paramsData && paramsData.folder && paramsData.folder.display_name)} </p>
           </div>
             <div className='action-right'>
             <Info size={18} id='positionLeft' style={{color:"#EE3224"}}/>
