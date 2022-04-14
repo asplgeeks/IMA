@@ -22,6 +22,8 @@ import Delete from "../../../Images/delete.svg"
 import Adnewgreen from './../../../Images/addnewgreen.svg'
 import Thread from './../../../Images/thread.svg'
 import Quote from './../../../Images/quote.svg'
+import Sub_reply from './../../../Images/sub_reply.svg'
+import CollapseIcon from './../../../Images/collaspeIcon.svg'
 
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -74,7 +76,11 @@ import {
   Media,
   input,
   Label,
-  Modal, ModalHeader, ModalBody, ModalFooter
+  Modal,
+  ModalHeader,
+  ModalBody, 
+  ModalFooter,
+  Collapse
 } from 'reactstrap'
 import {
   Paperclip,
@@ -104,6 +110,7 @@ const MailDetails = props => {
     formatDateToMonthShort,
     resetSelectedMail
   } = props
+
   const [searchField, setSearchField] = useState("")
   const store = useSelector(state => state.email)
   const history = useHistory()
@@ -114,11 +121,34 @@ const MailDetails = props => {
     const [value, setValue] = useState("")
     const [formValue, setFormValue] = useState({})
     const [modal, setModal] = useState(false)
-      const [uploadedImage, setUploadedImage] = useState([])
-      const [blocking_state, setBlocking] = useState(false)
-      const [commentDetail, setCommentDetail] = useState()
-      const [replyDetail, setReplyDetail] = useState()
-      const { mails, selectedMails, currentMail } = store
+    const [uploadedImage, setUploadedImage] = useState([])
+    const [blocking_state, setBlocking] = useState(false)
+    const [commentDetail, setCommentDetail] = useState()
+    const [replyDetail, setReplyDetail] = useState()
+    const [Collapse_data, setCollapse_data] = useState([])//useState([])
+
+//store data
+
+const { mails, selectedMails, currentMail } = store
+
+//toggle collapps
+const filter_array = (data) => {
+  const filter_info = Collapse_data.filter(function(item) {
+    return item !== data
+})
+setCollapse_data(filter_info)
+console.log("check_info12312", Collapse_data)
+}
+
+const ToggleCollapse = (data) => {
+  console.log("data", data, "array", Collapse_data)
+  const  array_data = (Collapse_data.indexOf(data) >= 0)
+  array_data === true ? filter_array(data) : setCollapse_data([...Collapse_data, data])
+  console.log("check_info", Collapse_data)
+
+} 
+console.log("check_info1111", Collapse_data)
+// const ToggleCollapse = () => setCollapse_data(!Collapse_data)
 
   // comment sub comment data
   const filteredPersons = mails && mails.data && mails.data.filter(
@@ -132,7 +162,6 @@ const MailDetails = props => {
     }
   )
 
-  console.log(filteredPersons)
 
   const deleteFunction = (i) => {
     const clearImage = uploadedImage && uploadedImage.filter((image, index) => {
@@ -148,14 +177,13 @@ const params = {
 }
 
 const commentparam = {
-  slidesPerView: 1,
+  slidesPerView: 1.2,
   spaceBetween:10
 }
 
 // ..show the files
 const userFiles = mail && mail.data && mail.data.files
 const USER_File_TYPE = JSON.parse(userFiles && userFiles.replaceAll("\"\"", "\""))
-console.log(USER_File_TYPE)
 const SwiperMultiSlides = () => {
   return (
         <Swiper dir={isRtl ? 'rtl' : 'ltr'} {...params}>
@@ -187,7 +215,7 @@ const SwiperMultiSlides = () => {
   }
 
   const toggleForReply = (status, detail) => {
-    console.log("status1", status, detail)
+    // console.log("status1", status, detail)
     if (modal !== status) {
       setModal(status)
       setReplyDetail(detail)
@@ -197,7 +225,7 @@ const SwiperMultiSlides = () => {
   }
 
   const toggleModal = (status, detail) => {
-    console.log("status1", status, detail)
+    // console.log("status1", status, detail)
     if (modal !== status) {
       setModal(status)
       setCommentDetail(detail)
@@ -223,7 +251,7 @@ const SwiperMultiSlides = () => {
     const bodyFormData = new FormData()
     const name = event.target.name
     const value = event.target.files
-    console.log(event.target.files)
+    // console.log(event.target.files)
     bodyFormData.append('file', value[0])
     const config = {
       headers: {
@@ -232,55 +260,30 @@ const SwiperMultiSlides = () => {
   }
   
   const fileList = event.target.files
-  console.log(fileList)
+  // console.log(fileList)
     axiosConfig.post('/admin/uploadFile', bodyFormData, config).then(r => setUploadedImage([...uploadedImage, r.data.data]))
     // uploadedImage.push
     // setFormValue(values => ({...values, [name]: [r.data && r.data.location]}))
   }
-  console.log(mail && mail)
+  // console.log(mail && mail)
   // onsubmit
   const onSubmit = (data) => {
     // setSentPop(true)
     // console.log(data, uploadedImage, commentDetail, props, replyDetail)
     dispatch(addCommentSubComment(data.comment, uploadedImage, commentDetail, props, replyDetail)).then(info => { 
-      console.log("info", info) 
+      // console.log("info", info) 
       if (info === "success") {
         setModal(false)
         // setUploadedImage([])
       }
      })
      .catch(err => {
-      console.log("err", err) 
+      // console.log("err", err) 
      })
     // alert(formValue.title)
   }
 
-  // COMMENT TREE SECTION 
-  const Subcomment = ({ subComment }) => {
-    return (
-      <Col sm='12'>
-      <Media> 
-      <div className='avatar'>
-      <img  src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/avatar-s-7.ba3f6823.jpg" height='50' width='50' />
 
-      </div>
-        <div>
-        <span className='user_name'>{subComment.comment_by}</span>
-        <span className='text-muted '> {subComment.commentor_designation} </span>
-        </div>
-      </Media>
-      <p>
-      {subComment.comment}
-      </p>
-  <small className='text-muted'> {moment(subComment.created_datetime).format("DD MMMM  YYYY")}
-      </small>
-      <div style={{float:"right"}} onClick={() => toggleForReply(true, subComment)}>
-      <small className='text-muted'><img src={Reply} />Reply </small>
-      </div>
-      {/* <Subcomment responses={responses}/> */}
-       </Col>
-    )
-}
 // console.log(Responses())
     // ** Renders Labels
     const renderModal = (
@@ -298,7 +301,7 @@ const SwiperMultiSlides = () => {
   
        <form  onSubmit={handleSubmit(onSubmit)}>
         <Row>
-        <Col md={12} sm={12}>
+        <Col md={12} sm={12}  className="p0">
        <FormControl variant="standard" >
           <InputLabel htmlFor="input-with-icon-adornment">
           Comment
@@ -325,7 +328,7 @@ const SwiperMultiSlides = () => {
             {errors.comment && <p style={{color:"red"}}>Please enter your comment</p>}  
         </FormControl>
         </Col>
-        <Col md={12} sm={12}>
+        <Col md={12} sm={12} className="p0">
         <FormControl variant="standard">
         <div className='files'>
                       <Label className='mb-0 btn lable-btn' for='attach-email-item'>
@@ -343,7 +346,7 @@ const SwiperMultiSlides = () => {
                     </div>
         </FormControl> 
         </Col>
-        <Col md={12} sm={12}>
+        <Col md={12} sm={12} className="p0">
         <FormControl variant="standard">
           <div> 
             {uploadedImage && uploadedImage.map((image, index) => {
@@ -355,7 +358,7 @@ const SwiperMultiSlides = () => {
             </div>
           </FormControl> 
         </Col>
-        <Col md={12} sm={12}>
+        <Col md={12} sm={12} className="p0">
           <div className='button_send_request'>
                <Button.Ripple color='success' type='submit' >
           <span className='align-middle ms-25'>SUBMIT</span>
@@ -377,15 +380,23 @@ const SwiperMultiSlides = () => {
       </div>
     )
 
+    // const number = () => {
+    //   const data = Math.floor((Math.random() * 1000) + 1)
+    //   return data
+    // }
+
+
     const SubComment = ({filteredPersons}) => ( 
-      <div>
+      <div  className='sub-comment'>
+    
+        {/* <div> asndlkafd ksjdfdsfkj {}</div> */}
                {filteredPersons && filteredPersons.map((detail, index) => {
               return (<div>
                 <Row className="comment_details" style={detail && detail.subcomments && detail.subcomments.length > 1 ? {marginLeft: "40px !important"} : {}}>
-                <Col sm='12'>
+                <Col sm='12' className="p0 m10" >
                 <Media> 
                 <div className='avatar'>
-                <img  src="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/static/media/avatar-s-7.ba3f6823.jpg" height='50' width='50' />
+                <img  src={detail.image_url} height='50' width='50' />
     
                 </div>
                   <div>
@@ -393,9 +404,7 @@ const SwiperMultiSlides = () => {
                   <span className='text-muted '> {detail.commentor_designation} </span>
                   </div>
                 </Media>
-                <p>
-                {detail.comment}
-                </p>
+                
 
         <Swiper dir={isRtl ? 'rtl' : 'ltr'} {...commentparam}>
           {JSON.parse(detail && detail.files.replaceAll("\"\"", "\"")).map((image, index) => {
@@ -411,30 +420,102 @@ const SwiperMultiSlides = () => {
 
       })}       
     </Swiper>
-
-                {JSON.parse(detail && detail.files.replaceAll("\"\"", "\"")).map((image, index) => {
-                  return (<div className='pdf_view_comment'>
-                  {image.mimetype.slice(0, 11) === "application" ? <span className='pdf_text'>
+      <div className='sub-comment-pdf'>
+       {JSON.parse(detail && detail.files.replaceAll("\"\"", "\"")).map((image, index) => {
+                  return (image.mimetype.slice(0, 11) === "application" ? <div className='pdf_view_comment'><span className='pdf_text'>
                      <span className='view'>
-                     <span className='pdf-img'><img src={PDF} /><span className='size'>5 MB</span></span>
+                     <span className='pdf-img'><img src={PDF} /><span className='size'>{(image.size / (1024 * 1024)).toFixed(1)} MB</span></span>
                   <span className='pdf-title'>{image.originalname}</span>
                    </span>
-                   </span> : ''}
-                    </div>)
+                   </span> </div> : ""
+                    )
                 })}
-            <small className='text-muted'> {moment(detail.created_datetime).format("DD MMMM  YYYY")}
-                </small>
-                <div style={{float:"right"}} onClick={() => toggleModal(true, detail)}>
-                <small className='text-muted'><img src={Reply} />Comment </small>
                 </div>
-                {/* <p>{detail && detail.subcomments && detail.subcomments.length}</p> */}
+                <p>
+                {detail.comment}
+                </p>
+                
+            <small className='text-muted'> {moment(detail.created_datetime).format("DD MMMM  YYYY")} {detail.subcomments ? detail.subcomments.length ? (<span> | {detail.subcomments.length} Replies <span onClick={() => ToggleCollapse(detail.id) }> <img src={CollapseIcon} /></span> </span>) : "" : "" } 
+            </small>
+                <div style={{float:"right"}} onClick={() => toggleModal(true, detail)}>
+                <small className='text-muted'><img src={Reply} />Reply</small>
+                </div>
                  </Col>
                 </Row>
-                {detail.subcomments ?  <SubComment className="subcomment" filteredPersons={detail.subcomments} /> : ''}
+                <Collapse style={{marginLeft:"20px"}} isOpen={(Collapse_data.indexOf(detail.id) >= 0)}>
+                {detail.subcomments ?  <Second_SubComment className="subcomment" filteredPersons={detail.subcomments}  /> : ''}
+                </Collapse>
+
                 </div>)
             })}
       </div>
     )
+
+
+    const Second_SubComment = ({filteredPersons, parent_id}) => (
+      <div>
+          {filteredPersons && filteredPersons.map((detail, index) => {
+              return (<div>
+                <Row className="comment_details" style={detail && detail.subcomments && detail.subcomments.length > 1 ? {marginLeft: "40px !important"} : {}}>
+                <Col sm='12' className="p0 m10" >
+
+                  
+                <Media> 
+                <div className='avatar'>
+                <img  src={detail.image_url} height='50' width='50' />
+    
+                </div>
+                  <div>
+                  <span className='user_name'>{detail.comment_by}</span>
+                  <span className='text-muted '> {detail.commentor_designation} </span>
+                  </div>
+                </Media>
+                
+
+        <Swiper dir={isRtl ? 'rtl' : 'ltr'} {...commentparam}>
+          {JSON.parse(detail && detail.files.replaceAll("\"\"", "\"")).map((image, index) => {
+               if (image.mimetype === "application/pdf") {
+            return ("")
+           } else {
+          return (
+            <SwiperSlide>
+            {image.mimetype.slice(0, 5) === "image" ?   <img src={image.location} alt='swiper 1' className='img-fluid swiper_img_comment' /> : ''}
+             </SwiperSlide> 
+            )
+        }
+
+      })}       
+    </Swiper>
+      <div className='sub-comment-pdf'>
+       {JSON.parse(detail && detail.files.replaceAll("\"\"", "\"")).map((image, index) => {
+                  return (image.mimetype.slice(0, 11) === "application" ? <div className='pdf_view_comment'><span className='pdf_text'>
+                     <span className='view'>
+                     <span className='pdf-img'><img src={PDF} /><span className='size'>{(image.size / (1024 * 1024)).toFixed(1)} MB</span></span>
+                  <span className='pdf-title'>{image.originalname}</span>
+                   </span>
+                   </span> </div> : ""
+                    )
+                })}
+                </div>
+                <p>
+                {detail.comment}
+                </p>
+                
+            <small className='text-muted'> {moment(detail.created_datetime).format("DD MMMM  YYYY")}{detail.subcomments ? detail.subcomments.length ? (<span> | {detail.subcomments.length}Sub Replies <span onClick={() => ToggleCollapse(detail.id) }> <img src={CollapseIcon} /></span> </span>) : "" : ""} 
+            </small>
+                <div style={{float:"right"}} onClick={() => toggleModal(true, detail)}>
+                <small className='text-muted'><img src={Sub_reply} />Sub-Reply</small>
+                </div>
+                 </Col>
+                </Row>
+                <Collapse isOpen={(Collapse_data.indexOf(detail.id) >= 0)}>
+                {detail.subcomments ? <Second_SubComment className="subcomment" filteredPersons={detail.subcomments} /> : ''}
+                </Collapse>
+                </div>)
+            })}
+      </div>
+    )
+
 
   return (
     <div
@@ -492,7 +573,7 @@ const SwiperMultiSlides = () => {
         <PerfectScrollbar className='email-user-list' options={{ wheelPropagation: true }}>
           {/* <div style={{overflowY:"scroll", scrollbarWidth:"none"}}> */}
             <Row className="topic_details">
-              <Col sm='12'>
+              <Col sm='12' className="p0">
                 <div className='email-label'>
                   <p><img src={Quote}></img> {mail && mail.data && mail.data.comment}</p>
                 </div>
@@ -503,17 +584,16 @@ const SwiperMultiSlides = () => {
           {/* </div> */}
 </Col>
 {USER_File_TYPE && USER_File_TYPE.map((image, index) => {
-          return (<div className='pdf_view'>
-            {image.mimetype.slice(0, 11) === "application" ? <span className='pdf_text'>
+          return (image.mimetype.slice(0, 11) === "application" ? <div className='pdf_view'> <span className='pdf_text'>
                <span className='view'>
-               <span className='pdf-img'><img src={PDF} /><span className='size'>5 MB</span></span>
+               <span className='pdf-img'><img src={PDF} /><span className='size'>{(image.size / (1024 * 1024)).toFixed(1)} MB</span></span>
             <span className='pdf-title'>{image.originalname}</span>
              </span>
-             </span> : ''}
-              </div>)
+             </span> </div> : ''
+             )
               })
             }
-            <Col md="12">
+            <Col md="12"  className="p0">
               <Media> 
             <div className='avatar'>
             <img  src={mail.image_url} height='25' width='25' />
