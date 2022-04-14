@@ -333,7 +333,7 @@ const onSubmit = (data) => {
 
      <Row>
      
-       <Col xs='12' sm='12' lg='12' xl={openMail === true ? '6' : '12'} style={{padding:"0px"}}>
+       <Col xs='12' sm='12' lg='12' xl={openMail === true ? '4' : '12'} style={{padding:"0px"}}>
       <div className='email-app-list'>
         <div className='app-fixed-search d-flex align-items-center topic_navbar'>
           <Link to='/apps'>
@@ -388,7 +388,7 @@ const onSubmit = (data) => {
           <p className='text-truncate mb-0 topic_title'>{(params && params.folder && params.folder.display_name) || (paramsData && paramsData.folder && paramsData.folder.display_name)} </p>
           </div>
             <div className='action-right'>
-            <Info size={18} id='positionLeft' style={{color:"#EE3224"}}/>
+            <Info size={20} id='positionLeft' style={{color:"#EE3224"}}/>
             </div>
             <UncontrolledTooltip placement='left' target='positionLeft'>
             {params && params.folder && params.folder.display_name}
@@ -405,7 +405,7 @@ const onSubmit = (data) => {
         </PerfectScrollbar>
       </div>
       </Col>
-      <Col xs='12' xl='6' style={openMail === true ? {padding:"0px"} : {borderLeft:"1px solid", display:"none"}}>
+      <Col xs='12' xl='8' style={openMail === true ? {padding:"0px"} : {borderLeft:"1px solid", display:"none"}}>
       <MailDetails
         openMail={openMail}
         dispatch={dispatch}

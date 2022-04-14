@@ -22,7 +22,8 @@ $email_details_header_height: 5rem;
     // Sidebar area starts
     .sidebar {
       .email-app-sidebar {
-        width: $menu-expanded-width;
+        // width: $menu-expanded-width;
+        width: 300px;
         height: inherit;
         background-color: $white;
         border-top-left-radius: $card-border-radius;
@@ -43,15 +44,16 @@ $email_details_header_height: 5rem;
         }
       }
       .list-group .list-group-item {
-        padding: 0.58rem 1.5rem;
+        padding: 0.25rem 1rem;
         border: 0;
         font-weight: $font-weight-bold;
+        font-family: "Helvetica Neue", "Medium" !important;
         // letter-spacing: 0.4px;
         border-left: 2px solid transparent;
         border-bottom: 1px solid #ebe9f1;
         border-radius: 0;
         .MuiBreadcrumbs-ol{
-          font-size: 11pt;
+          font-size: 10pt;
           font-family: "Helvetica Neue", "Regular" !important;
           color: #444444;
               }        
@@ -65,7 +67,7 @@ $email_details_header_height: 5rem;
           white-space: nowrap;
         }
         .badge-white{
-          font-size: 9pt;
+          font-size: 7pt;
           font-family: "Helvetica Neue", "Medium" !important;
           background: #EE3224;
         }
@@ -92,7 +94,7 @@ $email_details_header_height: 5rem;
     // Right content area common css starts
     .content-right {
       // width: calc(100% - #{$menu-expanded-width} - 164px);
-      width: calc(100% - #{$menu-expanded-width});
+      // width: calc(100% - #{$menu-expanded-width});
 
       border-left: 1px solid $border-color;
       .email-app-list {
@@ -266,7 +268,7 @@ $email_details_header_height: 5rem;
     visibility: hidden;
     top: 0;
     // width: calc(100% - #{$menu-expanded-width} - 164px);
-    width: calc(100% - #{$menu-expanded-width});
+    // width: calc(100% - #{$menu-expanded-width});
 
     background-color: $white;
     transform: translateX(100%);
@@ -793,7 +795,7 @@ color: #5e5873 !important;
 }
 .topic_details{
   padding: 0  2rem !important;
-  background-color: #F5F5F5 !important;
+  background-color: #f8f8f8 !important;
   p{
     font-size: 12pt;
     font-family: "Helvetica Neue", "Medium" !important;
@@ -1124,8 +1126,8 @@ p{
           width: 70px;
           margin-right: 10px !important;
           .img{
-            height: 50px;
-            width: 70px;
+            height: 30pt;
+            width: 52pt;
           }
         .pdf_text{
           background: #ff1919 !important;
@@ -1133,8 +1135,8 @@ p{
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            height: 50px;
-            width: 70px;
+            height: 30pt;
+            width: 52pt;
             .pdf-img{
              
               display: grid;
@@ -1192,7 +1194,7 @@ p{
                }
           }
           .media-body{
-            font-size: 13pt;
+            font-size: 12pt;
             font-family: "Helvetica Neue";
             color: #999999 !important;
           }
@@ -1387,7 +1389,7 @@ margin-left: 0px !important;
 
 .swiper_img{
   border-radius:10px;
-   width:300px;
+   width:335px;
     height:200px;
 }
 

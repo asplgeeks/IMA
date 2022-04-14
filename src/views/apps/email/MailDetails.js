@@ -158,7 +158,7 @@ const USER_File_TYPE = JSON.parse(userFiles && userFiles.replaceAll("\"\"", "\""
 console.log(USER_File_TYPE)
 const SwiperMultiSlides = () => {
   return (
-        <Swiper dir={isRtl ? 'rtl' : 'ltr'} {...params}>
+        <Swiper dir={isRtl ? 'rtl' : 'ltr'} {...param}>
           {USER_File_TYPE && USER_File_TYPE.map((image, index) => {
                if (image.mimetype === "application/pdf") {
             return ("")
@@ -439,14 +439,14 @@ const SwiperMultiSlides = () => {
   return (
     <div
     // className='wrap-border side-navbar square-border d-none d-lg-block border_bottom_none border_top_none'
-       className={classnames(window.innerWidth > "480" ? 'wrap-border side-navbar square-border d-none d-lg-block border_bottom_none border_top_none' : 'email-app-details', {
+       className={classnames(window.innerWidth > "480" ? 'wrap-border side-navbar square-border d-none d-lg-block border_bottom_none border_top_none position-absolute embed-responsive embed-responsive-4by9' : 'email-app-details', {
         show: openMail
       })}
 
     >
 <div>{renderModal}</div>
       {mail !== null && mail !== undefined ? (
-        <Fragment>
+        <Card>
      <div className='email-user-list'>
        <div className='app-fixed-search d-flex align-items-center details_navbar'>
           <div className='sidebar-toggle d-block ml-1' onClick={handleGoBack} >
@@ -538,16 +538,16 @@ const SwiperMultiSlides = () => {
               </Media>
               </Col>
             </Row>
-
+             <Card>
             <SubComment filteredPersons={filteredPersons}/>
+            </Card>
             {/* </div> */}
             </PerfectScrollbar>
             </div>
-        </Fragment>
+        </Card>
       ) : null}
 
-    </div>
-  )
+    </div>)
 }
 
 export default MailDetails
