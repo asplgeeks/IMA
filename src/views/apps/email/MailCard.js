@@ -1,3 +1,4 @@
+import { Fragment, useState  } from 'react'
 // ** Custom Components & Plugins
 import classnames from 'classnames'
 import { htmlToString } from '@utils'
@@ -5,6 +6,8 @@ import Avatar from '@components/avatar'
 import { Star, Paperclip } from 'react-feather'
 import { CustomInput, Media, Row, Col } from 'reactstrap'
 import PDF from "../../../Images/pdf.svg"
+import PDFVIEWER from './../../components/PdfReader'
+import Dialog from './../../components/Dailog'
 
 const moment = require('moment')
 const MailCard = props => {
@@ -21,7 +24,8 @@ const MailCard = props => {
     handleMailReadUpdate,
     formatDateToMonthShort
   } = props
-
+// state 
+const [pdfUrl, setPDFUrl] = useState("")
   // console.log(mail)
   // // ** Function to render labels
   // const renderLabels = arr => {
@@ -38,15 +42,16 @@ const MailCard = props => {
     handleMailReadUpdate([mail.id], true)
   }
 
-
+console.log("pdfUrl", pdfUrl)
 const files = JSON.parse(mail.files.replaceAll("\"\"", "\""))
-  return (
+  return (<div>
+             {pdfUrl !== "" ? <Dialog pdfUrl={pdfUrl} open={pdfUrl !== ""}/> : ''}
     <Media tag='li' className="topic_info"  >
      <Media body onClick={() => onMailClick(mail.id)}>
         <div className='comment_data'  style={files.length ? {} : {display:"none"}} >
         { files.map((img) => {
           if (img.mimetype === "application/pdf") {
-            return (<div className='pdf_view'>
+            return (<div className='pdf_view' onClick={() => setPDFUrl(img.location)}>
             <span className='pdf_text'>
             <span className='pdf-img'><img src={PDF} /> </span>
               <span className='view'>
@@ -85,7 +90,7 @@ const files = JSON.parse(mail.files.replaceAll("\"\"", "\""))
         </div>
       </Media>
     </Media>
-  )
+    </div>)
 }
 
 export default MailCard

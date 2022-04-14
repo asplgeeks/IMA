@@ -84,6 +84,8 @@ import {
   Trash2 } from 'react-feather'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import axiosConfig from './../../../axiosConfig'
+import PDFVIEWER from './../../components/PdfReader'
+import Dialog from './../../components/Dailog'
 const moment = require('moment')
 
 const MailDetails = props => {
@@ -119,7 +121,9 @@ const MailDetails = props => {
       const [commentDetail, setCommentDetail] = useState()
       const [replyDetail, setReplyDetail] = useState()
       const { mails, selectedMails, currentMail } = store
-
+// state pdf
+const [pdfUrl, setPDFUrl] = useState("")
+console.log(pdfUrl !== "")
   // comment sub comment data
   const filteredPersons = mails && mails.data && mails.data.filter(
     person => {
@@ -416,7 +420,7 @@ const SwiperMultiSlides = () => {
                   return (<div className='pdf_view_comment'>
                   {image.mimetype.slice(0, 11) === "application" ? <span className='pdf_text'>
                      <span className='view'>
-                     <span className='pdf-img'><img src={PDF} /><span className='size'>5 MB</span></span>
+                     <span className='pdf-img'><img src={PDF} onClick={() => setPDFUrl(image.location)}/><span className='size'>5 MB</span></span>
                   <span className='pdf-title'>{image.originalname}</span>
                    </span>
                    </span> : ''}
@@ -444,6 +448,7 @@ const SwiperMultiSlides = () => {
       })}
 
     >
+              {pdfUrl !== "" ? <Dialog pdfUrl={pdfUrl} open={pdfUrl !== ""}/> : ''}
 <div>{renderModal}</div>
       {mail !== null && mail !== undefined ? (
         <Card>
@@ -490,6 +495,7 @@ const SwiperMultiSlides = () => {
 
           </div>
         </div>
+
         <PerfectScrollbar  options={{ wheelPropagation: false }}>
           {/* <div style={{overflowY:"scroll", scrollbarWidth:"none"}}> */}
             <Row className="topic_details">
@@ -507,7 +513,7 @@ const SwiperMultiSlides = () => {
           return (<div className='pdf_view'>
             {image.mimetype.slice(0, 11) === "application" ? <span className='pdf_text'>
                <span className='view'>
-               <span className='pdf-img'><img src={PDF} /><span className='size'>5 MB</span></span>
+               <span className='pdf-img'><img src={PDF} onClick={() => setPDFUrl(image.location)}/><span className='size'>5 MB</span></span>
             <span className='pdf-title'>{image.originalname}</span>
              </span>
              </span> : ''}
