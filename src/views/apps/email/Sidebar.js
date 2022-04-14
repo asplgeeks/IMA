@@ -171,7 +171,7 @@ const renderModal = (
             You can always request to admin to create a new one. 
             However, the creation is at the discretion of the admin.
           </p>
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
           <Row>
       <Col md={12} sm={12}>
      <FormControl variant="standard" >
@@ -181,22 +181,25 @@ const renderModal = (
         <Controller 
         control={control}
         name="title"
+        rules={{
+          required:{
+              value: true,
+              message: "Campo obrigatório."
+          }
+      }}
         as={
         <Input
           id="input-with-icon-adornment"
           placeholder="Add Title"
           className={classnames({ 'is-invalid': errors['title'] })}
-         innerRef={register("title", {required:true, validate: value => value !== ''})}
+         innerRef={register("title", {required:true, validate: value => value !== ""})}
           // value={formValue.title || ''}
           // onChange={handleChange}
           startAdornment={
             <InputAdornment position="start">
-              {/* <Icon.Edit2 /> */}
               <img src={Thread}></img>
             </InputAdornment>
           }
-          // error={formValue.title === undefined}
-          // helperText={formValue.title === undefined ? "please fill something" : ''}
         />
         }
         />
@@ -213,17 +216,21 @@ const renderModal = (
         <Controller 
         control={control}
         name="thread"
-        defaultValue={''}
+         rules={{
+        required:{
+            value: true,
+            message: "Campo obrigatório."
+        }
+    }}
         as={
         <Input
           id="TEST"
           placeholder="Add Description"
-          name="thread"
           // name='thread'
           // value={formValue.thread || ''}
           // onChange={handleChange}
           className={classnames({ 'is-invalid': errors['thread'] })}
-          ref={register({required:true, validate: value => value !== ""})}
+          ref={register("thread", {required:true, validate: value => value !== ""})}
           startAdornment={
             <InputAdornment position="start">
                <img src={Path}></img>
@@ -233,8 +240,8 @@ const renderModal = (
         />
         }
         />
-        {/* {console.log(errors)} */}
-         {errors.thread && errors.thread.type === 'required' && <p style={{color:"red"}}>Thread is required</p>}
+        {console.log(errors)}
+         {errors.thread && <p style={{color:"red"}}>Thread is required</p>}
       </FormControl>
       </Col>
       <Col md={12} sm={12}>
@@ -247,7 +254,7 @@ const renderModal = (
       </Col>
 
       </Row>
-      </Form>
+      </form>
         </ModalBody>
         <ModalFooter className="thread-model-footer">
           <Button color="modal-success" onClick={() => toggleModal(3)}>
