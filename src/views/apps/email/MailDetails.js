@@ -90,6 +90,8 @@ import {
   Trash2 } from 'react-feather'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import axiosConfig from './../../../axiosConfig'
+import PDFVIEWER from './../../components/PdfReader'
+import Dialog from './../../components/Dailog'
 const moment = require('moment')
 
 const MailDetails = props => {
@@ -121,15 +123,16 @@ const MailDetails = props => {
     const [value, setValue] = useState("")
     const [formValue, setFormValue] = useState({})
     const [modal, setModal] = useState(false)
-    const [uploadedImage, setUploadedImage] = useState([])
-    const [blocking_state, setBlocking] = useState(false)
-    const [commentDetail, setCommentDetail] = useState()
-    const [replyDetail, setReplyDetail] = useState()
+      const [uploadedImage, setUploadedImage] = useState([])
+      const [blocking_state, setBlocking] = useState(false)
+      const [commentDetail, setCommentDetail] = useState()
+      const [replyDetail, setReplyDetail] = useState()
+      const { mails, selectedMails, currentMail } = store
+// state pdf
+const [pdfUrl, setPDFUrl] = useState("")
+console.log(pdfUrl !== "")
+
     const [Collapse_data, setCollapse_data] = useState([])//useState([])
-
-//store data
-
-const { mails, selectedMails, currentMail } = store
 
 //toggle collapps
 const filter_array = (data) => {
@@ -527,7 +530,7 @@ const SwiperMultiSlides = () => {
        {JSON.parse(detail && detail.files.replaceAll("\"\"", "\"")).map((image, index) => {
                   return (image.mimetype.slice(0, 11) === "application" ? <div className='pdf_view_comment'><span className='pdf_text'>
                      <span className='view'>
-                     <span className='pdf-img'><img src={PDF} /><span className='size'>{(image.size / (1024 * 1024)).toFixed(1)} MB</span></span>
+                     <span className='pdf-img'><img src={PDF} onClick={() => setPDFUrl(image.location)}/><span className='size'>5 MB</span></span>
                   <span className='pdf-title'>{image.originalname}</span>
                    </span>
                    </span> </div> : ""
@@ -561,6 +564,7 @@ const SwiperMultiSlides = () => {
         show: openMail
       })}
     >
+              {pdfUrl !== "" ? <Dialog pdfUrl={pdfUrl} open={pdfUrl !== ""}/> : ''}
 <div>{renderModal}</div>
       {mail !== null && mail !== undefined ? (
         <Fragment>
@@ -623,7 +627,7 @@ const SwiperMultiSlides = () => {
 {USER_File_TYPE && USER_File_TYPE.map((image, index) => {
           return (image.mimetype.slice(0, 11) === "application" ? <div className='pdf_view'> <span className='pdf_text'>
                <span className='view'>
-               <span className='pdf-img'><img src={PDF} /><span className='size'>{(image.size / (1024 * 1024)).toFixed(1)} MB</span></span>
+               <span className='pdf-img'><img src={PDF} onClick={() => setPDFUrl(image.location)}/><span className='size'>5 MB</span></span>
             <span className='pdf-title'>{image.originalname}</span>
              </span>
              </span> </div> : ''
