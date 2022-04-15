@@ -1,0 +1,2 @@
+(this["webpackJsonpvuexy-react-admin-dashboard"]=this["webpackJsonpvuexy-react-admin-dashboard"]||[]).push([[38],{1237:function(e,t,i){"use strict";i.r(t);var s=i(1),r=i(487),a=i(129);i(614);t.default=function(e){Object(a.b)();var t=Object(r.i)();return Object(s.useEffect)((function(){t.fuid&&t.user_id&&(localStorage.setItem("fbUserId",JSON.stringify(t.fuid)),localStorage.setItem("user_id",JSON.stringify(t.user_id)),e.history.push("/login"))}),[]),"Welcome"}},614:function(e,t,i){}}]);
+//# sourceMappingURL=38.0a682bf0.chunk.js.map

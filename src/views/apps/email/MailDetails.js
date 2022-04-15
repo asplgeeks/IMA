@@ -171,14 +171,51 @@ console.log("check_info1111", Collapse_data)
   }
 
   // ** Renders Attachments
-const param = {
-  slidesPerView: 2,
-  spaceBetween:20
+const params = {
+  // slidesPerView: 3,
+  spaceBetween:10,
+  breakpoints: {
+    1920: {
+        slidesPerView: 3,
+        spaceBetween: 30
+    },
+    1028: {
+        slidesPerView: 2.2,
+        spaceBetween: 30
+    },
+    480: {
+        slidesPerView: 1.2,
+        spaceBetween: 10
+    },
+    380: {
+      slidesPerView: 1.2,
+      spaceBetween: 10
+  }
+}
+
 }
 
 const commentparam = {
-  slidesPerView: 1.2,
-  spaceBetween:10
+  // slidesPerView: 1.2,
+  spaceBetween:10,
+  breakpoints: {
+    1920: {
+        slidesPerView: 5,
+        spaceBetween: 30
+    },
+    1028: {
+        slidesPerView:4,
+        spaceBetween: 30
+    },
+    480: {
+        slidesPerView: 2.5,
+        spaceBetween: 10
+    },
+    380: {
+      slidesPerView: 2,
+      spaceBetween: 10
+  }
+}
 }
 
 // ..show the files
@@ -186,7 +223,7 @@ const userFiles = mail && mail.data && mail.data.files
 const USER_File_TYPE = JSON.parse(userFiles && userFiles.replaceAll("\"\"", "\""))
 const SwiperMultiSlides = () => {
   return (
-        <Swiper dir={isRtl ? 'rtl' : 'ltr'} {...param}>
+        <Swiper dir={isRtl ? 'rtl' : 'ltr'} {...params}>
           {USER_File_TYPE && USER_File_TYPE.map((image, index) => {
                if (image.mimetype === "application/pdf") {
             return ("")
@@ -301,7 +338,7 @@ const SwiperMultiSlides = () => {
   
        <form  onSubmit={handleSubmit(onSubmit)}>
         <Row>
-        <Col md={12} sm={12} xl={6} className="p0">
+        <Col md={12} sm={12}  className="p0">
        <FormControl variant="standard" >
           <InputLabel htmlFor="input-with-icon-adornment">
           Comment
@@ -520,15 +557,14 @@ const SwiperMultiSlides = () => {
   return (
     <div
     // className='wrap-border side-navbar square-border d-none d-lg-block border_bottom_none border_top_none'
-       className={classnames(window.innerWidth > "480" ? 'wrap-border side-navbar square-border d-none d-lg-block border_bottom_none border_top_none position-absolute embed-responsive embed-responsive-4by9' : 'email-app-details', {
+      className={classnames('email-app-details', {
         show: openMail
       })}
-
     >
 <div>{renderModal}</div>
       {mail !== null && mail !== undefined ? (
-        <Card>
-     <div className='email-user-list'>
+        <Fragment>
+     <div className='email-user-list' options={{ wheelPropagation: false }}>
        <div className='app-fixed-search d-flex align-items-center details_navbar'>
           <div className='sidebar-toggle d-block ml-1' onClick={handleGoBack} >
            <span className='' style={{padding: "5px 1px"}}  ><img className='img' src={Back_arrow}  /> </span>
@@ -571,7 +607,7 @@ const SwiperMultiSlides = () => {
 
           </div>
         </div>
-        <PerfectScrollbar  options={{ wheelPropagation: false }}>
+        <PerfectScrollbar className='email-user-list' options={{ wheelPropagation: true }}>
           {/* <div style={{overflowY:"scroll", scrollbarWidth:"none"}}> */}
             <Row className="topic_details">
               <Col sm='12' className="p0">
@@ -618,16 +654,16 @@ const SwiperMultiSlides = () => {
               </Media>
               </Col>
             </Row>
-             <Card>
+
             <SubComment filteredPersons={filteredPersons}/>
-            </Card>
             {/* </div> */}
             </PerfectScrollbar>
             </div>
-        </Card>
+        </Fragment>
       ) : null}
 
-    </div>)
+    </div>
+  )
 }
 
 export default MailDetails

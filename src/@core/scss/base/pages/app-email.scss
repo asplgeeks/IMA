@@ -34,7 +34,7 @@ $email_details_header_height: 5rem;
     .sidebar {
       .email-app-sidebar {
         // width: $menu-expanded-width;
-        width: 300px;
+        width: 350px;
         height: inherit;
         background-color: $white;
         border-top-left-radius: $card-border-radius;
@@ -144,7 +144,7 @@ $email_details_header_height: 5rem;
     .email-user-list {
       position: relative;
       height: calc(
-        70% - calc(3.49rem + 1.32rem)
+        100% - calc(0.49rem + 1.32rem)
       ); // ? search box height (3.49rem) + select all section height (3.32rem)
       .email-media-list {
         padding: 0;
@@ -273,11 +273,15 @@ $email_details_header_height: 5rem;
   // On click of mail Details section slide in from right
   // Email details section starts
   .email-app-details {
-    position: absolute;
+    // position: absolute;
+    position: relative;
     display: block;
     z-index: 2;
     visibility: hidden;
     top: 0;
+    width: 62%;
+
+
     // width: calc(100% - #{$menu-expanded-width} - 164px);
     // width: calc(100% - #{$menu-expanded-width});
 
@@ -429,7 +433,12 @@ $email_details_header_height: 5rem;
         }
         .email-app-details {
           width: 100%;
+          position: absolute;
           border-radius: $border-radius;
+        }
+        .email-app-list
+        {
+          width: 100%;
         }
       }
     }
@@ -449,11 +458,21 @@ $email_details_header_height: 5rem;
     //  width:300px;
       height:90px;
   }
+  .email-app-details {
+    width: 100%;
+    position: absolute;
+    border-radius: $border-radius;
+  }
+  
   .email-app-details .topic_details{
     padding: 0  1rem !important;
   }
   .comment_details{
     padding: 0  1rem !important;
+  }
+  .email-app-list
+  {
+    width: 100%;
   }
 }
 
@@ -1461,4 +1480,13 @@ margin-left: 0px !important;
 
 .p0{
   padding: 0px !important;
+}
+
+.content-body{
+  display: flex;
+  .email-app-list{
+    width: 38%;  
+    border-right: 1px solid #ebe9f1;
+     }
+
 }
